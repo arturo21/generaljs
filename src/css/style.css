@@ -1,0 +1,17 @@
+html {
+	scroll-behavior: smooth;
+}
+body {
+	margin: 0 auto;
+}
+#css-support-msg {
+	text-align: center;
+	color: green;
+	display: none;
+}
+#css-support-msg.supported {
+	display: block;
+}
+section:focus {
+	outline: none;
+}

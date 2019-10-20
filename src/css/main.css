@@ -1,0 +1,19 @@
+#slider-wrapper-slide {
+	width:100%;
+	height: 300px;
+	position: relative;
+	float:none;
+	display:block;
+	transition: left 400ms linear;
+}
+.slideup, .slidedown {
+		max-height: 0;
+		overflow-y: hidden;
+		-webkit-transition: max-height 2s ease-in-out;
+		-moz-transition: max-height 2s ease-in-out;
+		-o-transition: max-height 2s ease-in-out;
+		transition: max-height 2s ease-in-out;
+}
+.slidedown {
+		max-height:100px;
+}
