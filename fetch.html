@@ -1,0 +1,144 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Prueba g.js - FETCH</title>
+		<style>
+			figure{
+				padding: 0px;
+				margin: 0px;
+			}
+			#esperandogif{
+				position: relative;
+				display:block;
+				float:none;
+				width:100%;
+				height:auto;
+				text-align:center;
+				padding: 0px;
+				margin: 0px;
+			}
+			#esperandogif img{
+				position: relative;
+				display:block;
+				float:none;
+				width:50px;
+				height:50px;
+				margin:0 auto;
+				padding: 0px;
+				margin: 0px;
+			}
+			#imagenes ul{
+				position:relative;
+				display:block;
+				float:none;
+				list-style: none;
+				width:100%;
+				height:200px;
+				padding: 0px;
+				margin: 0px;
+			}
+			#imagenes ul li{
+				position:relative;
+				display:inline-block;
+				float:left;
+				list-style: none;
+				width:200px;
+				height:200px;
+				padding: 0px;
+				margin: 0px;
+			}
+			#imagenes ul li:hover{
+				cursor:pointer;
+			}
+			#imagenes ul li:hover .overlay{
+				background:rgba(0,0,0,0.7);
+				position:absolute;
+				float:none;
+				display:block;
+				width:100%;
+				height:100%;
+				opacity:0.7;
+				z-index:9999;
+				padding: 0px;
+				margin: 0px;
+			}
+			#imagenes ul li img{
+				position:relative;
+				float:none;
+				display:block;
+				width:100%;
+				height:auto;
+				opacity:0.7;
+				padding: 0px;
+				margin: 0px;
+			}
+			#imagenes ul li:hover img{
+				opacity:1;
+				padding: 0px;
+				margin: 0px;
+			}
+		</style>
+	</head>
+	<body>
+
+		<div id="esperandogif">
+			<img src="832.gif" /><br />
+			<span id="titulo_widget"></span>
+		</div>
+		<div id="imagenes">
+			
+		</div>
+		<div id="mensajes">
+			
+		</div>
+		<script src="dist/bundle.js"></script>
+		<script>
+			genrl.docready(function(){
+				var usrinstagram="solucioneswebav";
+				var fetchobj=genrl.fetchapi.getFetch();
+				genrl.log("FETCH OBJ************");
+				genrl.log(fetchobj);
+				genrl.log("/FETCH OBJ************");
+				g("#titulo_widget").text("Esperando Data...");
+				genrl.fetchapi.get(
+					"https://www.instagram.com/" + usrinstagram + "/?__a=1",
+					function(data){
+						var datappal;
+						var datos;
+						var htmlstr='';
+						var nodesfotos=data.graphql;
+						var usuario_ins=nodesfotos.user;
+						var mediauser=usuario_ins.edge_owner_to_timeline_media;
+						var countposts=usuario_ins.edge_owner_to_timeline_media.count;
+						var posts=mediauser.edges;
+						var rowactive;
+						g("#esperandogif").hide();
+						htmlstr+="<ul class='lista_instagram'>";
+						if(posts.isArray()){
+							for(i=0;i<(posts.length-1);i++){
+								rowactive=posts[i];
+								htmlstr+="<li><figure class='overlay'></figure><img src='" + rowactive.node.display_url + "'></li>";
+							}
+						}
+						else{
+							genrl.log("Es un objeto");
+						}
+						htmlstr+="</ul>";
+						g("#imagenes").html(htmlstr);
+						g("#imagenes").wrap();
+						g("#imagenes ul").children().css({
+							'margin-left':'3%',
+							'margin-bottom':'3%'
+						});
+						g("#imagenes ul").child(2).css({
+							'background':'#000'
+						});
+						g("#imagenes ul").child(10).css({
+							'background':'#000'
+						});
+					}
+				);
+			});
+		</script>
+	</body>
+</html>

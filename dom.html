@@ -1,0 +1,102 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Prueba g.js</title>
+		<style>
+		*{
+							padding: 0px;
+				margin: 0px;
+		}
+			#esperandogif{
+				position: relative;
+				display:block;
+				float:none;
+				width:100%;
+				height:auto;
+				text-align:center;
+			}
+			#esperandogif img{
+				position: relative;
+				display:block;
+				float:none;
+				width:50px;
+				height:50px;
+				margin:0 auto;
+			}
+			#imagenes ul{
+				position:relative;
+				display:block;
+				float:none;
+				list-style: none;
+				width:100%;
+				height:200px;
+			}
+			#imagenes ul li{
+				position:relative;
+				display:inline-block;
+				float:left;
+				list-style: none;
+				width:200px;
+				height:200px;
+			}
+			#imagenes ul li:hover{
+				cursor:pointer;
+			}
+			#imagenes ul li:hover .overlay{
+				background:rgba(0,0,0,0.7);
+				position:absolute;
+				float:none;
+				display:block;
+				width:100%;
+				height:100%;
+				opacity:0.7;
+				z-index:9999;
+			}
+			#imagenes ul li img{
+				position:relative;
+				float:none;
+				display:block;
+				width:100%;
+				height:auto;
+				opacity:0.7;
+			}
+			#imagenes ul li:hover img{
+				opacity:1;
+			}
+		</style>
+	</head>
+	<body>
+
+		<div id="esperandogif">
+			<img src="832.gif" /><br />
+			<span id="titulo_widget"></span>
+		</div>
+		<div id="imagenes">
+			<div>
+				
+			</div>
+			<div>
+				
+			</div>
+		</div>
+		<div id="mensajes">
+			
+		</div>
+		<script src="../general.js/dist/bundle.js"></script>
+		<script>
+			genrl.docready(function(){
+				var usrinstagram="solucioneswebav";
+				var fetchobj;
+				var objetotexto;
+				var objetoimg;
+				g("#imagenes").child(2).css({
+					"background":"#000",
+					"height":"500px",
+					"width":"500px",
+				});
+				
+				g("#imagenes").getthis();
+			});
+		</script>
+	</body>
+</html>
