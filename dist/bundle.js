@@ -1282,14 +1282,14 @@ ww=__webpack_require__(15);
 ws=__webpack_require__(16);
 storage=__webpack_require__(17);
 datab=__webpack_require__(18);
-var is=__webpack_require__(19);
-var watchjs = __webpack_require__(20);
-var watch = watchjs.watch;
-var unwatch = watchjs.unwatch;
-var callWatchers = watchjs.callWatchers;
-var numapps=0;
-var elementactive="html";
-var varsint=[{}];
+let is=__webpack_require__(19);
+let watchjs = __webpack_require__(20);
+let watch = watchjs.watch;
+let unwatch = watchjs.unwatch;
+let callWatchers = watchjs.callWatchers;
+let numapps=0;
+let elementactive="html";
+let varsint=[{}];
 g=(function(global,factory){
 	this.elemaux='';
 	this.childrenaux=[{}];
@@ -1301,18 +1301,18 @@ g=(function(global,factory){
 		console.log(msg);
 	};
 	function easeInOutQuad(t, b, c, d){
-	  t /= d / 2;
-	  if (t < 1) return c / 2 * t * t + b;
-	  t--;
-	  return -c / 2 * (t * (t - 2) - 1) + b;
+		t /= d / 2;
+		if (t < 1) return c / 2 * t * t + b;
+		t--;
+		return -c / 2 * (t * (t - 2) - 1) + b;
 	};
 	function wrap(el, wrapper) {
 	    el.parentNode.insertBefore(wrapper, el);
 	    wrapper.appendChild(el);
 	};
 	function indexOf_(array, valToFind){
-	    var foundIndex = -1;
-	    for (var index = 0; index < array.length; index++) {
+	    let foundIndex = -1;
+	    for (let index = 0; index < array.length; index++) {
 	        if (array[index] === valToFind) {
 	            foundIndex = index;
 	            break;
@@ -1321,8 +1321,8 @@ g=(function(global,factory){
 		return foundIndex;
 	};
 	function prop(element,proper){
-		var obj; //busca dentro del objeto y devuelve solo la primera acepcion
-		var val;
+		let obj; //busca dentro del objeto y devuelve solo la primera acepcion
+		let val;
 		obj=getelems(element);
 		if(is.isObject(obj)){
 		  	result=obj[0].getAttribute(proper);
@@ -1330,10 +1330,10 @@ g=(function(global,factory){
 		}
 	};
 	function propAll(proper){
-		var val=''; //busca dentro del objeto y devuelve solo la primera acepcion
-		var array_tags=[];
-		var array_final=[];
-		var i=0;
+		let val=''; //busca dentro del objeto y devuelve solo la primera acepcion
+		let array_tags=[];
+		let array_final=[];
+		let i=0;
 		array_tags=getelems(proper);
 		if(array_tags.length>0){
 			for(i=0;i<array_tags.length;i++){
@@ -1343,7 +1343,7 @@ g=(function(global,factory){
 		}
 	};
 	function getScreenCordinates(obj) {
-        var p = {};
+        let p = {};
         p.x = obj.offsetLeft;
         p.y = obj.offsetTop;
         while (obj.offsetParent) {
@@ -1360,63 +1360,62 @@ g=(function(global,factory){
 	};
 	function setError(name,message){
 		this.name = name;
-	  this.message = message || '';
-	  var error = new Error(this.message);
-	  error.name = this.name;
-	  this.stack = error.stack;
+		this.message = message || '';
+		let error = new Error(this.message);
+		error.name = this.name;
+		this.stack = error.stack;
 	};
 	function getBrowserPreffix(){
-	  var N = navigator.appName, ua = navigator.userAgent, tem;
-	  var M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
-	  if(M && (tem = ua.match(/version\/([\.\d]+)/i))!= null) M[2] = tem[1];
-	  M = M? [M[1], M[2]]: [N, navigator.appVersion,'-?'];
-	  M = M[0];
-	  if(M == "Chrome") { browserPrefix = "webkit"; }
-	  if(M == "Firefox") { browserPrefix = "moz"; }
-	  if(M == "Safari") { browserPrefix = "webkit"; }
+		let N = navigator.appName, ua = navigator.userAgent, tem;
+		let M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+		if(M && (tem = ua.match(/version\/([\.\d]+)/i))!= null) M[2] = tem[1];
+		M = M? [M[1], M[2]]: [N, navigator.appVersion,'-?'];
+		M = M[0];
+		if(M == "Chrome") { browserPrefix = "webkit"; }
+		if(M == "Firefox") { browserPrefix = "moz"; }
+		if(M == "Safari") { browserPrefix = "webkit"; }
 		if(M == "Opera") { browserPrefix = "o"; }
-	  if(M == "MSIE") { browserPrefix = "ms"; }
-
+		if(M == "MSIE") { browserPrefix = "ms"; }
 		return browserPrefix;
 	};
 	function setAnimationDuration(el,speed){
-		var preffixbrowser;
+		let preffixbrowser;
 		preffixbrowser=getBrowserPreffix();
 		el.style[preffixbrowser + "-animation-duration"] = speed + "s";
 		return 0;
-	}
+	};
 	function getTransitionEvent(){
-	  var t, el = document.createElement("fakeelement");
-	  var transitions = {
-	    "transition"      : "transitionend",
-	    "OTransition"     : "oTransitionEnd",
-	    "MozTransition"   : "transitionend",
-	    "WebkitTransition": "webkitTransitionEnd"
-	  }
-	  for (t in transitions){
-	    if (el.style[t] !== undefined){
-	      return transitions[t];
-	    }
-	  }
+		let t, el = document.createElement("fakeelement");
+		let transitions = {
+	    	"transition"      : "transitionend",
+	    	"OTransition"     : "oTransitionEnd",
+	    	"MozTransition"   : "transitionend",
+	    	"WebkitTransition": "webkitTransitionEnd"
+	  	};
+		for (t in transitions){
+	    	if (el.style[t] !== undefined){
+	      		return transitions[t];
+	    	}
+		}
 	};
 	function getAnimationEvent(){
-	  var t, el = document.createElement("fakeelement");
-	  var animations = {
-	    "animationDuration"      : "animationend",
-	    "OAnimationDuration"     : "oanimationend",
-	    "MozAnimationDuration"   : "animationend",
-	    "WebkitAnimationDuration": "webkitAnimationEnd",
+	  	let t, el = document.createElement("fakeelement");
+	  	let animations = {
+		    "animationDuration"      : "animationend",
+		    "OAnimationDuration"     : "oanimationend",
+		    "MozAnimationDuration"   : "animationend",
+		    "WebkitAnimationDuration": "webkitAnimationEnd",
 			'MSAnimationDuration': 'MSAnimationEnd'
-	  }
-	  for (a in animations){
-	    if (el.style[a] !== undefined){
-	      return animations[a];
-	    }
-	  }
+	  	}
+	  	for (a in animations){
+	    	if (el.style[a] !== undefined){
+	      		return animations[a];
+	    	}
+	  	}
 	};
 	function getobjtype(id){
-		var cadena;
-		var typestr;
+		let cadena;
+		let typestr;
 		if(typeof id==='string'){
 			cadena=id;
 	      	if(cadena.search("#")==0){
@@ -1432,10 +1431,10 @@ g=(function(global,factory){
 		}
 	};
 	function getelem(id){
-		var objeto;
+		let objeto;
 		if(id!=undefined){
 			if(typeof id==='string'){
-				var pcarac='';
+				let pcarac='';
 				pcarac=id.charAt(0);
 				objeto=document.querySelector(id);
 				if(typeof objeto==='object'){
@@ -1450,7 +1449,7 @@ g=(function(global,factory){
 		}
 	};
 	function getelems(tag){
-		var arrtags=[];
+		let arrtags=[];
 		if(tag!=undefined){
 			arrtags=document.querySelectorAll(tag);
 			return arrtags;
@@ -1460,10 +1459,10 @@ g=(function(global,factory){
 		}
 	};
 	function valobj(objval){
-        var valor;
-        var obj;
-        var args;
-        var tovalue;
+        let valor;
+        let obj;
+        let args;
+        let tovalue;
         obj=getelem(objval);
         if(obj.type!='select-one' && obj.type!="file"){
 			valor=obj.value;
@@ -1479,10 +1478,10 @@ g=(function(global,factory){
         return valor;
    };
    function setval(objval,value){
-        var valor;
-        var obj;
-        var args;
-        var tovalue;
+        let valor;
+        let obj;
+        let args;
+        let tovalue;
         obj=getelem(objval);
         if(obj.type!='select-one' && obj.type!="file"){
 			obj.value=value;
@@ -1502,12 +1501,12 @@ g=(function(global,factory){
 		return [];
 	};
 	function child_(domel_,number){
-      	var objeto;
-      	var valaux;
-      	var numint;
-      	var children;
-      	var childfin;
-      	var intquery=domel_;
+      	let objeto;
+      	let valaux;
+      	let numint;
+      	let children;
+      	let childfin;
+      	let intquery=domel_;
       	objeto=getelem(intquery);
       	if(typeof number==='number'){
       		if(typeof objeto==='object'){
@@ -1579,7 +1578,7 @@ g=(function(global,factory){
 				return getelem(id);
 			},
 			getels: function(id){
-				var arrtags=[];
+				let arrtags=[];
 				arrtags=getelems(id);
 				return arrtags;
 			},
@@ -1588,7 +1587,7 @@ g=(function(global,factory){
 				return this;
 			},
 			hide: function(){
-				var domelement;
+				let domelement;
 				if(!document.getElementById){
 					return false;
 				}
@@ -1599,12 +1598,12 @@ g=(function(global,factory){
 				return this;
 			},
 			height: function(){
-				var domelement;
+				let domelement;
 				domelement=getelem(domel);
 				return parseFloat(getComputedStyle(domelement, null).height.replace("px", ""));
 			},
 			show:function(){
-				var domelement;
+				let domelement;
 				if(!document.getElementById){
 					return false;
 				}
@@ -1615,9 +1614,9 @@ g=(function(global,factory){
 				return this;
 			},
 			animate:function(){
-				var infiniteBool=0;
-				var speedanim=0;
-				var bit;
+				let infiniteBool=0;
+				let speedanim=0;
+				let bit;
 				//write code below
 				//define arguments to work with
 				el=getelem(domel);
@@ -1662,12 +1661,12 @@ g=(function(global,factory){
 			},
 			find:function(selector,callbackfind){
 				// Final found elements
-				var found_elements = [];
-				var i;
+				let found_elements = [];
+				let i;
 				// Find all the outer matched elements
-				var outers = document.querySelectorAll(domel);
+				let outers = document.querySelectorAll(domel);
 				for(i=0;i<outers.length;i++){
-					var elements_in_outer=outers[i].querySelectorAll(selector);
+					let elements_in_outer=outers[i].querySelectorAll(selector);
 					// document.querySelectorAll() returns an "array-like" collection of elements
 				// convert this "array-like" collection to an array
 					elements_in_outer=Array.prototype.slice.call(elements_in_outer);
@@ -1681,35 +1680,35 @@ g=(function(global,factory){
 				return this;
 		   },
 			each:function(callbackeach){
-		      	var objeto;
-		      	var x,y,valor,indice;
+		      	let objeto;
+		      	let x,y,valor,indice;
 		      	objeto=getelems(domel);
 		        g.each(objeto,callbackeach);
 		        return this;
 	      	},
 			trigger:function(evtname){
-		      	var objeto;
+		      	let objeto;
 		      	objeto=getelem(domel);
-				var event = document.createEvent('HTMLEvents');
+				let event = document.createEvent('HTMLEvents');
 				event.initEvent(evtname, true, false);
 				objeto.dispatchEvent(event);
 				return this;
 			},
 			empty:function(){
-		      	var objeto;
+		      	let objeto;
 		      	objeto=getelem(domel);
 		        objeto.innerHTML='';
 		        return this;
 			},
 			emptyVal:function(){
-		      	var objeto;
+		      	let objeto;
 		      	objeto=getelem(domel);
 		        objeto.value='';
 		        return this;
 			},
 			wrap:function(){
-		      	var objeto;
-		      	var content;
+		      	let objeto;
+		      	let content;
 		      	objeto=getelem(domel);
 		      	content=document.createElement('div');
 		      	content.class="wrap";
@@ -1719,8 +1718,8 @@ g=(function(global,factory){
 				return this;
 			},
 			wrapAll:function(){
-				var wrapper = document.createElement('div');
-				var objeto=getelems(domel);
+				let wrapper = document.createElement('div');
+				let objeto=getelems(domel);
 				objeto[0].before(wrapper);
 				elements.forEach(function(element) {
 				    wrapper.append(element);
@@ -1729,7 +1728,7 @@ g=(function(global,factory){
 			},
 			prop:function(property){
 		      	//busca dentro del objeto y devuelve solo la primera acepcion
-				var obj;
+				let obj;
 				//Llama a funcion interna prop(domel,prper)
 				obj=prop(domel,property);
 				if(is.isObject(obj)){
@@ -1738,10 +1737,10 @@ g=(function(global,factory){
 				return this;
 			},
 			unwrap:function(docunw){
-		      	var objeto;
+		      	let objeto;
 		      	objeto=getelem(docunw);
 				// get the element's parent node
-				var parent = objeto.parentNode;
+				let parent = objeto.parentNode;
 				// move all children out of the element
 				while (objeto.firstChild) parent.insertBefore(objeto.firstChild, objeto);
 				// remove the empty element
@@ -1749,23 +1748,23 @@ g=(function(global,factory){
 				return this;
 			},
 			html:function(){
-		      	var objeto;
-		      	var objeto=getelem(domel);
-		      	var args=arguments;
+		      	let objeto;
+		      	let objetohtml=getelem(domel);
+		      	let args=arguments;
 		      	if(args[0]!=undefined){
 		      		string=args[0];
-		      		objeto.innerHTML = string;
+		      		objetohtml.innerHTML = string;
 		      		return this;
 		      	}
 				return objeto.innerHTML;
 			},
 			text:function(){
-		      	var objeto;
-		      	var objeto=getelem(domel);
-		      	var args=arguments;
+		      	let objeto;
+		      	let objetotext=getelem(domel);
+		      	let args=arguments;
 		      	if(args[0]!=undefined){
 		      		string=args[0];
-		      		objeto.textContent = string;
+		      		objetotext.textContent = string;
 					return this;
 		      	}
 		      	else{
@@ -1773,73 +1772,73 @@ g=(function(global,factory){
 		      	}
 			},
 			is:function(classElem){
-		      	var objeto;
-		      	var otroobjeto;
-		      	objeto=getelem(domel);
+		      	let objeto;
+		      	let otroobjeto;
+		      	objetois=getelem(domel);
 		      	otroobjeto=getelem(classElem);
-		      	if(objeto === otherEl){
+		      	if(objetois === otherEl){
 					return 0;
 		      	}
 			},
 			prev:function(){
-		      	var objeto;
-		      	var nextsib;
-		      	objeto=getelem(domel);
-		      	prevsib=objeto.previousElementSibling;
+		      	let objeto;
+		      	let nextsib;
+		      	objetoprev=getelem(domel);
+		      	prevsib=objetoprev.previousElementSibling;
 				return prevsib;
 			},
 			next:function(){
-		      	var objeto;
-		      	var nextsib;
-		      	objeto=getelem(domel);
-		      	nextsib=objeto.nextElementSibling;
+		      	let objeto;
+		      	let nextsib;
+		      	objetonext=getelem(domel);
+		      	nextsib=objetonext.nextElementSibling;
 				return nextsib;
 			},
 			remove:function(){
-		      	var objeto;
-		      	objeto=getelem(domel);
-		      	objeto.parentNode.removeChild(objeto);
+		      	let objeto;
+		      	objetorm=getelem(domel);
+		      	objetorm.parentNode.removeChild(objeto);
 		      	return this;
 			},
 			replaceWith:function(string){
-		      	var objeto;
-		      	objeto=getelem(domel);
-		      	objeto.outerHTML = string;
+		      	let objetorep;
+		      	objetorep=getelem(domel);
+		      	objetorep.outerHTML = string;
 		      	return this;
 			},
 			matches:function(selector){
-		      	var objeto;
-		      	var otroobjeto;
-		      	objeto=getelem(domel);
-		      	otroobjeto=getelem(classElem);
-		      	if(objeto === otherEl){
+		      	let objetomat;
+		      	let otroobjetomat;
+		      	objetomat=getelem(domel);
+		      	otroobjetomat=getelem(classElem);
+		      	if(objetomat === otroobjetomat){
 					return this;
 		      	}
 			},
 			filter:function(filterFn){
-		      	var objeto;
-		      	objeto=getelem(domel);
+		      	let objetofilter;
+		      	objetofilter=getelem(domel);
 		      	if(typeof filterFn==='function'){
-		      		Array.prototype.filter.call(objeto,filterFn);
+		      		Array.prototype.filter.call(objetofilter,filterFn);
 		      	}
 		      	return this;
 			},
 			has:function(strquery){
-		      	var objeto;
-		      	var intquery=domel + ":has " + strquery;
-		      	objeto=getelem(intquery);
+		      	let objetohas;
+		      	let intqueryhas=domel + ":has " + strquery;
+		      	objetohas=getelem(intqueryhas);
 		      	if(typeof strquery==='string'){
-		      		if(typeof objeto==='object'){
+		      		if(typeof objetohas==='object'){
 		      			return this;
 		      		}
 		      	}
 			},
 			not:function(strquery){
-				var objeto;
-		      	var intquery=domel + ":has " + strquery;
-		      	objeto=getelem(intquery);
+				let objetonot;
+		      	let intquerynot=domel + ":has " + strquery;
+		      	objetonot=getelem(intquerynot);
 		      	if(typeof strquery==='string'){
-		      		if(typeof objeto==='object'){
+		      		if(typeof objetonot==='object'){
 		      			return this;
 		      		}
 		      	}
@@ -1849,28 +1848,28 @@ g=(function(global,factory){
 				return this;
 			},
 			closest:function(strelem){
-				var objeto;
-				objeto=getelem(domel);
+				let objetoclo;
+				objetoclo=getelem(domel);
 				if(typeof strelem==='string'){
-					return objeto.closest(strelem);
+					return objetoclo.closest(strelem);
 	  			}
 	  			return this;
 	  		},
 	  		siblings:function(){
-	  			var objeto;
-	  			objeto=getelem(domel);
-	  			Array.prototype.filter.call(objeto.parentNode.children, function(child){
-					return child !== objeto;
+	  			let objetosib;
+	  			objetosib=getelem(domel);
+	  			Array.prototype.filter.call(objetosib.parentNode.children, function(child){
+					return child !== objetosib;
 				});
 				return this;
 	  		},
 			offset:function(){
-				var objeto;
-				var par;
-				var rect;
-				var result;
-				objeto=getelem(domel);
-				rect = objeto.getBoundingClientRect();
+				let objetooff;
+				let par;
+				let rect;
+				let result;
+				objetooff=getelem(domel);
+				rect = objetooff.getBoundingClientRect();
 				result={
 					top: rect.top + document.body.scrollTop,
 					left: rect.left + document.body.scrollLeft
@@ -1878,167 +1877,166 @@ g=(function(global,factory){
 				return result;
 	  		},
 	  		scrollLeft:function(){
-	  			var objeto;
-	  			var par;
-	  			var rect;
-	  			var result;
-	  			objeto=getelem(domel);
-	  			rect = objeto.getBoundingClientRect();
+	  			let objetoscr;
+	  			let par;
+	  			let rect;
+	  			let result;
+	  			objetoscr=getelem(domel);
+	  			rect = objetoscr.getBoundingClientRect();
 	  			if(arguments.length<1){
-	  				var valor=rect.left;
+	  				let valor=rect.left;
 	  				return valor;
 	  			}
 	  			else{
-	  				var valor=rect.left + arguments[0];
-	  				objeto.style.transition="transform 3s linear 1s";
-					objeto.style.transform="translateX(" + valor + "px)";
+	  				let valor=rect.left + arguments[0];
+	  				objetoscr.style.transition="transform 3s linear 1s";
+					objetoscr.style.transform="translateX(" + valor + "px)";
 	  				return this;
 	  			}
 	  		},
 			scrollTop:function(){
-		    	var objeto;
-		      	var par;
-		      	var rect;
-		      	var result;
-		      	objeto=getelem(domel);
-		      	rect = objeto.getBoundingClientRect();
+		    	let objetoscrt;
+		      	let par;
+		      	let rect;
+		      	let result;
+		      	objetoscrt=getelem(domel);
+		      	rect = objetoscrt.getBoundingClientRect();
 		      	
 		      	if(arguments.length<1){
-		      		var valor=rect.top;
+		      		let valor=rect.top;
 		      		return valor;
 		      	}
 		      	else{
-		      		var valor=rect.top + arguments[0];
-		      		objeto.style.transition="transform 3s linear 1s";
-		      		objeto.style.transform="translateY(" + valor + "px)";
+		      		let valor=rect.top + arguments[0];
+		      		objetoscrt.style.transition="transform 3s linear 1s";
+		      		objetoscrt.style.transform="translateY(" + valor + "px)";
 					return this;
 				}
 			},
 			offsetParent:function(){
-			  	var objeto;
-			  	var par;
-			  	var rect;
-			  	var result;
-			  	objeto=getelem(domel);
-			  	result=objeto.offsetParent || objeto;
+			  	let objetooffp;
+			  	let par;
+			  	let rect;
+			  	let result;
+			  	objetooffp=getelem(domel);
+			  	result=objetooffp.offsetParent || objetooffp;
 				return this;
 			},
 			parent:function(){
-				var objeto;
-				objeto=getelem(domel);
-				return objeto.parentNode;
+				let objetopar;
+				objetopar=getelem(domel);
+				return objetopar.parentNode;
 			},
 			position:function(){
-		      	var objeto;
-		      	var result;
-		      	objeto=getelem(domel);
-		      	result={left:objeto.offsetLeft,top:objeto.offsetTop};
+		      	let objetopos;
+		      	let result;
+		      	objetopos=getelem(domel);
+		      	result={left:objetopos.offsetLeft,top:objetopos.offsetTop};
 				return result;
 			},
 			outerHeight:function(){
-		      	var objeto;
-		      	var result;
-		      	var objeto=getelem(domel);
-			    var height=objeto.offsetHeight;
-		    	var style=getComputedStyle(objeto);
-		      	var args=arguments;
+		      	let objeto;
+		      	let result;
+		      	let objetooh=getelem(domel);
+			    let height=objetooh.offsetHeight;
+		    	let style=getComputedStyle(objetooh);
+		      	let args=arguments;
 		      	if(args[0]!=undefined){
 		      		if(args[0]==true){
 					  		height+=parseInt(style.marginTop) + parseInt(style.marginBottom);
 					  		return height;
 		      		}
 		      		else{
-		      			return objeto.offsetHeight;
+		      			return objetooh.offsetHeight;
 		      		}
 		      	}
 		      	else{
-		      		return objeto.offsetHeight;
+		      		return objetooh.offsetHeight;
 		      	}
 			},
 			outerWidth:function(){
-		      	var objeto;
-		      	var result;
-		      	var objeto=getelem(domel);
-			    var height=objeto.offsetWidth;
-			    var style=getComputedStyle(objeto);
-		      	var args=arguments;
+		      	let result;
+		      	let objetoow=getelem(domel);
+			    let height=objeto.offsetWidth;
+			    let style=getComputedStyle(objeto);
+		      	let args=arguments;
 		      	if(args[0]!=undefined){
 		      		if(args[0]==true){
 					  width += parseInt(style.marginLeft) + parseInt(style.marginRight);
 					  return width;
 		      		}
 		      		else{
-		      			return objeto.offsetWidth;
+		      			return objetoow.offsetWidth;
 		      		}
 		      	}
 		      	else{
-		      		return objeto.offsetHeight;
+		      		return objetoow.offsetHeight;
 		      	}
 			},
 			after:function(htmlstr){
 		      	//write code below...
-		      	var obj;
-		      	obj=getelem(domel);
-				obj.insertAdjacentHTML('afterend', htmlstr);
+		      	let objaf;
+		      	objaf=getelem(domel);
+				objaf.insertAdjacentHTML('afterend', htmlstr);
 				return this;
 			},
 			before:function(htmlstr){
 		      	//write code below...
-		      	var obj;
-		      	obj=getelem(domel);
-				obj.insertAdjacentHTML('beforebegin', htmlstr);
+		      	let objbef;
+		      	objbef=getelem(domel);
+				objbef.insertAdjacentHTML('beforebegin', htmlstr);
 				return this;
 			},
 			append:function(html){
 		      	//write code below...
-		      	var obj;
-		      	var elChild = document.createElement('div');
-				obj=getelem(domel);
+		      	let objappe;
+		      	let elChild = document.createElement('div');
+				objappe=getelem(domel);
 				elChild.innerHTML=html;
-				obj.appendChild(elChild);
+				objappe.appendChild(elChild);
 				return this;
 			},
 			prepend:function(html){
 		      	//write code below...
-		      	var obj;
-		      	obj=getelem(domel);
-				obj.insertAdjacentHTML('afterend', html);
+		      	let objprep;
+		      	objprep=getelem(domel);
+				objprep.insertAdjacentHTML('afterend', html);
 				return this;
 			},
 			clone:function(){
 		      	//write code below...
-		      	var obj;
-		      	obj=getelem(domel);
-		      	obj.cloneNode(true);
+		      	let objclo;
+		      	objclo=getelem(domel);
+		      	objclo.cloneNode(true);
 		      	return this;
 			},
 			children:function(){
 		      	//write code below...
-		      	var obj;
-		      	obj=getelem(domel);
-				setChildrenAux_(obj.children);
+		      	let objcld;
+		      	objcld=getelem(domel);
+				setChildrenAux_(objcld.children);
 				return this;
 			},
 			first:function(){
 		      	//write code below...
-		      	var obj;
-		      	var numeqch;
-		      	obj=getelem(domel);
-				numeqch=obj.children[0];
+		      	let objfrs;
+		      	let numeqch;
+		      	objfrs=getelem(domel);
+				numeqch=objfrs.children[0];
 				return this;
 			},
 			last:function(){
 		      	//write code below...
-		      	var obj;
-		      	var numeqch;
-		      	obj=getelem(domel);
-				numeqch=obj.slice(-1);
+		      	let objlst;
+		      	let numeqch;
+		      	objlst=getelem(domel);
+				numeqch=objlst.slice(-1);
 				return this;
 			},
 			index:function(){
-				elm=getelem(domel);
-				var c = elm.parentNode.children;
-				var i=0;
+				let elm=getelem(domel);
+				let c = elm.parentNode.children;
+				let i=0;
 				for(; i < c.length; i++ ){
 					if( c[i] == elm ){
 						return i;
@@ -2047,15 +2045,15 @@ g=(function(global,factory){
 				return this;
 			},
 			hasClass:function(classElem){
-		      	var objeto;
-		      	objeto=getelem(domel);
-		      	if(objeto.classList.contains(classElem)){
+		      	let objetohasc;
+		      	objetohasc=getelem(domel);
+		      	if(objetohasc.classList.contains(classElem)){
 					return this;
 		      	}
 			},
 			addClass:function(classele){
 		      	//write code below...
-		      	var obj;var stringclass;var stringarr;var i;
+		      	let obj;let stringclass;let stringarr;let i;
 				stringclass="";
 				stringclass=classele;
 		      	obj=getelem(domel);
@@ -2072,7 +2070,7 @@ g=(function(global,factory){
 			},
 			removeClass:function(classele){
 		      	//write code below...
-				var obj; var stringclass; var stringarr; stringclass="";var i;
+				let obj; let stringclass; let stringarr; stringclass="";let i;
 				stringclass=classele;
 	  			obj=getelem(domel);
 				stringarr=stringclass.split(' ');
@@ -2088,9 +2086,9 @@ g=(function(global,factory){
 			},
 			addAttrb:function(attr,value){
 		      	//write code below...
-		      	var obj;
-		      	var type;
-		      	var i;
+		      	let obj;
+		      	let type;
+		      	let i;
 		      	type=getobjtype(domel);
 		      	switch(type){
 		      		case 'element':
@@ -2114,10 +2112,10 @@ g=(function(global,factory){
 			},
 			getAttrb:function(attr){
 				//write code below...
-		      	var obj;
-		      	var type;
-		      	var i;
-		      	var result;
+		      	let obj;
+		      	let type;
+		      	let i;
+		      	let result;
 		      	result=Array;
 		      	type=getobjtype(domel);
 		      	switch(type){
@@ -2145,9 +2143,9 @@ g=(function(global,factory){
 			},
 			rmAttrb:function(attr){
 		      	//write code below...
-		      	var obj;
-		      	var type;
-		      	var i;
+		      	let obj;
+		      	let type;
+		      	let i;
 		      	type=getobjtype(domel);
 		      	switch(type){
 		      		case 'element':
@@ -2171,9 +2169,9 @@ g=(function(global,factory){
 			},
 			data:function(attr){
 			  	//write code below...
-			  	var obj;
-			  	var i;
-			  	var value;
+			  	let obj;
+			  	let i;
+			  	let value;
 			  	obj=getelems(domel);
 			  	if(arguments.length<2){
 					for(i=0;i<obj.length;i++){
@@ -2192,13 +2190,13 @@ g=(function(global,factory){
 			},
 			toggleClass:function(classele){
 			  	//write code below...
-			  	var obj;
+			  	let obj;
 			  	obj=getelem(domel);
 			  	obj.classList.toggle(classele);
 			  	return this;
 			},
 			cursor:function(estilo){
-		        var fila;
+		        let fila;
 		      	switch(estilo){
 		      		case 'auto':
 						fila=getelem(domel);
@@ -2232,7 +2230,7 @@ g=(function(global,factory){
 	      		return this;
 	      	},
 	      	toggleDisplay: function(){
-	        	var fila;
+	        	let fila;
 	            if (!document.getElementById){
 	                return false;
 	            }
@@ -2246,14 +2244,14 @@ g=(function(global,factory){
 	            return this;
 	        },
 	        resetText: function(){
-	          	var textcontent;
+	          	let textcontent;
 	          	textcontent=getelem(domel);
 	          	textcontent.value='';
 				return this;
 	        },
 	        val: function(){
-	            var valor;
-	            var args;
+	            let valor;
+	            let args;
 	            args=arguments;
 	            if(args[0]==undefined){
 	                valor=valobj(domel);
@@ -2269,23 +2267,23 @@ g=(function(global,factory){
 	            return this;
 	        },
 	        intval: function(){
-				var number;
+				let number;
 				valor=valobj(domel);
 				return parseInt(valor);
 	        },
 	        floatval: function(){
-	        	var number;
+	        	let number;
 				valor=valobj(domel);
 				return parseFloat(valor);
 	        },
 		    gotodiv: function(){
-		        var objeto;
+		        let objeto;
 		        objeto=getelem(domel);
 		        objeto.scrollIntoView();
 		        return this;
 		    },
 			smooth: function(target, options){
-			    var start = window.pageYOffset,
+			    let start = window.pageYOffset,
 			        opt = {
 			            duration: options.duration,
 			            offset: options.offset || 0,
@@ -2327,7 +2325,7 @@ g=(function(global,factory){
 			    return this;
 			},
 		    blink: function(status){
-		        var fila;
+		        let fila;
 		        switch(status){
 		        	case 'on':
 			        	fila=getelem(domel);
@@ -2342,7 +2340,7 @@ g=(function(global,factory){
 		        return this;
 		    },
 			submit:function(callbackfunc){
-	        	var control;
+	        	let control;
 	        	control=getelem(domel);
 		        control.onsubmit=function(){
 		        	callbackfunc();
@@ -2350,7 +2348,7 @@ g=(function(global,factory){
 		        return this;
 			},
 	        click:function(callbackfunc){
-	        	var control;
+	        	let control;
 	        	control=getelem(domel);
 		        control.onclick=function(){
 		        	callbackfunc();
@@ -2358,7 +2356,7 @@ g=(function(global,factory){
 		        return this;
 	      	},
 	      	change:function(callbackfunc){
-		        var control;
+		        let control;
 	        	control=getelem(domel);
 		        control.onchange=function(){
 		        	callbackfunc();
@@ -2366,7 +2364,7 @@ g=(function(global,factory){
 		        return this;
 	      	},
 	      	blur:function(callbackfunc){
-		        var control;
+		        let control;
 	        	control=getelem(domel);
 		        control.onblur=function(){
 		        	callbackfunc();
@@ -2374,7 +2372,7 @@ g=(function(global,factory){
 		        return this;
 	      	},
 			not:function(ignomename){
-				var control=getelems(domel + ':not(' + ignomename + ')');
+				let control=getelems(domel + ':not(' + ignomename + ')');
 				if(control!=undefined){
 					return;
 				}
@@ -2387,7 +2385,7 @@ g=(function(global,factory){
 				return this;
 			},
 			trigger:function(el, eventName, options){
-				var event;
+				let event;
 				if (window.CustomEvent) {
 					event = new CustomEvent(eventName, options);
 				}
@@ -2399,52 +2397,43 @@ g=(function(global,factory){
 				return this;
 			},
 			on:function(e){
-				var control;
-				var idcontrol;
-				var event;
-				var idcontrol;
-				idcontrol=domel;
-				event=arguments[0];
+				let control;
+				let eventoCall;
+				eventoCall=arguments[0];
 				callback=arguments[1];
-				control=getelem(idcontrol);
-				control.addEventListener(event,callback);
+				control=getelem(domel);
+				control.addEventListener(eventoCall,callback);
 				return this;
 			},
 			one:function(e){
-				var control;
-				var idcontrol;
-				var event;
-				var idcontrol;
-				idcontrol=domel;
-				event=arguments[0];
-				callback=arguments[1];;
-				control=getelem(idcontrol);
-				control.addEventListener(event,function(){
-					control.removeEventListener(event);
+				let control;
+				let eventoCall;
+				eventoCall=arguments[0];
+				callback=arguments[1];
+				control=getelem(domel);
+				control.addEventListener(eventoCall,function(){
+					control.removeEventListener(eventoCall,callback);
 				});
 				return this;
 		    },
 			off:function(e){
-				var control;
-				var idcontrol;
-				var event;
-				var idcontrol;
-				idcontrol=domel;
-				event=arguments[0];
+				let control;
+				let eventoCall;
+				eventoCall=arguments[0];
 				callback=arguments[1];
-				control=getelem(idcontrol);
-				control.removeEventListener(event,callback);
+				control=getelem(domel);
+				control.removeEventListener(eventoCall,callback);
 				return this;
 			},
 			load:function(modulourl){
 				window.addEventListener('load', function() {
 				    // page is fully rendered
-			        var xmlhttp=false;
-			        var filecont;
-			        var contentdiv;
-			        var n;
-			        var allScripts;
-			        var callback;
+			        let xmlhttp=false;
+			        let filecont;
+			        let contentdiv;
+			        let n;
+			        let allScripts;
+			        let callback;
 			        callback=arguments[1];
 			        contentdiv=getelem(domel);
 			        xmlhttp=g.getxhr();
@@ -2479,18 +2468,18 @@ g=(function(global,factory){
 				});
 			},
 			get:function(stylesStr){
-				var result;
-				var aux,i;
-				var objelem=getelem(domel);
-				var style=window.getComputedStyle ? getComputedStyle(objelem,null) : objelem.currentStyle;
+				let result;
+				let aux,i;
+				let objelem=getelem(domel);
+				let style=window.getComputedStyle ? getComputedStyle(objelem,null) : objelem.currentStyle;
 				result={};
 				if(!Array.isArray(stylesStr)){
 					aux=style[stylesStr];
 					result[stylesStr]=aux;
 				}
 				else{
-					var objeto=stylesStr;
-					var indi;
+					let objeto=stylesStr;
+					let indi;
 					for(i=0;i<2;i++){
 						indi=stylesStr[i];
 						aux=style[indi];
@@ -2500,8 +2489,8 @@ g=(function(global,factory){
 				return result;
 			},
 			set:function(styles){
-				var elems;
-				var i;
+				let elems;
+				let i;
 				if (typeof styles !== 'object') {
 					throw new Error('Second parameter of this function should be an object');
 				}
@@ -2511,7 +2500,7 @@ g=(function(global,factory){
 				}
 				else{
 					elems.forEach(function(elem) {
-						for (var i in styles) {
+						for (let i in styles) {
 							if (styles.hasOwnProperty(i)) {
 								elem.style[i] = styles[i];
 							}
@@ -2522,15 +2511,14 @@ g=(function(global,factory){
 			},
 			css: function(style){
 				//Hacer callback un argumento opcional
-				var callbackCall;
-				var callbackAux;
-				var response;
-				var dominter;
-				var domelint;
-				var valaux;
-				var valchildren;
-				var valparent;
-				var domelint;
+				let callbackCall;
+				let callbackAux;
+				let response;
+				let dominter;
+				let valaux;
+				let valchildren;
+				let valparent;
+				let domelint;
 				valaux=getValAux_();
 				valchildren=getChildrenAux_();
 				valparent=getParentAux_();
@@ -2596,8 +2584,8 @@ genrl=(function(global,factory){
 	    wrapper.appendChild(el);
 	};
 	function indexOf_(array, valToFind){
-	    var foundIndex = -1;
-	    for (var index = 0; index < array.length; index++) {
+	    let foundIndex = -1;
+	    for (let index = 0; index < array.length; index++) {
 	        if (array[index] === valToFind) {
 	            foundIndex = index;
 	            break;
@@ -2606,8 +2594,8 @@ genrl=(function(global,factory){
 		return foundIndex;
 	};
 	function prop(element,proper){
-		var obj; //busca dentro del objeto y devuelve solo la primera acepcion
-		var val;
+		let obj; //busca dentro del objeto y devuelve solo la primera acepcion
+		let val;
 		obj=getelems(element);
 		if(is.isObject(obj)){
 		  	result=obj[0].getAttribute(proper);
@@ -2615,10 +2603,10 @@ genrl=(function(global,factory){
 		}
 	};
 	function propAll(proper){
-		var val=''; //busca dentro del objeto y devuelve solo la primera acepcion
-		var array_tags=[];
-		var array_final=[];
-		var i=0;
+		let val=''; //busca dentro del objeto y devuelve solo la primera acepcion
+		let array_tags=[];
+		let array_final=[];
+		let i=0;
 		array_tags=getelems(proper);
 		if(array_tags.length>0){
 			for(i=0;i<array_tags.length;i++){
@@ -2628,7 +2616,7 @@ genrl=(function(global,factory){
 		}
 	};
 	function getScreenCordinates(obj) {
-        var p = {};
+        let p = {};
         p.x = obj.offsetLeft;
         p.y = obj.offsetTop;
         while (obj.offsetParent) {
@@ -2646,13 +2634,13 @@ genrl=(function(global,factory){
 	function setError(name,message){
 		this.name = name;
 	  this.message = message || '';
-	  var error = new Error(this.message);
+	  let error = new Error(this.message);
 	  error.name = this.name;
 	  this.stack = error.stack;
 	};
 	function getBrowserPreffix(){
-	  var N = navigator.appName, ua = navigator.userAgent, tem;
-	  var M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+	  let N = navigator.appName, ua = navigator.userAgent, tem;
+	  let M = ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
 	  if(M && (tem = ua.match(/version\/([\.\d]+)/i))!= null) M[2] = tem[1];
 	  M = M? [M[1], M[2]]: [N, navigator.appVersion,'-?'];
 	  M = M[0];
@@ -2665,14 +2653,14 @@ genrl=(function(global,factory){
 		return browserPrefix;
 	};
 	function setAnimationDuration(el,speed){
-		var preffixbrowser;
+		let preffixbrowser;
 		preffixbrowser=getBrowserPreffix();
 		el.style[preffixbrowser + "-animation-duration"] = speed + "s";
 		return 0;
 	}
 	function getTransitionEvent(){
-	  var t, el = document.createElement("fakeelement");
-	  var transitions = {
+	  let t, el = document.createElement("fakeelement");
+	  let transitions = {
 	    "transition"      : "transitionend",
 	    "OTransition"     : "oTransitionEnd",
 	    "MozTransition"   : "transitionend",
@@ -2685,8 +2673,8 @@ genrl=(function(global,factory){
 	  }
 	};
 	function getAnimationEvent(){
-	  var t, el = document.createElement("fakeelement");
-	  var animations = {
+	  let t, el = document.createElement("fakeelement");
+	  let animations = {
 	    "animationDuration"      : "animationend",
 	    "OAnimationDuration"     : "oanimationend",
 	    "MozAnimationDuration"   : "animationend",
@@ -2700,8 +2688,8 @@ genrl=(function(global,factory){
 	  }
 	};
 	function getobjtype(id){
-		var cadena;
-		var typestr;
+		let cadena;
+		let typestr;
 		if(typeof id==='string'){
 			cadena=id;
 	      	if(cadena.search("#")==0){
@@ -2717,7 +2705,7 @@ genrl=(function(global,factory){
 		}
 	};
 	function getelem(id){
-		var objeto;
+		let objeto;
 		if(id!=undefined){
 			if(typeof id==='string'){
 				objeto=document.querySelector(id);
@@ -2733,7 +2721,7 @@ genrl=(function(global,factory){
 		}
 	};
 	function getelems(tag){
-		var arrtags=[];
+		let arrtags=[];
 		if(tag!=undefined){
 			arrtags=document.querySelectorAll(tag);
 			return arrtags;
@@ -2743,10 +2731,10 @@ genrl=(function(global,factory){
 		}
 	};
 	function valobj(objval){
-        var valor;
-        var obj;
-        var args;
-        var tovalue;
+        let valor;
+        let obj;
+        let args;
+        let tovalue;
         obj=getelem(objval);
         if(obj.type!='select-one' && obj.type!="file"){
 			valor=obj.value;
@@ -2762,10 +2750,10 @@ genrl=(function(global,factory){
         return valor;
    };
    function setval(objval,value){
-        var valor;
-        var obj;
-        var args;
-        var tovalue;
+        let valor;
+        let obj;
+        let args;
+        let tovalue;
         obj=getelem(objval);
         if(obj.type!='select-one' && obj.type!="file"){
 			obj.value=value;
@@ -2812,8 +2800,8 @@ genrl=(function(global,factory){
 			g("html").addAttrb("name","appdata"+numapps);
 			g("html").addAttrb("data-scope",scopenom);
 			g("html").addAttrb("data-gapp",scopenom);
-			var attrbdata=g("html").getAttrb("data-scope");
-			var model = new datab.Model(scopenom);
+			let attrbdata=g("html").getAttrb("data-scope");
+			let model = new datab.Model(scopenom);
 			numapps++;
 		},
 		log: function(msg){
@@ -2829,14 +2817,14 @@ genrl=(function(global,factory){
 			console.warn(msg);
 		},
 		map: function(array,callbackmap){
-			var val,index;
+			let val,index;
 			if(array.isArray()){
 				array.map(callbackmap);
 			}
 	  	},
 		propAll:function(prper){
 	      	//busca dentro del objeto y devuelve solo la primera acepcion
-			var obj;
+			let obj;
 			obj=propAll(prper);
 			return obj;
 		},
@@ -2860,8 +2848,8 @@ genrl=(function(global,factory){
 				return btoa(string);
 	    },
 		each:function(objeto,callbackeach){
-			var objProc;
-			var x,y,valor,indice;
+			let objProc;
+			let x,y,valor,indice;
 			if(is.isObject(objeto)){
 				try {
 					objeto.forEach(callbackeach);
@@ -2906,35 +2894,35 @@ genrl=(function(global,factory){
 				//Detect browser and write the corresponding name
 				if (navigator.userAgent.search("MSIE") >= 0){
 				    glog('"MS Internet Explorer ');
-				    var position = navigator.userAgent.search("MSIE") + 5;
-				    var end = navigator.userAgent.search("; Windows");
-				    var version = navigator.userAgent.substring(position,end);
+				    let position = navigator.userAgent.search("MSIE") + 5;
+				    let end = navigator.userAgent.search("; Windows");
+				    let version = navigator.userAgent.substring(position,end);
 				    glog(version + '"');
 				}
 				else if (navigator.userAgent.search("Chrome") >= 0){
 					glog('"Google Chrome ');// For some reason in the browser identification Chrome contains the word "Safari" so when detecting for Safari you need to include Not Chrome
-				    var position = navigator.userAgent.search("Chrome") + 7;
-				    var end = navigator.userAgent.search(" Safari");
-				    var version = navigator.userAgent.substring(position,end);
+				    let position = navigator.userAgent.search("Chrome") + 7;
+				    let end = navigator.userAgent.search(" Safari");
+				    let version = navigator.userAgent.substring(position,end);
 				    glog(version + '"');
 				}
 				else if (navigator.userAgent.search("Firefox") >= 0){
 				    glog('"Mozilla Firefox ');
-				    var position = navigator.userAgent.search("Firefox") + 8;
-				    var version = navigator.userAgent.substring(position);
+				    let position = navigator.userAgent.search("Firefox") + 8;
+				    let version = navigator.userAgent.substring(position);
 				    glog(version + '"');
 				}
 				else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0){//<< Here
 				    glog('"Apple Safari ');
-				    var position = navigator.userAgent.search("Version") + 8;
-				    var end = navigator.userAgent.search(" Safari");
-				    var version = navigator.userAgent.substring(position,end);
+				    let position = navigator.userAgent.search("Version") + 8;
+				    let end = navigator.userAgent.search(" Safari");
+				    let version = navigator.userAgent.substring(position,end);
 				    glog(version + '"');
 				}
 				else if (navigator.userAgent.search("Opera") >= 0){
 				    glog('"Opera ');
-				    var position = navigator.userAgent.search("Version") + 8;
-				    var version = navigator.userAgent.substring(position);
+				    let position = navigator.userAgent.search("Version") + 8;
+				    let version = navigator.userAgent.substring(position);
 				    glog(version + '"');
 				}
 				else{
@@ -2980,8 +2968,8 @@ genrl=(function(global,factory){
 	        return atob(cadena);
 	    },
 		param: function(object) {
-		    var encodedString = '';
-		    for (var prop in object) {
+		    let encodedString = '';
+		    for (let prop in object) {
 		        if (object.hasOwnProperty(prop)) {
 		            if (encodedString.length > 0) {
 		                encodedString += '&';
@@ -2992,10 +2980,10 @@ genrl=(function(global,factory){
 		    return encodedString;
 		},
 	    getParam: function(name){
-	            var regexS = "[\\?&]"+name+"=([^&#]*)";
-	            var regex = new RegExp ( regexS );
-	            var tmpURL = window.location.href;
-	            var results = regex.exec( tmpURL );
+	            let regexS = "[\\?&]"+name+"=([^&#]*)";
+	            let regex = new RegExp ( regexS );
+	            let tmpURL = window.location.href;
+	            let results = regex.exec( tmpURL );
 	            if(results==null){
 	                    return"";
 	            }
@@ -3021,15 +3009,15 @@ genrl=(function(global,factory){
 	      if (argString === null || typeof argString === 'undefined'){
 	        return '';
 	      }
-	      var string = (argString + ''); // .replace(/\r\n/g, "\n").replace(/\r/g, "\n");
-	      var utftext = '',
+	      let string = (argString + ''); // .replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+	      let utftext = '',
 	        start, end, stringl = 0;
 
 	      start = end = 0;
 	      stringl = string.length;
-	      for (var n = 0; n < stringl; n++){
-	        var c1 = string.charCodeAt(n);
-	        var enc = null;
+	      for (let n = 0; n < stringl; n++){
+	        let c1 = string.charCodeAt(n);
+	        let enc = null;
 
 	        if (c1 < 128){
 	          end++;
@@ -3045,7 +3033,7 @@ genrl=(function(global,factory){
 	          if ((c1 & 0xFC00) != 0xD800){
 	            throw new RangeError('Unmatched trail surrogate at ' + n);
 	          }
-	          var c2 = string.charCodeAt(++n);
+	          let c2 = string.charCodeAt(++n);
 	          if ((c2 & 0xFC00) != 0xDC00){
 	            throw new RangeError('Unmatched lead surrogate at ' + (n - 1));
 	          }
@@ -3083,7 +3071,7 @@ genrl=(function(global,factory){
 	      //   example 1: utf8_decode('Kevin van Zonneveld');
 	      //   returns 1: 'Kevin van Zonneveld'
 
-	      var tmp_arr = [],
+	      let tmp_arr = [],
 	        i = 0,
 	        ac = 0,
 	        c1 = 0,
@@ -3129,26 +3117,26 @@ genrl=(function(global,factory){
 	        return document.domain;
 	    },
 	    getURI: function(){
-	        var request_uri;
+	        let request_uri;
 	        request_uri=location.pathname + location.search;
 	        return request_uri;
 	    },
 	    explode: function(variab, delimiter){
-	      var arraystr;
+	      let arraystr;
 	      return variab.split(delimiter);
 	    },
 	    gotolocal: function(valselect){
-	      var URL;
+	      let URL;
 	      URL=valselect;
 	      location.href=URL;
 	    },
 	    gotoremote: function(valselect){
-	      var URL;
+	      let URL;
 	      URL="http://"+valselect;
 	      location.href=URL;
 	    },
 		parseHTML:function(htmlstr){
-			var tmp = document.implementation.createHTMLDocument();
+			let tmp = document.implementation.createHTMLDocument();
 			tmp.body.innerHTML = htmlstr;
 			return tmp.body.children;
 		},
@@ -3182,14 +3170,14 @@ genrl=(function(global,factory){
 			return indexOf_(array,valToFind);
 		},
 		makeArray: function(pseudoarray){
-			var realArray = [].slice.call(pseudoarray);
+			let realArray = [].slice.call(pseudoarray);
 			return realArray;
 		},
 		indexOf: function(array, valToFind){
 		    return indexOf_(array,valToFind);
 		},
 		getKey: function(e){
-			var KeyCode;
+			let KeyCode;
 			if(e){
 				if(e.keyCode>0){
 					KeyCode=e.keyCode;
@@ -3201,7 +3189,7 @@ genrl=(function(global,factory){
 			return KeyCode;
 		},
 		getChar: function(event){
-	       	var cadena;
+	       	let cadena;
 			//bloquear teclado a solo numeros
 			teclan=g.getKey(event);
 			cadena=String.fromCharCode(teclan);
@@ -3232,7 +3220,7 @@ genrl=(function(global,factory){
 		},
 		type: function(objname){
 			//retorna el tipo de objeto
-			var obj;
+			let obj;
 			obj=getelem(objname);
 			return Object.prototype.toString.call(obj).replace(/^\[object (.+)\]$/, '$1').toLowerCase();
 		},
@@ -3241,19 +3229,19 @@ genrl=(function(global,factory){
 		 * Funciones XHR para trabajar con AJAX
 		 * */
 		getxhr:function(){
-	  		var xhr;
+	  		let xhr;
 			xhr=window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 			return xhr;
 		},
 		upload: function(fileid,callbackup){
-			var filectrl;
-	      	var file;
-	      	var reader;
-	      	var finalfile;
-	      	var fileapi;
-	      	var formData;
-	      	var objnombrefile;
-	      	var resp;
+			let filectrl;
+	      	let file;
+	      	let reader;
+	      	let finalfile;
+	      	let fileapi;
+	      	let formData;
+	      	let objnombrefile;
+	      	let resp;
 	      	objnombrefile={};
 			//Validación si hay los elementos para realizar la carga asíncrona de archivos
 		     if(window.File && window.FileList && window.Blob && window.FileReader && window.FormData){
@@ -3263,9 +3251,9 @@ genrl=(function(global,factory){
 					file=filectrl.files[0];
 					reader.readAsBinaryString(file);
 					reader.onload=function(event){
-					    var result=event.target.result;
-					    var fileName=filectrl.files[0].name;
-					    var objres;
+					    let result=event.target.result;
+					    let fileName=filectrl.files[0].name;
+					    let objres;
 					    objres={};
 						objres.__proto__={
 							data:'',
@@ -3313,19 +3301,19 @@ genrl=(function(global,factory){
 	      	 * 1 dirsocket
 	      	 * 2 [callback] optional
 	      	 */
-	      	var i;
-	        var arrayvar;
-	        var ajxProtocol;
-	        var dirsocket;
-	        var variablesobj;
-	        var variablesaux;
-	        var sock;
-	        var callback;
-	        var data;
-	        var responset;
-	        var contenedor;
-	        var headers;
-			var objres;
+	      	let i;
+	        let arrayvar;
+	        let ajxProtocol;
+	        let dirsocket;
+	        let variablesobj;
+	        let variablesaux;
+	        let sock;
+	        let callback;
+	        let data;
+	        let responset;
+	        let contenedor;
+	        let headers;
+			let objres;
 			objres={};
 			objres.__proto__={
 				data:'',
@@ -3408,19 +3396,19 @@ genrl=(function(global,factory){
 				 * 1 dirsocket
 				 * 2 [callback] optional
 				 */
-				var i;
-				var arrayvar;
-				var ajxProtocol;
-				var dirsocket;
-				var variablesobj;
-				var variablesaux;
-				var sock;
-				var callback;
-				var data;
-				var responset;
-				var contenedor;
-				var headers;
-				var objres;
+				let i;
+				let arrayvar;
+				let ajxProtocol;
+				let dirsocket;
+				let variablesobj;
+				let variablesaux;
+				let sock;
+				let callback;
+				let data;
+				let responset;
+				let contenedor;
+				let headers;
+				let objres;
 				objres={};
 				objres.__proto__={
 					data:'',
@@ -3504,19 +3492,19 @@ genrl=(function(global,factory){
       	 * 1 dirsocket
       	 * 2 [callback] optional
 		*/
-	      	var i;
-	        var arrayvar;
-	        var ajxProtocol;
-	        var dirsocket;
-	        var variablesobj;
-	        var variablesaux;
-	        var sock;
-	        var callback;
-	        var data;
-	        var responset;
-	        var enctype;
-	        var contenedor;
-			var objres;
+	      	let i;
+	        let arrayvar;
+	        let ajxProtocol;
+	        let dirsocket;
+	        let variablesobj;
+	        let variablesaux;
+	        let sock;
+	        let callback;
+	        let data;
+	        let responset;
+	        let enctype;
+	        let contenedor;
+			let objres;
 			objres={};
 			objres.__proto__={
 				data:'',
@@ -3589,7 +3577,7 @@ genrl=(function(global,factory){
 }(window));
 ////////Módulo para extender el framework
 genrl.fn=(function(){
-	var _class2type={};
+	let _class2type={};
 	function glogfn(msg){
 		console.log(msg);
 	};
@@ -3604,7 +3592,7 @@ genrl.fn=(function(){
   function _isFunction(target){
     return toString.call(target) === "[object Function]";
   };
-  var _isArray =  Array.isArray || function(obj) {
+  let _isArray =  Array.isArray || function(obj) {
       return _type(obj) === "array";
 	};
 	function _isPlainObject(obj) {
@@ -3628,12 +3616,12 @@ genrl.fn=(function(){
 		}
 		// Own properties are enumerated firstly, so to speed up,
 		// if last one is own, then all properties are own.
-		var key;
+		let key;
 		for ( key in obj ) {}
 		return key === undefined || hasOwn.call( obj, key );
 	};
 	function _extend(){
-    var options, name, src, copy, copyIsArray, clone,
+    let options, name, src, copy, copyIsArray, clone,
       target = arguments[0] || {},
       i = 1,
       length = arguments.length,
@@ -3690,7 +3678,7 @@ genrl.fn=(function(){
 };
 	return{
 		extend:function(){
-			var options, name, src, copy, copyIsArray, clone,
+			let options, name, src, copy, copyIsArray, clone,
 	      target = arguments[0] || {},
 	      i = 1,
 	      length = arguments.length,
@@ -3789,7 +3777,7 @@ genrl.path=(function(){
 	            }
 	        },
 	        popState: function(event){
-	            var initialPop = !genrl.path.history.initial.popped && location.href == genrl.path.history.initial.URL;
+	            let initialPop = !genrl.path.history.initial.popped && location.href == genrl.path.history.initial.URL;
 	            genrl.path.history.initial.popped = true;
 	            if(initialPop) return;
 	            genrl.path.dispatch(document.location.pathname);
@@ -3816,8 +3804,8 @@ genrl.path=(function(){
 	        }
 	    },
 	    match:function(path, parameterize){
-				var compare="";
-	      var params = {}, route = null, possible_routes, slice, i, j, compare;
+			let compare="";
+			let params = {}, route = null, possible_routes, slice, i, j;
 				try{
 			        for (route in genrl.path.routes.defined){
 			            if (route !== null && route !== undefined){
@@ -3858,7 +3846,7 @@ genrl.path=(function(){
 				return null;
 	    },
 	    dispatch:function(passed_route){
-	        var previous_route, matched_route;
+	        let previous_route, matched_route;
 	        if (genrl.path.routes.current !== passed_route){
 	            genrl.path.routes.previous = genrl.path.routes.current;
 	            genrl.path.routes.current = passed_route;
@@ -3882,7 +3870,7 @@ genrl.path=(function(){
 	        }
 	    },
 	    listen:function(){
-	        var fn = function(){ genrl.path.dispatch(location.hash); }
+	        let fn = function(){ genrl.path.dispatch(location.hash); }
 
 	        if (location.hash === ""){
 	            if (genrl.path.routes.root !== null){
@@ -3941,7 +3929,7 @@ genrl.path.core.route.prototype = {
         return this;
     },
     'partition': function () {
-        var parts = [], options = [], re = /\(([^}]+?)\)/g, text, i;
+        let parts = [], options = [], re = /\(([^}]+?)\)/g, text, i;
         while (text = re.exec(this.path)) {
             parts.push(text[1]);
         }
@@ -3952,7 +3940,7 @@ genrl.path.core.route.prototype = {
         return options;
     },
     'run': function () {
-        var halt_execution = false, i, result, previous;
+        let halt_execution = false, i, result, previous;
 
         if (genrl.path.routes.defined[this.path].hasOwnProperty("do_enter")) {
             if (genrl.path.routes.defined[this.path].do_enter.length > 0) {
@@ -3986,17 +3974,17 @@ genrl.__proto__.unwatch_=function(objeto,attrib,callback){
 	unwatch(DOMelement,attrib,callback);
 };
 genrl.__proto__.ajax=function(){
-	var sock;
+	let sock;
 	sock=g.getxhr();
 	return sock;
 };
 genrl.__proto__.ds=function(iddataset){
-  	var obj;
-  	var idfinal;
+  	let obj;
+  	let idfinal;
   	obj=g.getelems(iddataset);
   	return{
   		get:function(nomvar){
-  			var result;
+  			let result;
 			idfinal="data-" + nomvar;
 			result=g(iddataset).prop(idfinal);
 			return result;
@@ -4038,7 +4026,7 @@ genrl.__proto__.isEmpty=function(string){
 	}
 };
 genrl.__proto__.getelem=function(id){
-	var objeto;
+	let objeto;
 	if(typeof id==='string'){
 		objeto=document.querySelector(id);
 		if(typeof objeto==='object'){
@@ -4047,7 +4035,7 @@ genrl.__proto__.getelem=function(id){
 	}
 };
 genrl.__proto__.getelems=function(tag){
-	var arrtags=[];
+	let arrtags=[];
 	if(tag!=undefined){
 		arrtags=document.querySelectorAll(tag);
 		return arrtags;
