@@ -32,6 +32,8 @@ let callWatchers = watchjs.callWatchers;
 let numapps=0;
 let elementactive="html";
 let varsint=[{}];
+let scope=[{}];
+
 g=(function(global,factory){
 	this.elemaux='';
 	this.childrenaux=[{}];
