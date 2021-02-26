@@ -23,6 +23,7 @@ fetchapi=require("./mods/fetchapi.js");
 ww=require("./mods/webworkers.js");
 ws=require("./mods/websockets.js");
 storage=require("./mods/cookies.js");
+webapi=require("./mods/webapi.js");
 datab=require("./mods/data-bind.lite.min.js");
 let is=require("./mods/is.min.js");
 let watchjs = require("./mods/watch.min.js");
@@ -1550,21 +1551,26 @@ genrl=(function(global,factory){
 		},
 		log: function(msg){
 			console.log(msg);
+			return this;
 		},
 		error: function(msg){
 			console.error(msg);
+			return this;
 		},
 		info: function(msg){
 			console.info(msg);
+			return this;
 		},
 		warn: function(msg){
 			console.warn(msg);
+			return this;
 		},
 		map: function(array,callbackmap){
 			let val,index;
 			if(array.isArray()){
 				array.map(callbackmap);
 			}
+			return this;
 	  	},
 		propAll:function(prper){
 	      	//busca dentro del objeto y devuelve solo la primera acepcion
@@ -1701,9 +1707,11 @@ genrl=(function(global,factory){
 	    },
 	    rReplace: function(direccion,variable,valor){
 	        location.replace([direccion]+"?"+[variable]+"="+[valor]);
+			return this;
 	    },
 	    rHref: function(direccion,variable,valor){
 	        location.href([direccion]+"?"+[variable]+"="+[valor]);
+			return this;
 	    },
 	    base64_encode: function(cadena){
 	        return btoa(cadena);
@@ -1729,7 +1737,7 @@ genrl=(function(global,factory){
 	            let tmpURL = window.location.href;
 	            let results = regex.exec( tmpURL );
 	            if(results==null){
-	                    return"";
+					return"";
 	            }
 	            else{
 	                return results[1];
@@ -2092,32 +2100,32 @@ genrl=(function(global,factory){
 	      		// VALIDACIONES
 	      		if(arguments[2]!=undefined){
 		      		if(typeof arguments[2]==="function"){
-								callback=arguments[2];
-							}
-							else{
-								glog("El argumento Callback debe ser de tipo función");
-							}
+						callback=arguments[2];
+					}
+					else{
+						glog("El argumento Callback debe ser de tipo función");
+					}
 	      		}
 	      		////////////////////////////////////////////////////
 	      		// EJECUTAR FUNCION Y CALLBACK//////////////////////
 		        sock.open(ajxProtocol,dirsocket,true);
-						function transferComplete(event){
-              glog("STATUS: " + event.target.readyState + " " + event.target.status + " " + event.target.statusText);
-              if(callback!=undefined){
-             		if(typeof callback==="function"){
-									objres.data=event.target.responseText;
-									objres.status=event.target.readyState;
-									objres.error=0;
-									glog("MESSAGE " + event.target.responseText);
-									callback(objres);
-								}
-								else{
-									glog("El parámetro Callback no es función o no existe!");
-								}
-              }
-              else{
-								glog("El parámetro Callback no existe!");
-							}
+				function transferComplete(event){
+					glog("STATUS: " + event.target.readyState + " " + event.target.status + " " + event.target.statusText);
+					if(callback!=undefined){
+		         		if(typeof callback==="function"){
+							objres.data=event.target.responseText;
+							objres.status=event.target.readyState;
+							objres.error=0;
+							glog("MESSAGE " + event.target.responseText);
+							callback(objres);
+						}
+						else{
+							glog("El parámetro Callback no es función o no existe!");
+						}
+					}
+					else{
+						glog("El parámetro Callback no existe!");
+					}
 				}
 
 				function transferFailed(event){
@@ -2793,5 +2801,6 @@ genrl.extend({ ww });
 genrl.extend({ ws });
 genrl.extend({ storage });
 genrl.extend({ fetchapi });
+genrl.extend({ webapi });
 genrl.init();
 module.exports=g;
