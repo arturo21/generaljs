@@ -24,6 +24,7 @@ ww=require("./mods/webworkers.js");
 ws=require("./mods/websockets.js");
 storage=require("./mods/cookies.js");
 webapi=require("./mods/webapi.js");
+ytapi=require("./mods/ytapi.js");
 datab=require("./mods/data-bind.lite.min.js");
 let is=require("./mods/is.min.js");
 let watchjs = require("./mods/watch.min.js");
@@ -189,7 +190,7 @@ g=(function(global,factory){
 			else{
 				if(typeof id==='object'){
 					return id;
-				}			
+				}
 			}
 		}
 	};
@@ -310,12 +311,12 @@ g=(function(global,factory){
 		this.parentaux=null;
 		return 0;
 	};
-	setError.prototype = Object.create(Error.prototype);		
+	setError.prototype = Object.create(Error.prototype);
 	//here wuould go public functions
 	//...................
 	return function(domel="html"){
 		return{
-			getthis(){
+			getthis: function(){
 				console.log(this);
 				return 0;
 			},
@@ -428,7 +429,7 @@ g=(function(global,factory){
 		      	let objeto;
 		      	let x,y,valor,indice;
 		      	objeto=getelems(domel);
-		        g.each(objeto,callbackeach);
+		        genrl.each(objeto,callbackeach);
 		        return this;
 	      	},
 			trigger:function(evtname){
@@ -646,7 +647,7 @@ g=(function(global,factory){
 		      	let result;
 		      	objetoscrt=getelem(domel);
 		      	rect = objetoscrt.getBoundingClientRect();
-		      	
+
 		      	if(arguments.length<1){
 		      		let valor=rect.top;
 		      		return valor;
@@ -1055,7 +1056,7 @@ g=(function(global,factory){
 			    }
 			    function end(){
 			        window.scrollTo(0, start + distance);
-	
+
 			        if (typeof opt.callback==='function'){
 			        	opt.callback();
 			        }
@@ -1080,7 +1081,7 @@ g=(function(global,factory){
 			        	fila=getelem(domel);
 			        	fila.className="";
 			        	break;
-	
+
 		        }
 		        return this;
 		    },
@@ -1212,7 +1213,7 @@ g=(function(global,factory){
 				    xmlhttp.send();
 				});
 			},
-			get:function(stylesStr){
+			get: function(stylesStr){
 				let result;
 				let aux,i;
 				let objelem=getelem(domel);
@@ -1233,7 +1234,7 @@ g=(function(global,factory){
 				}
 				return result;
 			},
-			set:function(styles){
+			set: function(styles){
 				let elems;
 				let i;
 				if (typeof styles !== 'object') {
@@ -1265,13 +1266,18 @@ g=(function(global,factory){
 				let valparent;
 				let domelint;
 				valaux=getValAux_();
+				genrl.log("HOLA1");
 				valchildren=getChildrenAux_();
+				genrl.log("HOLA2");
 				valparent=getParentAux_();
+				genrl.log("HOLA3");
 				if(typeof arguments[1]==='function'){
 					callbackCall=arguments[1];
+					genrl.log("ES UNA FUNCION");
 				}
 				if(debugvar_(valaux)){
 					domelint=valaux;
+					genrl.log(domelint);
 				}
 				else{
 					if(debugvar_(valchildren)){
@@ -1286,18 +1292,17 @@ g=(function(global,factory){
 				if(typeof style==='string' || Array.isArray(style) || typeof style==='object'){
 					if(Array.isArray(domelint) || domelint.length>0){
 						try{
-							for(i=0;i<domelint.length;i++){
-								g(domelint[i]).set(style);
-							}
+							g(domel).set(style);
 							return this;
 						}
 						catch(e){
+							genrl.log("ERROR");
 							genrl.log(e);
 						}
 					}
 					else{
 						try{
-							g(domelint).set(style);
+							g(domel).set(style);
 							return this;
 						}
 						catch(e){
@@ -1461,7 +1466,7 @@ genrl=(function(global,factory){
 			else{
 				if(typeof id==='object'){
 					return id;
-				}			
+				}
 			}
 		}
 	};
@@ -2802,5 +2807,6 @@ genrl.extend({ ws });
 genrl.extend({ storage });
 genrl.extend({ fetchapi });
 genrl.extend({ webapi });
+genrl.extend({ ytapi });
 genrl.init();
 module.exports=g;

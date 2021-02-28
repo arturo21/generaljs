@@ -28,14 +28,16 @@ var options = {
 }
 */
 /************************************************/
-var nombrewapi='';
+let nombrewapi='';
+let element;
 webapi=(function(nombrewapi){
-	var element=getelem(domel);
 	//Submodulo WebAnimationsAPI
 	return{
-		animate:function(keyframesanim,optanim){
+		animate:function(options){
+			//contenedor,keyframesanim,optanim
 			if(element!=undefined){
-				element.animate(keyframesanim, optanim)
+				element=document.querySelector(options.contenedor);
+				element.animate(options.keyframesanim, options.optanim)
 			}
 			else{
 				glog("El Elemento no está definido para trabajar con la API.");

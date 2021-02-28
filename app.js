@@ -7,7 +7,7 @@ g.docready(function(){
 	var elementos=[];
 	var ww={};
 	var index=0;
-	
+
 	h=[
 		{'nombre':'arturo'},
 		{'nombre':'pedro'},
@@ -46,7 +46,7 @@ g.docready(function(){
 	});
 	contdivs=0;
 	bitvisible=0;
-	
+
 	g.dom("#btnmover").click(function(){
 		g.dom("#div_A").animate('bounce',5000,function(){
 			g.log("Se ha activado el callBack");
@@ -296,7 +296,11 @@ g.docready(function(){
 	g.log(accordion);
 	g.log("**********************************");
 	g.log("VIDEO API");
-	var video=g.videoapi.getPlayer("#video");
+	var video=g.ytapi.play({
+		'id':'RbRSEY2f7Yo',
+		'ancho':'1024',
+		'alto':'1024'
+	});
 	g.log(video);
 	g.log("**********************************");
 });
