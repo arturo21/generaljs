@@ -27,7 +27,7 @@ ws=(function(){
 	sockets=[];
 	retobject={};
 	objectfinal={};
-	
+
 	function printonerror(event){
 		console.log("ERROR...");
 		console.log(event.error);
@@ -93,12 +93,12 @@ ws=(function(){
 			return 0;
 		},
 		reply:function(nombreid,message,callbackmsg){
-			var w=g.ws.get(nombreid);
+			var w=genrl.ws.get(nombreid);
 			w.socket.addEventListener('message',callbackmsg);
 			callbackmsg();
 		},
 		send:function(nombreid,message){
-			var w=g.ws.get(nombreid);
+			var w=genrl.ws.get(nombreid);
 			w.socket.send(message);
 			g.log("************SOCKET RESPONSE*************");
 			g.log(message);

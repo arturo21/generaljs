@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2019 Arturo Vasquez Soluciones Web.
+  Copyright (C) 2021 Arturo Vasquez Soluciones Web.
   Todos los derechos reservados.
 
   La redistribución y uso en formatos fuente y binario están permitidas
@@ -20,20 +20,20 @@
 fetchapi=(function(global,factory){
   //write code below
   function getSocket(){
-    var fetchapi=fetch;
+    let fetchapi=fetch;
     if(fetchapi){
       return fetchapi;
     }
   };
   return{
     getFetch:function(){
-		var sockfetch=getSocket();
-      return sockfetch;
+		let sockfetch=getSocket();
+		return sockfetch;
   	},
   	get:function(url,callbackReq){
-  		var objeto;
-		var x,y,valor,indice;
-		var sockfetch=getSocket();
+  		let objeto;
+		let x,y,valor,indice;
+		let sockfetch=getSocket();
 		sockfetch(url)
 	    .then(function(response){
 	    	response.json().then(function(data){
@@ -58,11 +58,11 @@ fetchapi=(function(global,factory){
 	    })
   	},
   	post:function(url,data,callbackReq){
-		var sockfetch=getSocket();
-		var options;
-		var respjson;
-		var objeto;
-		var x,y,valor,indice;
+		let sockfetch=getSocket();
+		let options;
+		let respjson;
+		let objeto;
+		let x,y,valor,indice;
       options={
         method:'POST',
         headers:{

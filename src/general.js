@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2019 Arturo Vasquez Soluciones Web.
+  Copyright (C) 2020 Arturo Vasquez Soluciones Web.
   Todos los derechos reservados.
 
   La redistribución y uso en formatos fuente y binario están permitidas
@@ -17,9 +17,11 @@
 /*Integrado GDOM para el manejo del DOM / eventos / AJAX */
 /*Este archivo lo necesita Function SMOOTH SCROLL*/
 require("./requestAnimationFrame.js");
+require("./css/animate.css");
 /*************************************************/
 cripto=require("./mods/gcrypto.js");
 fetchapi=require("./mods/fetchapi.js");
+ajaxapi=require("./mods/ajaxapi.js");
 ww=require("./mods/webworkers.js");
 ws=require("./mods/websockets.js");
 storage=require("./mods/cookies.js");
@@ -365,7 +367,7 @@ g=(function(global,factory){
 				let bit;
 				//write code below
 				//define arguments to work with
-				el=getelem(domel);
+				el=document.querySelector(domel);
 				animationStr="";
 				animationName=arguments[0];
 				bit=arguments[1];
@@ -403,7 +405,7 @@ g=(function(global,factory){
 				else{
 					setAnimationDuration(el,speedanim);
 				}
-		    	return this;
+				return this;
 			},
 			find:function(selector,callbackfind){
 				// Final found elements
@@ -1030,7 +1032,7 @@ g=(function(global,factory){
 		    },
 			smooth: function(target, options){
 			    let start = window.pageYOffset,
-			        opt = {
+			        opt={
 			            duration: options.duration,
 			            offset: options.offset || 0,
 			            callback: options.callback,
@@ -1056,7 +1058,6 @@ g=(function(global,factory){
 			    }
 			    function end(){
 			        window.scrollTo(0, start + distance);
-
 			        if (typeof opt.callback==='function'){
 			        	opt.callback();
 			        }
@@ -1171,48 +1172,6 @@ g=(function(global,factory){
 				control.removeEventListener(eventoCall,callback);
 				return this;
 			},
-			load:function(modulourl){
-				window.addEventListener('load', function() {
-				    // page is fully rendered
-			        let xmlhttp=false;
-			        let filecont;
-			        let contentdiv;
-			        let n;
-			        let allScripts;
-			        let callback;
-			        callback=arguments[1];
-			        contentdiv=getelem(domel);
-			        xmlhttp=g.getxhr();
-			        if (typeof callback==='function'){
-								callback();
-			        }
-				    xmlhttp.onreadystatechange = function(){
-				        if(xmlhttp.readyState==XMLHttpRequest.DONE){
-				           if(xmlhttp.status == 200){
-				               contentdiv.innerHTML = xmlhttp.responseText;
-				               allScripts=contentdiv.getElementsByTagName('script');
-				               for (n=0;n<allScripts.length;n++){
-									//run script inside rendered div
-									eval(allScripts[n].innerHTML);
-				               }
-				               if(callback!=undefined){
-							        if(typeof callback==='function'){
-										callback();
-							        }
-							        else{
-							        	glog("No se puede ejecutar la llamada, no es tipo funcion");
-							        }
-				               }
-				           }
-				           else {
-				               glog('Error');
-				           }
-				        }
-				    }
-				    xmlhttp.open("GET", modulourl, true);
-				    xmlhttp.send();
-				});
-			},
 			get: function(stylesStr){
 				let result;
 				let aux,i;
@@ -1265,12 +1224,12 @@ g=(function(global,factory){
 				let valchildren;
 				let valparent;
 				let domelint;
+				let objfinal=[{}];
+
 				valaux=getValAux_();
-				genrl.log("HOLA1");
 				valchildren=getChildrenAux_();
-				genrl.log("HOLA2");
 				valparent=getParentAux_();
-				genrl.log("HOLA3");
+				//Identificar que el callback es uuna finción
 				if(typeof arguments[1]==='function'){
 					callbackCall=arguments[1];
 					genrl.log("ES UNA FUNCION");
@@ -1289,25 +1248,44 @@ g=(function(global,factory){
 						}
 					}
 				}
-				if(typeof style==='string' || Array.isArray(style) || typeof style==='object'){
-					if(Array.isArray(domelint) || domelint.length>0){
-						try{
-							g(domel).set(style);
-							return this;
+				if(typeof style==='object'){
+					genrl.log("ES UN OBJETO");
+					if(Array.isArray(domelint)){
+						if(style.length==undefined){
+							genrl.log("CONFIRMADO OBJETO");
 						}
-						catch(e){
-							genrl.log("ERROR");
-							genrl.log(e);
+						else{
+							genrl.log("CONFIRMADO ARRAY");
+							genrl.log(style);
+							let max=parseInt(style.length);
+							for(i=0;i<=max;i++){
+								aux=style[i];
+								aux_=g(domel).get(aux);
+								if(aux_[aux]!=undefined){
+									objfinal[aux]=aux_[aux];
+								}
+							}
+							objfinal.length=i;
+							return objfinal;
+						}
+						if(style.length>0){
+							genrl.warn("ARRAY Cond 1");
+							try{
+								g(domel).set(style);
+								return this;
+							}
+							catch(e){
+								genrl.log("ERROR TRY CATCH 1");
+								genrl.log(e);
+							}
 						}
 					}
-					else{
-						try{
-							g(domel).set(style);
-							return this;
-						}
-						catch(e){
-							genrl.log(e);
-						}
+				}
+				else{
+					genrl.warn("STRING Cond 2");
+					if(typeof style==='string'){
+						genrl.log("Es un string");
+						return g(domel).get(style);
 					}
 				}
 				if(typeof callbackCall==='function'){
@@ -1522,6 +1500,17 @@ genrl=(function(global,factory){
 		}
 		return [];
 	};
+	function getSocket_(){
+		if (window.XMLHttpRequest) {
+			// code for modern browsers
+			xmlhttp = new XMLHttpRequest();
+		}
+		else{
+			// code for old IE browsers
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		return xmlhttp;
+	};
 	setError.prototype = Object.create(Error.prototype);
 	return{
 		//write code below
@@ -1534,6 +1523,9 @@ genrl=(function(global,factory){
 		},
 		init: function(){
 			this.createScope();
+		},
+		getxhr:function(){
+			return getSocket_();
 		},
 		docready: function(fn){
 			if(document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
@@ -1655,7 +1647,7 @@ genrl=(function(global,factory){
 				    glog(version + '"');
 				}
 				else if (navigator.userAgent.search("Chrome") >= 0){
-					glog('"Google Chrome ');// For some reason in the browser identification Chrome contains the word "Safari" so when detecting for Safari you need to include Not Chrome
+					glog('"Google Chrome ');
 				    let position = navigator.userAgent.search("Chrome") + 7;
 				    let end = navigator.userAgent.search(" Safari");
 				    let version = navigator.userAgent.substring(position,end);
@@ -1981,355 +1973,6 @@ genrl=(function(global,factory){
 			obj=getelem(objname);
 			return Object.prototype.toString.call(obj).replace(/^\[object (.+)\]$/, '$1').toLowerCase();
 		},
-		/**
-		 * Ajax Clase
-		 * Funciones XHR para trabajar con AJAX
-		 * */
-		getxhr:function(){
-	  		let xhr;
-			xhr=window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-			return xhr;
-		},
-		upload: function(fileid,callbackup){
-			let filectrl;
-	      	let file;
-	      	let reader;
-	      	let finalfile;
-	      	let fileapi;
-	      	let formData;
-	      	let objnombrefile;
-	      	let resp;
-	      	objnombrefile={};
-			//Validación si hay los elementos para realizar la carga asíncrona de archivos
-		     if(window.File && window.FileList && window.Blob && window.FileReader && window.FormData){
-				 try{
-					reader=new FileReader();
-					filectrl=getelem(fileid); //Files[0] = 1st file
-					file=filectrl.files[0];
-					reader.readAsBinaryString(file);
-					reader.onload=function(event){
-					    let result=event.target.result;
-					    let fileName=filectrl.files[0].name;
-					    let objres;
-					    objres={};
-						objres.__proto__={
-							data:'',
-							file:'',
-							status:'',
-							error:'',
-						};
-					    g.post(
-							{
-								data:btoa(result),
-								name:fileName
-							},
-							"upload.php",
-							function(data){
-								resp=JSON.parse(data.data);
-								objres.file=resp[0].file;
-								objres.status="200 OK";
-								objres.error="0";
-								callbackup(objres);
-							}
-						);
-					};
-					reader.onerror=function(event){
-						glog("Hubo un error de lectura de disco." + event.target.error);
-						objres.file="";
-						objres.status=event.target.error;
-						objres.error=event.target.error;
-						callbackup(objres);
-					};
-				 }
-				 catch(e){
-					 genrl.log("EXCEPCION...." + e);
-				 }
-			}
-			else{
-			    // browser doesn't supports File API
-			    glog("browser doesn't supports File API");
-			}
-			return this;
-	      },
-	      post: function(){
-	      	/*
-	      	 * Parámetros:
-	      	 * 0 objvariables
-	      	 * 1 dirsocket
-	      	 * 2 [callback] optional
-	      	 */
-	      	let i;
-	        let arrayvar;
-	        let ajxProtocol;
-	        let dirsocket;
-	        let variablesobj;
-	        let variablesaux;
-	        let sock;
-	        let callback;
-	        let data;
-	        let responset;
-	        let contenedor;
-	        let headers;
-			let objres;
-			objres={};
-			objres.__proto__={
-				data:'',
-				status:'',
-				error:'',
-			};
-	        arrayvar=new Array();
-	        variablesobj={};
-	        variablesaux={};
-	        //almacenar argumentos en el array 'arrayvar'
-	        for(i=0;i<arguments.length;i++){
-	          arrayvar[i]=arguments[i];
-	        }
-			if(arguments.length<2){
-	      		glog("Faltan Argumentos " + arguments.length);
-	      	}
-	      	else{
-	      		// Obtener objeto AJAX;
-	      		sock=g.getxhr();
-	      		sock.addEventListener("load", transferComplete);
-						sock.addEventListener("error", transferFailed);
-	      		// Obtener objeto de variables;
-	      		variablesaux=JSON.stringify(arrayvar[0]);
-	      		variablesobj=JSON.parse(variablesaux);
-	      		glog(variablesobj);
-	      		// Obtener string de protocolo
-	      		ajxProtocol="POST";
-	      		// Obtener string de dir archivo socket
-	      		dirsocket=arrayvar[1];
-	      		// Obtener string de enctype
-	      		headers="application/x-www-form-urlencoded";
-	      		// VALIDACIONES
-	      		if(arguments[2]!=undefined){
-		      		if(typeof arguments[2]==="function"){
-						callback=arguments[2];
-					}
-					else{
-						glog("El argumento Callback debe ser de tipo función");
-					}
-	      		}
-	      		////////////////////////////////////////////////////
-	      		// EJECUTAR FUNCION Y CALLBACK//////////////////////
-		        sock.open(ajxProtocol,dirsocket,true);
-				function transferComplete(event){
-					glog("STATUS: " + event.target.readyState + " " + event.target.status + " " + event.target.statusText);
-					if(callback!=undefined){
-		         		if(typeof callback==="function"){
-							objres.data=event.target.responseText;
-							objres.status=event.target.readyState;
-							objres.error=0;
-							glog("MESSAGE " + event.target.responseText);
-							callback(objres);
-						}
-						else{
-							glog("El parámetro Callback no es función o no existe!");
-						}
-					}
-					else{
-						glog("El parámetro Callback no existe!");
-					}
-				}
-
-				function transferFailed(event){
-					objres.data=event.target.responseText;
-					objres.status=event.target.readyState;
-					objres.error=event.target.error;
-					glog(event.target.error);
-					callback(objres);
-				}
-				sock.setRequestHeader("Content-Type",headers);
-				sock.send(JSON.stringify(variablesobj));
-		        ////////////////////////////////////////////////////
-					}
-				return this;
-			},
-			getJSON: function(){
-				/*
-				 * Parámetros:
-				 * 0 objvariables
-				 * 1 dirsocket
-				 * 2 [callback] optional
-				 */
-				let i;
-				let arrayvar;
-				let ajxProtocol;
-				let dirsocket;
-				let variablesobj;
-				let variablesaux;
-				let sock;
-				let callback;
-				let data;
-				let responset;
-				let contenedor;
-				let headers;
-				let objres;
-				objres={};
-				objres.__proto__={
-					data:'',
-					status:'',
-					error:'',
-				};
-				arrayvar=new Array();
-				variablesobj={};
-				variablesaux={};
-				//almacenar argumentos en el array 'arrayvar'
-				for(i=0;i<arguments.length;i++){
-					arrayvar[i]=arguments[i];
-				}
-				if(arguments.length<2){
-					glog("Faltan Argumentos " + arguments.length);
-				}
-				else{
-					// Obtener objeto AJAX;
-					sock=g.getxhr();
-					sock.addEventListener("load", transferComplete);
-					sock.addEventListener("error", transferFailed);
-					// Obtener objeto de variables;
-					variablesaux=JSON.stringify(arrayvar[0]);
-					variablesobj=JSON.parse(variablesaux);
-					// Obtener string de protocolo
-					ajxProtocol="POST";
-					// Obtener string de dir archivo socket
-					dirsocket=arrayvar[1];
-					// Obtener string de enctype
-					headers="application/x-www-form-urlencoded";
-					// VALIDACIONES
-					if(arguments[2]!=undefined){
-						if(typeof arguments[2]==="function"){
-							callback=arguments[2];
-						}
-						else{
-							glog("El argumento Callback debe ser de tipo función");
-						}
-					}
-					////////////////////////////////////////////////////
-					// EJECUTAR FUNCION Y CALLBACK//////////////////////
-				sock.open(ajxProtocol,dirsocket,true);
-				function transferComplete(event){
-				glog("STATUS: " + event.target.readyState + " " + event.target.status + " " + event.target.statusText);
-				if(callback!=undefined){
-					if(typeof callback==="function"){
-						sanity=JSON.stringify(event.target.responseText);
-						objres.data=JSON.parse(sanity);
-						objres.status=event.target.readyState;
-						objres.error=0;
-						glog(objres.data);
-						callback(objres);
-					}
-					else{
-						glog("El parámetro Callback no es función o no existe!");
-					}
-				}
-				else{
-					glog("El parámetro Callback no existe!");
-				}
-				return this;
-			}
-
-			function transferFailed(event){
-				objres.data=event.target.responseText;
-				objres.status=event.target.readyState;
-				objres.error=event.target.error;
-				glog(event.target.error);
-				callback(objres);
-			}
-			sock.setRequestHeader("Content-Type",headers);
-			sock.send(JSON.stringify(variablesobj));
-					////////////////////////////////////////////////////
-			}
-			return this;
-		},
-		get: function(){
-      	/*
-      	 * Parámetros:
-      	 * 0 objvariables
-      	 * 1 dirsocket
-      	 * 2 [callback] optional
-		*/
-	      	let i;
-	        let arrayvar;
-	        let ajxProtocol;
-	        let dirsocket;
-	        let variablesobj;
-	        let variablesaux;
-	        let sock;
-	        let callback;
-	        let data;
-	        let responset;
-	        let enctype;
-	        let contenedor;
-			let objres;
-			objres={};
-			objres.__proto__={
-				data:'',
-				status:'',
-				error:'',
-			};
-	        arrayvar=new Array();
-	        variablesobj={};
-	        variablesaux={};
-	        //almacenar argumentos en el array 'arrayvar'
-	        for(i=0;i<arguments.length;i++){
-	          arrayvar[i]=arguments[i];
-	        }
-			if(arguments.length<2){
-	      		glog("Faltan Argumentos " + arguments.length);
-	      	}
-	      	else{
-	      		// Obtener objeto AJAX;
-	      		sock=g.getxhr();
-	      		sock.addEventListener("load", transferComplete);
-						sock.addEventListener("error", transferFailed);
-	      		// Obtener string de protocolo
-	      		ajxProtocol="GET";
-	      		// Obtener string de dir archivo socket
-	      		dirsocket=arrayvar[1];
-	      		// VALIDACIONES
-		    		if(arguments[2]!=undefined){
-		      		if(typeof arguments[2]==="function"){
-								callback=arguments[2];
-							}
-							else{
-								glog("El argumento Callback debe ser de tipo función");
-							}
-			      }
-	      		////////////////////////////////////////////////////
-	      		// EJECUTAR FUNCION Y CALLBACK//////////////////////
-		        sock.open(ajxProtocol,dirsocket,true);
-						function transferComplete(event){
-		          data=event.target.responseText;
-		          glog("STATUS: " + event.target.readyState + " " + event.target.status + " " + event.target.statusText);
-		          if(callback!=undefined){
-								if(typeof callback==="function"){
-									objres.data=event.target.responseText;
-									objres.status=event.target.readyState;
-									objres.error=0;
-									glog("MESSAGE " + event.target.responseText);
-									callback(objres);
-								}
-								else{
-									glog("El parámetro Callback no es función o no existe!");
-								}
-							}
-							else{
-								glog("El parámetro Callback no existe!");
-							}
-						}
-						function transferFailed(event){
-							objres.data=event.target.responseText;
-							objres.status=event.target.readyState;
-							objres.error=event.target.error;
-							glog(event.target.error);
-							callback(objres);
-						}
-						sock.send(null);
-						////////////////////////////////////////////////////
-			}
-			return this;
-		}
 	};
 }(window));
 ////////Módulo para extender el framework
@@ -2732,7 +2375,7 @@ genrl.__proto__.unwatch_=function(objeto,attrib,callback){
 };
 genrl.__proto__.ajax=function(){
 	let sock;
-	sock=g.getxhr();
+	sock=genrl.getxhr();
 	return sock;
 };
 genrl.__proto__.ds=function(iddataset){

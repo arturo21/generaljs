@@ -1,10 +1,10 @@
-	g.extend({
+	genrl.extend({
 		saludofunc:function(mensaje){
-			console.log("SALUDOFUNC: HOLA, " + mensaje + " -> funcion extendida con otra funcion dentro de raiz");
+			genrl.log("SALUDOFUNC: HOLA, " + mensaje + " -> funcion extendida con otra funcion dentro de raiz");
 		}
 	});
-	g.fn.extend({
+	genrl.fn.extend({
 		saludos:function(mensaje){
-			console.log("SALUDOFUNC FN: HOLA, " + mensaje + " -> funcion extendida con otra funcion dentro de fn");
+			genrl.log("SALUDOFUNC FN: HOLA, " + mensaje + " -> funcion extendida con otra funcion dentro de fn");
 		}
 	});

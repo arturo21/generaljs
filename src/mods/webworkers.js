@@ -91,7 +91,7 @@ ww=(function(nombreww){
 			return 0;
 		},
 		send:function(nombreid,message){
-			var w=g.ww.get(nombreid);
+			var w=genrl.ww.get(nombreid);
 			w.worker.postMessage(message);
 		}
 	}
