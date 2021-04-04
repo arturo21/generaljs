@@ -18,177 +18,119 @@
 /**********************AJAX API*****************/
 /************************************************/
 ajaxapi=(function(global,factory){
+	let ajax_=getSocket();
+	let bitget=0;
+	let bitpost=0;
+	let bitgetjson=0;
+	let bitupload=0;
+	let bitload=0;
+	let protocol='get';
+	let errormessage="";
 	//write code below
 	function getSocket(){
-		if (window.XMLHttpRequest) {
-			// code for modern browsers
-			xmlhttp = new XMLHttpRequest();
-		}
-		else{
-			// code for old IE browsers
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
+		// code for modern browsers
+		xmlhttp = new XMLHttpRequest();
 		return xmlhttp;
 	};
-	function transferCompleteGet(data,callback){
-		if(typeof callback === 'function'){
-			callback(data);
-		}
-	};
-	function transferFailedGet(data,callback){
-		if(typeof callback === 'function'){
-			callback(data);
-		}
-	};
-
-	function transferCompleteGetJSON(data,callback){
-		if(typeof callback === 'function'){
-			callback(data);
-		}
-	};
-	function transferFailedGetJSON(data,callback){
-		if(typeof callback === 'function'){
-			callback(data);
-		}
-	};
-	function transferCompletePost(data,callback){
-		if(typeof callback === 'function'){
-			callback(data);
-		}
-	};
-	function transferFailedPost(data,callback){
-		if(typeof callback === 'function'){
-			callback(data);
-		}
-	};
-	function transferCompletePostUpl(data,callback){
-		if(typeof callback === 'function'){
-			callback(data);
-		}
-	};
-	function transferFailedPostUpl(data,callback){
-		if(typeof callback === 'function'){
-			callback(data);
-		}
-	};
-
 return{
     getAjax:function(){
 		let sockajax=getSocket();
 		return sockajax;
   	},
-	load:function(modulourl){
-		window.addEventListener('load', function() {
-		    // page is fully rendered
-	        let xmlhttp=false;
-	        let filecont;
-	        let contentdiv;
-	        let n;
-	        let allScripts;
-	        let callback;
-	        callback=arguments[1];
-	        contentdiv=getelem(domel);
-	        xmlhttp=genrl.getxhr();
-	        if (typeof callback==='function'){
-						callback();
-	        }
-		    xmlhttp.onreadystatechange = function(){
-		        if(xmlhttp.readyState==XMLHttpRequest.DONE){
-		           if(xmlhttp.status == 200){
-		               contentdiv.innerHTML = xmlhttp.responseText;
-		               allScripts=contentdiv.getElementsByTagName('script');
-		               for (n=0;n<allScripts.length;n++){
-							//run script inside rendered div
-							eval(allScripts[n].innerHTML);
-		               }
-		               if(callback!=undefined){
-					        if(typeof callback==='function'){
-								callback();
-					        }
-					        else{
-					        	glog("No se puede ejecutar la llamada, no es tipo funcion");
-					        }
-		               }
-		           }
-		           else {
-		               glog('Error');
-		           }
-		        }
-		    }
-		    xmlhttp.open("GET", modulourl, true);
-		    xmlhttp.send();
-		});
-	},
-  	get:function(url){
-		let sockajax=getSocket();
+	load:function(url){
 		let options;
 		let respjson;
 		let objeto;
 		let x,y,valor,indice;
-		let ajaxg=getSocket();
-  		ajaxg.addEventListener("load", transferCompleteGet);
-		ajaxg.addEventListener("error", transferFailedGet);
-		ajaxg.open("GET", url, true);
-
-		return{
-			then: transferCompleteGet(data, callback),
-			catch: transferCompleteGet(e, callback),
+		var params = "action=load";
+		bitget=0;
+		bitpost=0;
+		bitgetjson=0;
+		bitupload=0;
+		bitload=1;
+		if(bitload==1){
+			console.log("BITLOAD=1");
+			ajax_.open("GET", url, false);
+			ajax_.send(null);
+			return this;
+		}
+	},
+  	get:function(url){
+		let options;
+		let respjson;
+		let objeto;
+		let x,y,valor,indice;
+		var params = "action=get";
+		bitget=1;
+		bitpost=0;
+		bitgetjson=0;
+		bitupload=0;
+		bitload=0;
+		if(bitget==1){
+			console.log("BITGET=1");
+			ajax_.open("GET", url, false);
+			ajax_.send(null);
+			return this;
 		}
   	},
   	getJSON:function(url){
-		let sockajax=getSocket();
 		let options;
 		let respjson;
 		let objeto;
 		let x,y,valor,indice;
-		let ajaxg=getSocket();
-  		ajaxg.addEventListener("load", transferCompleteGetJSON);
-		ajaxg.addEventListener("error", transferFailedGetJSON);
-		ajaxg.open("GET", url, true);
-
-		return{
-			then: transferCompleteGetJSON(data,callback),
-			catch: transferFailedGetJSON(e, callback)
+		var params="action=getjson";
+		bitget=0;
+		bitpost=0;
+		bitgetjson=1;
+		bitupload=0;
+		bitload=0;
+		if(bitgetjson==1){
+			console.log("BITJSON=1");
+			ajax_.open("GET", url, false);
+			ajax_.send(null);
+			return this;
 		}
   	},
   	post:function(url,data){
-		let sockajax=getSocket();
 		let options;
 		let respjson;
 		let objeto;
 		let x,y,valor,indice;
-		let ajaxp=getSocket();
 		let formData = new FormData();
-  		ajaxp.addEventListener("load", transferCompletePost);
-		ajaxp.addEventListener("error", transferFailedPost);
-		ajaxp.open("POST", url, true);
+		protocol="post";
+		ajax_.open("POST", url, false);
 		formData.append('data',data);
-		ajaxp.send(formData);
-
-		return{
-			then: transferCompletePost(data, callback),
-			catch: transferFailedPost(e, callback)
-		}
+		ajax_.send(formData);
+		return this;
   	},
   	upload:function(url,data){
-		let sockajax=getSocket();
 		let options;
 		let respjson;
 		let objeto;
-		let x,y,valor,indice;
-		let ajaxp=getSocket();
+		protocol="post";
 		let formData = new FormData();
-  		ajaxp.addEventListener("load", transferCompletePostUpl);
-		ajaxp.addEventListener("error", transferFailedPostUpl);
-		ajaxp.open("POST", url, true);
+		ajax_.open("POST", url, true);
 		formData.append('data',data);
-		ajaxp.send(formData);
-
-		return{
-			then: transferCompletePostUpl(data, callback),
-			catch: transferFailedPostUpl(e, callback)
+		ajax_.send(formData);
+		return this;
+  	},
+	then:function(callback){
+		if(ajax_.readyState==4){
+			if(ajax_.status==200){
+				callback(ajax_.response);
+				return this;
+			}
+			else{
+				errormessage="ERROR DE CONEXION";
+				ajaxapi.catch(errormessage);
+				return this;
+			}
 		}
-  	}
+		return this;
+	},
+	catch:function(e){
+		console.log(e);
+	}
   }
 }(window));
 module.exports=ajaxapi;

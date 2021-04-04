@@ -1102,6 +1102,30 @@ g=(function(global,factory){
 		        }
 		        return this;
 	      	},
+	        dblClick:function(callbackfunc){
+	        	let control;
+	        	control=getelem(domel);
+		        control.ondblclick=function(){
+		        	callbackfunc();
+		        }
+		        return this;
+	      	},
+	        keyup:function(callbackfunc){
+	        	let control;
+	        	control=getelem(domel);
+		        control.onkeyup=function(){
+		        	callbackfunc();
+		        }
+		        return this;
+	      	},
+	        keydown:function(callbackfunc){
+	        	let control;
+	        	control=getelem(domel);
+		        control.onkeydown=function(){
+		        	callbackfunc();
+		        }
+		        return this;
+	      	},
 	      	change:function(callbackfunc){
 		        let control;
 	        	control=getelem(domel);
@@ -1121,7 +1145,7 @@ g=(function(global,factory){
 			not:function(ignomename){
 				let control=getelems(domel + ':not(' + ignomename + ')');
 				if(control!=undefined){
-					return;
+					return this;
 				}
 				return this;
 			},
@@ -2449,6 +2473,7 @@ genrl.extend({ ww });
 genrl.extend({ ws });
 genrl.extend({ storage });
 genrl.extend({ fetchapi });
+genrl.extend({ ajaxapi });
 genrl.extend({ webapi });
 genrl.extend({ ytapi });
 genrl.init();

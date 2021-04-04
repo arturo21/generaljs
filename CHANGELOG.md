@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
  
 ### Added
 - AJAXAPI
-  MINOR changes
+  MINOR changes added UPLOAD and getJSON and LOAD
+  TO have GET, POST, getJSON, UPLOAD
  
 ### Changed
   

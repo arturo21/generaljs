@@ -1,0 +1,174 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Prueba g.js - FETCH</title>
+		<style>
+			figure{
+				padding: 0px;
+				margin: 0px;
+			}
+			#esperandogif{
+				position: relative;
+				display:block;
+				float:none;
+				width:100%;
+				height:auto;
+				text-align:center;
+				padding: 0px;
+				margin: 0px;
+			}
+			#esperandogif img{
+				position: relative;
+				display:block;
+				float:none;
+				width:50px;
+				height:50px;
+				margin:0 auto;
+				padding: 0px;
+				margin: 0px;
+			}
+			#imagenes ul{
+				position:relative;
+				display:block;
+				float:none;
+				list-style: none;
+				width:100%;
+				height:200px;
+				padding: 0px;
+				margin: 0px;
+			}
+			#imagenes ul li{
+				position:relative;
+				display:inline-block;
+				float:left;
+				list-style: none;
+				width:200px;
+				height:200px;
+				padding: 0px;
+				margin: 0px;
+			}
+			#imagenes ul li:hover{
+				cursor:pointer;
+			}
+			#imagenes ul li:hover .overlay{
+				background:rgba(0,0,0,0.7);
+				position:absolute;
+				float:none;
+				display:block;
+				width:100%;
+				height:100%;
+				opacity:0.7;
+				z-index:9999;
+				padding: 0px;
+				margin: 0px;
+			}
+			#imagenes ul li img{
+				position:relative;
+				float:none;
+				display:block;
+				width:100%;
+				height:auto;
+				opacity:0.7;
+				padding: 0px;
+				margin: 0px;
+			}
+			#imagenes ul li:hover img{
+				opacity:1;
+				padding: 0px;
+				margin: 0px;
+			}
+		</style>
+	</head>
+	<body>
+
+		<div id="esperandogif">
+			<img src="832.gif" /><br />
+			<span id="titulo_widget"></span>
+		</div>
+		<div id="imagenes">
+			
+		</div>
+		<form enctype="multipart/form-data">
+		<input id="nombre" name="nombre" type="text"><br>
+		<input id="nombrefile" name="nombrefile" type="file"><br>
+		<input id="nombrebtn" name="nombrebtn" type="button" value="Enviar Nombre">
+		<input id="filebtn" name="filebtn" type="button" value="Enviar Archivo">
+
+		<input id="getbtn" name="getbtn" type="button" value="GET">
+		<input id="getjbtn" name="getjbtn" type="button" value="GETJSON">
+		<input id="loadbtn" name="loadbtn" type="button" value="LOAD">
+		</form>
+		<div id="mensajes">
+			
+		</div>
+		<div id="mensajesa">
+			
+		</div>
+		<div id="mensajesb">
+			
+		</div>
+		<script src="dist/bundle.js"></script>
+		<script>
+			genrl.docready(function(){
+				var usrinstagram="contactoav";
+				var fetchobj=genrl.ajaxapi;
+				var apiajax=genrl.ajaxapi;
+				var apiajax_=genrl.ajaxapi;
+				g("#titulo_widget").text("Esperando Data...");
+				g("#getbtn").click(function(){
+					fetchobj
+					.get("http://localhost/sistemapmod/devtools/dev/general.js/README.md")
+					.then(function(data){
+						console.log("DATA: " + data);
+						g("#titulo_widget").html("RESULTADO:");
+						g("#mensajes").html(data);
+					})
+					.catch(function(e){	
+						console.log("ERROR:" + e);
+					})
+				});
+				g("#getjbtn").click(function(){
+					fetchobj
+					.getJSON("http://localhost/sistemapmod/devtools/dev/general.js/config.json")
+					.then(function(data){
+						console.log("DATA: " + data);
+						g("#titulo_widget").html("RESULTADO:");
+						g("#mensajesb").html(data);
+					})
+					.catch(function(e){	
+						console.log("ERROR:" + e);
+					})
+				});
+				g("#loadbtn").click(function(){
+					fetchobj
+					.load("http://localhost/sistemapmod/devtools/dev/general.js/README.md")
+					.then(function(data){
+						console.log("DATA: " + data);
+						g("#titulo_widget").html("RESULTADO:");
+						g("#mensajesa").html(data);
+					})
+					.catch(function(e){	
+						console.log("ERROR:" + e);
+					})
+				});
+
+				g("#nombrebtn").click(function(){
+					datos=[{
+						'nombre':g('#nombre').val()
+					}]
+					fetchobj
+					.post("/api/v1/genAPIKey",datos)
+					.then(function(data){
+						console.log("DATA: " + data);
+						g("#titulo_widget").html("RESULTADO:");
+						g("#mensajes").html(data);
+					
+					})
+					.catch(function(e){	
+						console.log("ERROR:" + e);
+					})
+				});
+			});
+		</script>
+	</body>
+</html>
