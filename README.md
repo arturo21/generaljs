@@ -60,6 +60,7 @@ g("#btnmover").click(function(){
 ```javascript
 	g("#element").setAttrb("attribRandom","test");
 ```
+
 ## Get element children
 ```javascript
 	g("#element").children();
@@ -71,7 +72,7 @@ g("#btnmover").click(function(){
 ```
 
 ## Get fileList from file input when it changes
-## archivo is a file input
+### archivo is a file input
 ```javascript
 	g('#archivo').change(function(e){
 		console.log("Cambió el campo");
