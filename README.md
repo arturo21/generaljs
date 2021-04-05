@@ -13,7 +13,7 @@ JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworker
 
 ## Log something to JS console
 ```javascript
-	genrl.log("Se ha activado el callBack");
+	genrl.log("Hello World");
 ```
 
 ## How to select a DOMElement By ID
