@@ -70,6 +70,15 @@ g("#btnmover").click(function(){
 	g("#element").child(N);
 ```
 
+## Get fileList from file input when it changes
+## archivo is a file input
+```javascript
+	g('#archivo').change(function(e){
+		console.log("Cambió el campo");
+		dataf=g('#archivo').getFiles();
+	});
+```
+
 ## AJAX Calls
 ### GET + Callback
 ```javascript
