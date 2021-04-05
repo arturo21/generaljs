@@ -116,16 +116,24 @@ g("#btnmover").click(function(){
 		})
 	});
 ```
-## Smooth scrolling
+
+### Asynchronous POST for General.JS 
+#### Client Side
 ```javascript
-	g("#holap").click(function(){
-		g.dom("#holap").smooth("#adiosp",{
-			duration:'10000',
-			offset: 0,
-			callback: function(){
-				g.log("Scroll finalizado");
-			}
-		});
+	g("#namebtn").click(function(){
+		let strdata={'nombre':'arturo'};
+		datos=strdata;
+		fetchobj
+		.post("socketd.php",datos)
+		.then(function(data){
+			console.log("DATA RECIBIDA: ");
+			console.log(data);
+			g("#titulo_widget").html("RESULTADO:");
+			g("#mensajesa").html(data);
+		})
+		.catch(function(e){	
+			console.log("ERROR:" + e);
+		})
 	});
 ```
 
@@ -159,6 +167,19 @@ g("#btnmover").click(function(){
         echo("uploads/".$_FILES['file']['name']);
     }
 ?>
+```
+
+## Smooth scrolling
+```javascript
+	g("#holap").click(function(){
+		g.dom("#holap").smooth("#adiosp",{
+			duration:'10000',
+			offset: 0,
+			callback: function(){
+				g.log("Scroll finalizado");
+			}
+		});
+	});
 ```
 
 ### Asynchronous JS FETCH API
