@@ -179,12 +179,14 @@ g=(function(global,factory){
 		}
 	};
 	function getelem(id){
-		let objeto;
+		let objeto, attrib, filelist;
+		let tag,tagf;
 		if(id!=undefined){
 			if(typeof id==='string'){
-				let pcarac='';
-				pcarac=id.charAt(0);
 				objeto=document.querySelector(id);
+				if(objeto){
+					return objeto;
+				}
 				if(typeof objeto==='object'){
 					return objeto;
 				}
@@ -192,6 +194,32 @@ g=(function(global,factory){
 			else{
 				if(typeof id==='object'){
 					return id;
+				}
+			}
+		}
+	};
+	function getFileList(id,callback){
+		let objeto, attrib, filelist;
+		let tag,tagf;
+		if(id!=undefined){
+			if(typeof id==='string'){
+				objeto=document.querySelector(id);
+				if(objeto){
+					console.log("FILTRO1");
+					tag=objeto.tagName;
+					tagf=tag.toLowerCase();
+					if(tagf=='input'){
+						console.log("FILTRO2");
+						attrib=objeto.getAttribute("type");
+						if(attrib!=null || attrib!=undefined || attrib!=''){
+							console.log("FILTRO2.5 " + attrib);	
+							if(attrib=='file'){
+								console.log("FILTRO3");
+								fileList = objeto.files;
+								callback(fileList);
+							}
+						}
+					}
 				}
 			}
 		}
@@ -334,6 +362,22 @@ g=(function(global,factory){
 				console.log(arguments)
 				return this;
 			},
+			getFiles:function(){
+				let objeto, tag, tagf, attrib;
+				objeto=getelem(domel);
+				tag=objeto.tagName;
+				tagf=tag.toLowerCase();
+				if(tagf=='input'){
+					attrib=objeto.getAttribute("type");
+					if(attrib!=null || attrib!=undefined || attrib!=''){
+						if(attrib==='file'){
+							fileList = objeto.files;
+							return fileList;
+						}
+					}
+				}
+				return this;
+			},
 			hide: function(){
 				let domelement;
 				if(!document.getElementById){
@@ -367,7 +411,7 @@ g=(function(global,factory){
 				let bit;
 				//write code below
 				//define arguments to work with
-				el=document.querySelector(domel);
+				el=getelem(domel);
 				animationStr="";
 				animationName=arguments[0];
 				bit=arguments[1];
@@ -412,7 +456,7 @@ g=(function(global,factory){
 				let found_elements = [];
 				let i;
 				// Find all the outer matched elements
-				let outers = document.querySelectorAll(domel);
+				let outers = getelem(domel);
 				for(i=0;i<outers.length;i++){
 					let elements_in_outer=outers[i].querySelectorAll(selector);
 					// document.querySelectorAll() returns an "array-like" collection of elements
@@ -1455,62 +1499,6 @@ genrl=(function(global,factory){
 			}
 			return typestr;
 		}
-	};
-	function getelem(id){
-		let objeto;
-		if(id!=undefined){
-			if(typeof id==='string'){
-				objeto=document.querySelector(id);
-				if(typeof objeto==='object'){
-					return objeto;
-				}
-			}
-			else{
-				if(typeof id==='object'){
-					return id;
-				}
-			}
-		}
-	};
-	function getelems(tag){
-		let arrtags=[];
-		if(tag!=undefined){
-			arrtags=document.querySelectorAll(tag);
-			return arrtags;
-		}
-		else{
-			return -1;
-		}
-	};
-	function valobj(objval){
-        let valor;
-        let obj;
-        let args;
-        let tovalue;
-        obj=getelem(objval);
-        if(obj.type!='select-one' && obj.type!="file"){
-			valor=obj.value;
-        }
-        else{
-        	if(obj.type=="file"){
-        		valor=obj.files[0];
-        	}
-        	else{
-        		valor=obj.options[obj.selectedIndex].value;
-        	}
-        }
-        return valor;
-   };
-   function setval(objval,value){
-        let valor;
-        let obj;
-        let args;
-        let tovalue;
-        obj=getelem(objval);
-        if(obj.type!='select-one' && obj.type!="file"){
-			obj.value=value;
-        }
-        return 0;
 	};
 	function version(){
 		return "0.0.1";

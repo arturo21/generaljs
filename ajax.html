@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Prueba g.js - FETCH</title>
+		<title>Prueba g.js - ajax api</title>
 		<style>
 			figure{
 				padding: 0px;
@@ -88,15 +88,16 @@
 		<div id="imagenes">
 			
 		</div>
-		<form enctype="multipart/form-data">
+		<form method="post" action="#" enctype="multipart/form-data">
 		<input id="nombre" name="nombre" type="text"><br>
-		<input id="nombrefile" name="nombrefile" type="file"><br>
-		<input id="nombrebtn" name="nombrebtn" type="button" value="Enviar Nombre">
+		<input id="archivo" name="archivo" type="file"><br>
+		<input id="namebtn" name="namebtn" type="button" value="Enviar Nombre">
 		<input id="filebtn" name="filebtn" type="button" value="Enviar Archivo">
 
 		<input id="getbtn" name="getbtn" type="button" value="GET">
 		<input id="getjbtn" name="getjbtn" type="button" value="GETJSON">
 		<input id="loadbtn" name="loadbtn" type="button" value="LOAD">
+		<input id="postbtn" name="postbtn" type="button" value="POST">
 		</form>
 		<div id="mensajes">
 			
@@ -110,10 +111,11 @@
 		<script src="dist/bundle.js"></script>
 		<script>
 			genrl.docready(function(){
-				var usrinstagram="contactoav";
-				var fetchobj=genrl.ajaxapi;
-				var apiajax=genrl.ajaxapi;
-				var apiajax_=genrl.ajaxapi;
+				let usrinstagram="contactoav";
+				let fetchobj=genrl.ajaxapi;
+				let apiajax=genrl.ajaxapi;
+				let apiajax_=genrl.ajaxapi;
+				let archivo, archivof;
 				g("#titulo_widget").text("Esperando Data...");
 				g("#getbtn").click(function(){
 					fetchobj
@@ -151,18 +153,34 @@
 						console.log("ERROR:" + e);
 					})
 				});
-
-				g("#nombrebtn").click(function(){
-					datos=[{
-						'nombre':g('#nombre').val()
-					}]
+				g("#namebtn").click(function(){
+					let strdata={'nombre':'arturo'};
+					datos=strdata;
 					fetchobj
-					.post("/api/v1/genAPIKey",datos)
+					.post("socketd.php",datos)
 					.then(function(data){
-						console.log("DATA: " + data);
+						console.log("DATA RECIBIDA: ");
+						console.log(data);
 						g("#titulo_widget").html("RESULTADO:");
-						g("#mensajes").html(data);
-					
+						g("#mensajesa").html(data);
+					})
+					.catch(function(e){	
+						console.log("ERROR:" + e);
+					})
+				});
+
+				g('#archivo').change(function(e){
+					console.log("Cambió el campo");
+					dataf=g('#archivo').getFiles();
+				});
+				g("#filebtn").click(function(){
+					let fdata = new FormData();
+					fdata.append("file", dataf[0]);
+					fetchobj
+					.upload("uploadfile.php",fdata)
+					.then(function(data){
+						g("#titulo_widget").html("RESULTADO:");
+						g("#mensajesb").html(data);
 					})
 					.catch(function(e){	
 						console.log("ERROR:" + e);

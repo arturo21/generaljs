@@ -50,7 +50,7 @@ return{
 		bitload=1;
 		if(bitload==1){
 			console.log("BITLOAD=1");
-			ajax_.open("GET", url, false);
+			ajax_.open("GET", url, true);
 			ajax_.send(null);
 			return this;
 		}
@@ -68,7 +68,7 @@ return{
 		bitload=0;
 		if(bitget==1){
 			console.log("BITGET=1");
-			ajax_.open("GET", url, false);
+			ajax_.open("GET", url, true);
 			ajax_.send(null);
 			return this;
 		}
@@ -86,7 +86,7 @@ return{
 		bitload=0;
 		if(bitgetjson==1){
 			console.log("BITJSON=1");
-			ajax_.open("GET", url, false);
+			ajax_.open("GET", url, true);
 			ajax_.send(null);
 			return this;
 		}
@@ -96,36 +96,51 @@ return{
 		let respjson;
 		let objeto;
 		let x,y,valor,indice;
-		let formData = new FormData();
 		protocol="post";
-		ajax_.open("POST", url, false);
-		formData.append('data',data);
-		ajax_.send(formData);
+		bitget=0;
+		bitpost=1;
+		bitgetjson=0;
+		bitupload=0;
+		bitload=0;
+		ajax_=getSocket();
+		ajax_.open("POST", url, true);
+		ajax_.response='json';
+		ajax_.send(JSON.stringify(data));
 		return this;
   	},
   	upload:function(url,data){
 		let options;
 		let respjson;
 		let objeto;
+		let x,y,valor,indice;
 		protocol="post";
-		let formData = new FormData();
+		bitget=0;
+		bitpost=0;
+		bitgetjson=0;
+		bitupload=1;
+		bitload=0;
+		ajax_=getSocket();
+		console.log("DATA A ENVIAR UPLOAD: ");		
+		console.log(data);
 		ajax_.open("POST", url, true);
-		formData.append('data',data);
-		ajax_.send(formData);
+		ajax_.response='text';
+		ajax_.send(data);
 		return this;
   	},
 	then:function(callback){
-		if(ajax_.readyState==4){
-			if(ajax_.status==200){
-				callback(ajax_.response);
-				return this;
+		ajax_.onreadystatechange = function(){
+			if(ajax_.readyState==4){
+				if(ajax_.status==200){
+					callback(ajax_.response);
+					return this;
+				}
+				else{
+					errormessage="ERROR DE CONEXION";
+					ajaxapi.catch(errormessage);
+					return this;
+				}
 			}
-			else{
-				errormessage="ERROR DE CONEXION";
-				ajaxapi.catch(errormessage);
-				return this;
-			}
-		}
+		};
 		return this;
 	},
 	catch:function(e){

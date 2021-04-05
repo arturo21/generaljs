@@ -73,43 +73,52 @@ g("#btnmover").click(function(){
 ## AJAX Calls
 ### GET + Callback
 ```javascript
-	genrl.get(
-	{
-		id:"321654"
-	},
-	"socket.php",
-	function(data){
-		g.log("DATA: ");
-		g.log(data.data);
-		g.dom("#ajaxresponse").html("RESPONSE AJAX \n" + data.data);
-	}
-);
+	g("#getbtn").click(function(){
+		fetchobj
+		.get("general.js/README.md")
+		.then(function(data){
+			console.log("DATA: " + data);
+			g("#titulo_widget").html("RESULTADO:");
+			g("#mensajes").html(data);
+		})
+		.catch(function(e){	
+			console.log("ERROR:" + e);
+		})
+	});
 ```
-### POST + Callback
+### GET JSON + Callback
 ```javascript
-	genrl.post(
-	{
-		name:"peter",
-		lastname:"smitth"
-	},
-	"socket.php",
-	function(data){
-		g.log("DATA: ");
-		g.log(data.data);
-		g.dom("#ajaxresponse").html("RESPONSE AJAX \n" + data.data);
-	}
-);
+	g("#getjbtn").click(function(){
+		fetchobj
+		.getJSON("http://localhost/sistemapmod/devtools/dev/general.js/config.json")
+		.then(function(data){
+			console.log("DATA: " + data);
+			g("#titulo_widget").html("RESULTADO:");
+			g("#mensajesb").html(data);
+		})
+		.catch(function(e){	
+			console.log("ERROR:" + e);
+		})
+	});
 ```
 ## Load asinchronous + Callback
 ```javascript
-	g.dom("#cargadiv").load("README.md",function(){
-		g.log("Módulo cargado.");
+	g("#loadbtn").click(function(){
+		fetchobj
+		.load("http://localhost/sistemapmod/devtools/dev/general.js/README.md")
+		.then(function(data){
+			console.log("DATA: " + data);
+			g("#titulo_widget").html("RESULTADO:");
+			g("#mensajesa").html(data);
+		})
+		.catch(function(e){	
+			console.log("ERROR:" + e);
+		})
 	});
-);
 ```
 ## Smooth scrolling
 ```javascript
-	g.dom("#holap").click(function(){
+	g("#holap").click(function(){
 		g.dom("#holap").smooth("#adiosp",{
 			duration:'10000',
 			offset: 0,
@@ -123,31 +132,32 @@ g("#btnmover").click(function(){
 ### Asynchronous Files UPLOAD for General.JS 
 #### Client Side
 ```javascript
-	genrl.upload("#filetoupload",function(data){
-		g.log("*******************data.file*******************");
-		g.log("DATA");
-		g.log(data);
-		g.log("DATA FILE NAME");
-		g.log(data.file);
-		g.log("DATA FILE STATUS");
-		g.log(data.status);
-		g.log("*******************data.file*******************");
-		//////////////////////////////////////////////////
+	g('#archivo').change(function(e){
+		console.log("Cambió el campo");
+		dataf=g('#archivo').getFiles();
+	});
+	g("#filebtn").click(function(){
+		let fdata = new FormData();
+		fdata.append("file", dataf[0]);
+		fetchobj
+		.upload("uploadfile.php",fdata)
+		.then(function(data){
+			g("#titulo_widget").html("RESULTADO:");
+			g("#mensajesb").html(data);
+		})
+		.catch(function(e){	
+			console.log("ERROR:" + e);
+		})
 	});
 ```
 #### Server Side
 ```php
 <?php
-	$JSON    =file_get_contents("php://input");
-	$request =json_decode($JSON);
-	$data=base64_decode($request->data);
-	$fileName=$request->name;
-	$serverFile=time().$fileName;
-	$fp=fopen('uploads/'.$serverFile,'w'); //Prepends timestamp to prevent overwriting
-	fwrite($fp,$data);
-	fclose($fp);
-	$returnData[]=array("file"=>$serverFile);
-	echo(json_encode($returnData));
+	session_start();
+    if (move_uploaded_file($_FILES["file"]["tmp_name"], "uploads/".$_FILES['file']['name'])) {
+        //more code here...
+        echo("uploads/".$_FILES['file']['name']);
+    }
 ?>
 ```
 
