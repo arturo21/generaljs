@@ -83,6 +83,7 @@ g("#btnmover").click(function(){
 ## AJAX Calls
 ### GET + Callback
 ```javascript
+	let fetchobj=genrl.ajaxapi;
 	g("#getbtn").click(function(){
 		fetchobj
 		.get("general.js/README.md")
@@ -98,6 +99,7 @@ g("#btnmover").click(function(){
 ```
 ### GET JSON + Callback
 ```javascript
+	let fetchobj=genrl.ajaxapi;
 	g("#getjbtn").click(function(){
 		fetchobj
 		.getJSON("http://localhost/sistemapmod/devtools/dev/general.js/config.json")
@@ -113,6 +115,7 @@ g("#btnmover").click(function(){
 ```
 ## Load asinchronous + Callback
 ```javascript
+	let fetchobj=genrl.ajaxapi;
 	g("#loadbtn").click(function(){
 		fetchobj
 		.load("http://localhost/sistemapmod/devtools/dev/general.js/README.md")
@@ -130,6 +133,7 @@ g("#btnmover").click(function(){
 ### Asynchronous POST for General.JS 
 #### Client Side
 ```javascript
+	let fetchobj=genrl.ajaxapi;
 	g("#namebtn").click(function(){
 		let strdata={'nombre':'arturo'};
 		datos=strdata;
@@ -150,6 +154,7 @@ g("#btnmover").click(function(){
 ### Asynchronous Files UPLOAD for General.JS 
 #### Client Side
 ```javascript
+	let fetchobj=genrl.ajaxapi;
 	g('#archivo').change(function(e){
 		console.log("Cambió el campo");
 		dataf=g('#archivo').getFiles();
@@ -182,7 +187,7 @@ g("#btnmover").click(function(){
 ## Smooth scrolling
 ```javascript
 	g("#holap").click(function(){
-		g.dom("#holap").smooth("#adiosp",{
+		g("#holap").smooth("#adiosp",{
 			duration:'10000',
 			offset: 0,
 			callback: function(){
