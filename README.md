@@ -71,6 +71,16 @@ g("#btnmover").click(function(){
 	g("#element").child(N);
 ```
 
+## ROUTES
+```javascript
+	genrl.path.map("#/prueba").to(function(){
+		g("#cargadiv").load("README.md",function(){
+			genrl.log("Módulo cargado.");
+		});
+	});
+	genrl.path.listen();
+```
+
 ## Get fileList from file input when it changes
 ### archivo is a file input
 ```javascript
