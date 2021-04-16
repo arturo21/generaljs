@@ -77,19 +77,6 @@ g=(function(global,factory){
 			return result;
 		}
 	};
-	function propAll(proper){
-		let val=''; //busca dentro del objeto y devuelve solo la primera acepcion
-		let array_tags=[];
-		let array_final=[];
-		let i=0;
-		array_tags=getelems(proper);
-		if(array_tags.length>0){
-			for(i=0;i<array_tags.length;i++){
-				array_final[i]=array_tags[i];
-			}
-			return array_final;
-		}
-	};
 	function getScreenCordinates(obj) {
         let p = {};
         p.x = obj.offsetLeft;
@@ -522,7 +509,7 @@ g=(function(global,factory){
 		      	//busca dentro del objeto y devuelve solo la primera acepcion
 				let obj;
 				//Llama a funcion interna prop(domel,prper)
-				obj=prop(domel,property);
+				obj=prop_(domel,property);
 				if(is.isObject(obj)){
 					return obj;
 				}
@@ -1389,7 +1376,7 @@ genrl=(function(global,factory){
 	    }
 		return foundIndex;
 	};
-	function prop(element,proper){
+	function prop_(element,proper){
 		let obj; //busca dentro del objeto y devuelve solo la primera acepcion
 		let val;
 		obj=getelems(element);
@@ -1398,7 +1385,7 @@ genrl=(function(global,factory){
 			return result;
 		}
 	};
-	function propAll(proper){
+	function propAll_(proper){
 		let val=''; //busca dentro del objeto y devuelve solo la primera acepcion
 		let array_tags=[];
 		let array_final=[];
@@ -1594,7 +1581,7 @@ genrl=(function(global,factory){
 		propAll:function(prper){
 	      	//busca dentro del objeto y devuelve solo la primera acepcion
 			let obj;
-			obj=propAll(prper);
+			obj=propAll_(prper);
 			return obj;
 		},
 		extend:function(callback){
