@@ -558,20 +558,31 @@ g=(function(global,factory){
 		      	if(objetois === otherEl){
 					return 0;
 		      	}
+				return this;
 			},
 			prev:function(){
 		      	let objeto;
 		      	let nextsib;
 		      	objetoprev=getelem(domel);
 		      	prevsib=objetoprev.previousElementSibling;
-				return prevsib;
+				if(prevsib){
+					return prevsib;
+				}
+				else{
+					return this;
+				}
 			},
 			next:function(){
 		      	let objeto;
 		      	let nextsib;
 		      	objetonext=getelem(domel);
 		      	nextsib=objetonext.nextElementSibling;
-				return nextsib;
+				if(nextsib){
+					return nextsib;
+				}
+				else{
+					return this;
+				}
 			},
 			remove:function(){
 		      	let objeto;
@@ -591,8 +602,9 @@ g=(function(global,factory){
 		      	objetomat=getelem(domel);
 		      	otroobjetomat=getelem(classElem);
 		      	if(objetomat === otroobjetomat){
-					return this;
+					return 0;
 		      	}
+				return this;
 			},
 			filter:function(filterFn){
 		      	let objetofilter;
@@ -614,7 +626,7 @@ g=(function(global,factory){
 			},
 			not:function(strquery){
 				let objetonot;
-		      	let intquerynot=domel + ":has " + strquery;
+		      	let intquerynot=domel + ":not " + strquery;
 		      	objetonot=getelem(intquerynot);
 		      	if(typeof strquery==='string'){
 		      		if(typeof objetonot==='object'){
