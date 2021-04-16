@@ -624,18 +624,11 @@ g=(function(global,factory){
 		      		}
 		      	}
 			},
-			not:function(strquery){
-				let objetonot;
-		      	let intquerynot=domel + ":not " + strquery;
-		      	objetonot=getelem(intquerynot);
-		      	if(typeof strquery==='string'){
-		      		if(typeof objetonot==='object'){
-		      			return this;
-		      		}
-		      	}
-			},
 			child:function(number){
-				child_(domel,number);
+				if(child_(domel,number)){
+					let childelem=child_(domel,number);
+					return childelem;
+				}
 				return this;
 			},
 			closest:function(strelem){
@@ -805,7 +798,10 @@ g=(function(global,factory){
 		      	//write code below...
 		      	let objcld;
 		      	objcld=getelem(domel);
-				setChildrenAux_(objcld.children);
+				if(objcld.children!=undefined){
+					setChildrenAux_(objcld.children);
+					return objcld.children;
+				}
 				return this;
 			},
 			first:function(){
@@ -814,6 +810,9 @@ g=(function(global,factory){
 		      	let numeqch;
 		      	objfrs=getelem(domel);
 				numeqch=objfrs.children[0];
+				if(numeqch){
+					return numeqch;
+				}
 				return this;
 			},
 			last:function(){
@@ -822,6 +821,9 @@ g=(function(global,factory){
 		      	let numeqch;
 		      	objlst=getelem(domel);
 				numeqch=objlst.slice(-1);
+				if(numeqch){
+					return numeqch;
+				}
 				return this;
 			},
 			index:function(){
@@ -1190,7 +1192,6 @@ g=(function(global,factory){
 				if(control!=undefined){
 					return this;
 				}
-				return this;
 			},
 			bind:function(fn,context){
 				if(typeof fn==='function'){
