@@ -1205,7 +1205,7 @@ g=(function(global,factory){
 					event = new CustomEvent(eventName, options);
 				}
 				else{
-					event = document.createEvent('CustomEvent');
+					event = document.createEvent(eventName);
 					event.initCustomEvent(eventName, true, true, options);
 				}
 				el.dispatchEvent(event);
