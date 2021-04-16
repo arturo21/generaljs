@@ -1116,21 +1116,6 @@ g=(function(global,factory){
 			    }
 			    return this;
 			},
-		    blink: function(status){
-		        let fila;
-		        switch(status){
-		        	case 'on':
-			        	fila=getelem(domel);
-			        	fila.className="blink_div";
-			        	break;
-			        case 'off':
-			        	fila=getelem(domel);
-			        	fila.className="";
-			        	break;
-
-		        }
-		        return this;
-		    },
 			submit:function(callbackfunc){
 	        	let control;
 	        	control=getelem(domel);
