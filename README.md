@@ -6,7 +6,7 @@ JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworker
 
 ## How to init the library
 ```javascript
-	genrl.docready(function(){
+	genrl.run(function(){
 		//write code below
 	});
 ```
