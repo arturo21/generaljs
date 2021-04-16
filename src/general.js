@@ -1555,6 +1555,14 @@ genrl=(function(global,factory){
 		    	document.addEventListener('DOMContentLoaded', fn);
 			}
 		},
+		run: function(fn){
+			if(document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
+				fn();
+			}
+			else{
+		    	document.addEventListener('DOMContentLoaded', fn);
+			}
+		},
 		createScope: function(){
 			//Crear Scope HTML - Javascript DOM
 			scopenom="genrlapp-" + Math.floor(Math.random() * 27);
