@@ -485,6 +485,16 @@ g=(function(global,factory){
 		        objeto.value='';
 		        return this;
 			},
+			prop:function(property){
+		      	//busca dentro del objeto y devuelve solo la primera acepcion
+				let obj;
+				//Llama a funcion interna prop(domel,prper)
+				obj=prop_(domel,property);
+				if(is.isObject(obj)){
+					return obj;
+				}
+				return this;
+			},
 			wrap:function(){
 		      	let objeto;
 		      	let content;
@@ -503,16 +513,6 @@ g=(function(global,factory){
 				elements.forEach(function(element) {
 				    wrapper.append(element);
 				});
-				return this;
-			},
-			prop:function(property){
-		      	//busca dentro del objeto y devuelve solo la primera acepcion
-				let obj;
-				//Llama a funcion interna prop(domel,prper)
-				obj=prop_(domel,property);
-				if(is.isObject(obj)){
-					return obj;
-				}
 				return this;
 			},
 			unwrap:function(docunw){
