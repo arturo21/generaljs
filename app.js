@@ -17,7 +17,7 @@ genrl.docready(function(){
 		];
 	genrl.log("**************prop Function************");
 	//buscar sin ID pero sabiendo la etiqueta
-	//genrl.log(g.dom("html").prop("data-scope"));
+	//genrl.log(g("html").prop("data-scope"));
 	//buscar con ID, sabiendo el atributo
 	genrl.log(genrl.ds("#appdata0").get("scope"));
 	//buscar solo el atributo

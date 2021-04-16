@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2020 Arturo Vasquez Soluciones Web.
+  Copyright (C) 2021 Arturo Vasquez Soluciones Web.
   Todos los derechos reservados.
 
   La redistribución y uso en formatos fuente y binario están permitidas
@@ -1211,7 +1211,7 @@ g=(function(global,factory){
 				el.dispatchEvent(event);
 				return this;
 			},
-			on:function(e){
+			on:function(){
 				let control;
 				let eventoCall;
 				eventoCall=arguments[0];
@@ -1220,7 +1220,7 @@ g=(function(global,factory){
 				control.addEventListener(eventoCall,callback);
 				return this;
 			},
-			one:function(e){
+			one:function(){
 				let control;
 				let eventoCall;
 				eventoCall=arguments[0];
@@ -1231,7 +1231,7 @@ g=(function(global,factory){
 				});
 				return this;
 		    },
-			off:function(e){
+			off:function(){
 				let control;
 				let eventoCall;
 				eventoCall=arguments[0];
@@ -1949,10 +1949,10 @@ genrl=(function(global,factory){
 			}
 			return KeyCode;
 		},
-		getChar: function(event){
+		getChar: function(e){
 	       	let cadena;
 			//bloquear teclado a solo numeros
-			teclan=g.getKey(event);
+			teclan=g.getKey(e);
 			cadena=String.fromCharCode(teclan);
 			return String.fromCharCode(cadena);
 		},
@@ -1974,10 +1974,10 @@ genrl=(function(global,factory){
 			return this;
 		},
 		trim: function(cadena){
-			if (string.trim) {
-				return string.trim();
+			if (cadena.trim) {
+				return cadena.trim();
 			}
-			return string.replace(/^\s+|\s+$/g, '');
+			return cadena.replace(/^\s+|\s+$/g, '');
 		},
 		type: function(objname){
 			//retorna el tipo de objeto
