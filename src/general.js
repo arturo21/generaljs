@@ -1527,12 +1527,6 @@ genrl=(function(global,factory){
 	return{
 		//write code below
 		//aqui van las funciones que no dependen del DOM ni de un control. Que van solas sin atarla a un control HTML
-		print:function(){
-			console.log("Esta es una prueba");
-		},
-		mprint:function(mensaje){
-			console.log(mensaje);
-		},
 		init: function(){
 			this.createScope();
 		},
