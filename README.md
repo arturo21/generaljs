@@ -16,6 +16,21 @@ JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworker
 	genrl.log("Hello World");
 ```
 
+## Warning something to JS console
+```javascript
+	genrl.warn("Hello World");
+```
+
+## Info something to JS console
+```javascript
+	genrl.info("Hello World");
+```
+
+## Error something to JS console
+```javascript
+	genrl.error("Hello World");
+```
+
 ## How to select a DOMElement By ID
 ```javascript
 	g("#element");
@@ -71,7 +86,7 @@ g("#btnmover").click(function(){
 	g("#element").child(N);
 ```
 
-## ROUTES
+## URL ROUTES
 ```javascript
 	genrl.path.map("#/prueba").to(function(){
 		g("#cargadiv").load("README.md",function(){
@@ -93,9 +108,9 @@ g("#btnmover").click(function(){
 ## AJAX Calls
 ### GET + Callback
 ```javascript
-	let fetchobj=genrl.ajaxapi;
+	let ajaxobj=genrl.ajaxapi;
 	g("#getbtn").click(function(){
-		fetchobj
+		ajaxobj
 		.get("general.js/README.md")
 		.then(function(data){
 			console.log("DATA: " + data);
@@ -109,9 +124,9 @@ g("#btnmover").click(function(){
 ```
 ### GET JSON + Callback
 ```javascript
-	let fetchobj=genrl.ajaxapi;
+	let ajaxobj=genrl.ajaxapi;
 	g("#getjbtn").click(function(){
-		fetchobj
+		ajaxobj
 		.getJSON("http://localhost/sistemapmod/devtools/dev/general.js/config.json")
 		.then(function(data){
 			console.log("DATA: " + data);
@@ -125,9 +140,9 @@ g("#btnmover").click(function(){
 ```
 ## Load asinchronous + Callback
 ```javascript
-	let fetchobj=genrl.ajaxapi;
+	let ajaxobj=genrl.ajaxapi;
 	g("#loadbtn").click(function(){
-		fetchobj
+		ajaxobj
 		.load("http://localhost/sistemapmod/devtools/dev/general.js/README.md")
 		.then(function(data){
 			console.log("DATA: " + data);
@@ -143,11 +158,11 @@ g("#btnmover").click(function(){
 ### Asynchronous POST for General.JS 
 #### Client Side
 ```javascript
-	let fetchobj=genrl.ajaxapi;
+	let ajaxobj=genrl.ajaxapi;
 	g("#namebtn").click(function(){
 		let strdata={'nombre':'arturo'};
 		datos=strdata;
-		fetchobj
+		ajaxobj
 		.post("socketd.php",datos)
 		.then(function(data){
 			console.log("DATA RECIBIDA: ");
@@ -164,7 +179,7 @@ g("#btnmover").click(function(){
 ### Asynchronous Files UPLOAD for General.JS 
 #### Client Side
 ```javascript
-	let fetchobj=genrl.ajaxapi;
+	let ajaxobj=genrl.ajaxapi;
 	g('#archivo').change(function(e){
 		console.log("Cambió el campo");
 		dataf=g('#archivo').getFiles();
@@ -172,7 +187,7 @@ g("#btnmover").click(function(){
 	g("#filebtn").click(function(){
 		let fdata = new FormData();
 		fdata.append("file", dataf[0]);
-		fetchobj
+		ajaxobj
 		.upload("uploadfile.php",fdata)
 		.then(function(data){
 			g("#titulo_widget").html("RESULTADO:");
