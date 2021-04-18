@@ -333,21 +333,21 @@ g=(function(global,factory){
 	//...................
 	return function(domel="html"){
 		return{
-			getthis: function(){
-				console.log(this);
-				return 0;
+			getThis: function(){
+				return this;
 			},
-			getel: function(id){
-				return getelem(id);
+			getEl: function(){
+				let element;
+				element=getelem(domel);
+				return element;
 			},
-			getels: function(id){
+			getEls: function(){
 				let arrtags=[];
-				arrtags=getelems(id);
+				arrtags=getelems(domel);
 				return arrtags;
 			},
-			getArgs:function(stylesStr){
-				console.log(arguments)
-				return this;
+			getArgs:function(){
+				return arguments;
 			},
 			getFiles:function(){
 				let objeto, tag, tagf, attrib;
