@@ -74,6 +74,7 @@ ws=(function(){
 						g.log(sockets[w]);
 						retobject.socket=sockets[w].inst;
 						retobject.id=sockets[w].nombre;
+						return sockets[w].nombre;
 						break;
 					}
 				}
@@ -93,6 +94,11 @@ ws=(function(){
 			return 0;
 		},
 		reply:function(nombreid,message,callbackmsg){
+			var w=genrl.ws.get(nombreid);
+			w.socket.addEventListener('message',callbackmsg);
+			callbackmsg();
+		},
+		receive:function(nombreid,callbackmsg){
 			var w=genrl.ws.get(nombreid);
 			w.socket.addEventListener('message',callbackmsg);
 			callbackmsg();
