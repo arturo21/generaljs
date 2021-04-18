@@ -1,6 +1,6 @@
 # general.js
 
-**JS Library to improve your web**
+**JS library to do high performance solutions**
  
 JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworkers / Watch - UnWatch / Crypto / expansible 
 
