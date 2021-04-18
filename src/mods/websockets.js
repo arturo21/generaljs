@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2019 Arturo Vasquez Soluciones Web.
+  Copyright (C) 2021 Arturo Vasquez Soluciones Web.
   Todos los derechos reservados.
 
   La redistribución y uso en formatos fuente y binario están permitidas
