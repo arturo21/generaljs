@@ -264,7 +264,7 @@ g("#btnmover").click(function(){
 	}
 ```
 
-## How to extend the library 1
+## How to extend the library
 ### Creates a new function
 ```javascript
 	genrl.extend({
@@ -279,7 +279,7 @@ g("#btnmover").click(function(){
 	genrl.myfunction(options);
 ```
 
-## How to extend the library (private functions) 2
+## How to extend the library (private functions)
 ### Creates a new function
 ```javascript
 	genrl.fn.extend({
