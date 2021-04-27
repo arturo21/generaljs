@@ -1968,7 +1968,7 @@ genrl=(function(global,factory){
 			}
 			return this;
 		},
-		trim: function(cadena){
+		cadtrim: function(cadena){
 			if (cadena.trim) {
 				return cadena.trim();
 			}
