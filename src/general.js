@@ -1972,7 +1972,9 @@ genrl=(function(global,factory){
 			if (cadena.trim) {
 				return cadena.trim();
 			}
-			return cadena.replace(/^\s+|\s+$/g, '');
+			else{
+				return cadena.replace(/^\s+|\s+$/g, '');
+			}
 		},
 		type: function(objname){
 			//retorna el tipo de objeto
