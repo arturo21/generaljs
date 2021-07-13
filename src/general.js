@@ -228,6 +228,7 @@ g=(function(global,factory){
         let tovalue;
         obj=getelem(objval);
         if(obj.type!='select-one' && obj.type!="file"){
+			console.log("TIPO" + obj.type);
 			if(obj.type=="checkbox"){
 				if(obj.checked==true){
 					valor=true;
