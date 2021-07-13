@@ -91,6 +91,13 @@ g("#btnmover").click(function(){
 	g("#element").child(N);
 ```
 
+## Evaluates a Function
+```javascript
+	genrl.eval(function(){
+		alert("Hola Mundo!");
+	});
+```
+
 ## URL ROUTES
 ```javascript
 	genrl.path.map("#/prueba").to(function(){
