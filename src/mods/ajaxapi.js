@@ -102,10 +102,13 @@ return{
 		bitgetjson=0;
 		bitupload=0;
 		bitload=0;
+		console.log("**DATA**");
+		console.log(data);
+		console.log("**DATA**");
 		ajax_=getSocket();
 		ajax_.open("POST", url, true);
 		ajax_.response='json';
-		ajax_.send(JSON.stringify(data));
+		ajax_.send(data);
 		return this;
   	},
   	upload:function(url,data){
