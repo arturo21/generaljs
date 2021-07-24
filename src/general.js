@@ -344,6 +344,10 @@ g=(function(global,factory){
 	//...................
 	return function(domel="html"){
 		return{
+			extend:function(callback){
+				//extiende las funcionalidades de la librería mediante la función interna extend
+				genrl.fn.extend(g,callback);
+			},
 			getThis: function(){
 				return this;
 			},
