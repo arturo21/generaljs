@@ -291,6 +291,20 @@ g("#btnmover").click(function(){
 	genrl.myfunction(options);
 ```
 
+### Creates a new function
+```javascript
+	g("#MyContent").extend({
+		myfunction:function(options){
+			//write code below
+		});
+	});
+```
+
+### Use new function 
+```javascript
+	g("#MyContent").myfunction(options);
+```
+
 ## How to extend the library (private functions)
 ### Creates a new function
 ```javascript
