@@ -1606,8 +1606,10 @@ genrl=(function(global,factory){
 			//extiende las funcionalidades de la librería mediante la función interna extend
 			genrl.fn.extend(genrl,callback);
 		},
-		create:function(domelement){
-			document.createElement(domelement);
+		create:function(domelement,callback){
+			let elem;
+			elem=document.createElement(domelement);
+			callback(elem);
 			return this;
 		},
 		slice: function(array,start,end,callbackslc){
