@@ -344,10 +344,6 @@ g=(function(global,factory){
 	//...................
 	return function(domel="html"){
 		return{
-			extend:function(callback){
-				//extiende las funcionalidades de la librería mediante la función interna extend
-				genrl.fn.extend(g,callback);
-			},
 			getThis: function(){
 				return this;
 			},
@@ -1282,6 +1278,10 @@ g=(function(global,factory){
 				}
 				return this;
 			},
+			extend:function(callback){
+				//extiende las funcionalidades de la librería mediante la función interna extend
+				genrl.fn.extend(g,callback);
+			},
 			css: function(style){
 				//Hacer callback un argumento opcional
 				let callbackCall;
@@ -1667,44 +1667,44 @@ genrl=(function(global,factory){
 			return this;
 		},
 	    browser: function(){
-				//Detect browser and write the corresponding name
-				if (navigator.userAgent.search("MSIE") >= 0){
-				    glog('"MS Internet Explorer ');
-				    let position = navigator.userAgent.search("MSIE") + 5;
-				    let end = navigator.userAgent.search("; Windows");
-				    let version = navigator.userAgent.substring(position,end);
-				    glog(version + '"');
-				}
-				else if (navigator.userAgent.search("Chrome") >= 0){
-					glog('"Google Chrome ');
-				    let position = navigator.userAgent.search("Chrome") + 7;
-				    let end = navigator.userAgent.search(" Safari");
-				    let version = navigator.userAgent.substring(position,end);
-				    glog(version + '"');
-				}
-				else if (navigator.userAgent.search("Firefox") >= 0){
-				    glog('"Mozilla Firefox ');
-				    let position = navigator.userAgent.search("Firefox") + 8;
-				    let version = navigator.userAgent.substring(position);
-				    glog(version + '"');
-				}
-				else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0){//<< Here
-				    glog('"Apple Safari ');
-				    let position = navigator.userAgent.search("Version") + 8;
-				    let end = navigator.userAgent.search(" Safari");
-				    let version = navigator.userAgent.substring(position,end);
-				    glog(version + '"');
-				}
-				else if (navigator.userAgent.search("Opera") >= 0){
-				    glog('"Opera ');
-				    let position = navigator.userAgent.search("Version") + 8;
-				    let version = navigator.userAgent.substring(position);
-				    glog(version + '"');
-				}
-				else{
-				    glog('"Other"');
-				}
-				return navigator.userAgent;
+			//Detect browser and write the corresponding name
+			if (navigator.userAgent.search("MSIE") >= 0){
+				glog('"MS Internet Explorer ');
+				let position = navigator.userAgent.search("MSIE") + 5;
+				let end = navigator.userAgent.search("; Windows");
+				let version = navigator.userAgent.substring(position,end);
+				glog(version + '"');
+			}
+			else if (navigator.userAgent.search("Chrome") >= 0){
+				glog('"Google Chrome ');
+				let position = navigator.userAgent.search("Chrome") + 7;
+				let end = navigator.userAgent.search(" Safari");
+				let version = navigator.userAgent.substring(position,end);
+				glog(version + '"');
+			}
+			else if (navigator.userAgent.search("Firefox") >= 0){
+				glog('"Mozilla Firefox ');
+				let position = navigator.userAgent.search("Firefox") + 8;
+				let version = navigator.userAgent.substring(position);
+				glog(version + '"');
+			}
+			else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0){//<< Here
+				glog('"Apple Safari ');
+				let position = navigator.userAgent.search("Version") + 8;
+				let end = navigator.userAgent.search(" Safari");
+				let version = navigator.userAgent.substring(position,end);
+				glog(version + '"');
+			}
+			else if (navigator.userAgent.search("Opera") >= 0){
+				glog('"Opera ');
+				let position = navigator.userAgent.search("Version") + 8;
+				let version = navigator.userAgent.substring(position);
+				glog(version + '"');
+			}
+			else{
+				glog('"Other"');
+			}
+			return navigator.userAgent;
 	    },
 	    isArray: function(arr){
 	    	if(Object.prototype.toString.call(arr) === "[object Array]"){
@@ -1758,16 +1758,16 @@ genrl=(function(global,factory){
 		    return encodedString;
 		},
 	    getParam: function(name){
-	            let regexS = "[\\?&]"+name+"=([^&#]*)";
-	            let regex = new RegExp ( regexS );
-	            let tmpURL = window.location.href;
-	            let results = regex.exec( tmpURL );
-	            if(results==null){
-					return"";
-	            }
-	            else{
-	                return results[1];
-	            }
+            let regexS = "[\\?&]"+name+"=([^&#]*)";
+            let regex = new RegExp ( regexS );
+            let tmpURL = window.location.href;
+            let results = regex.exec( tmpURL );
+            if(results==null){
+				return"";
+            }
+            else{
+                return results[1];
+            }
 	    },
 	    utf8_encode: function(argString){
 	      //  discuss at: http://phpjs.org/functions/utf8_encode/
