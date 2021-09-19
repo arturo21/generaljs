@@ -84,19 +84,70 @@
 		</div>
 		<script src="../dist/bundle.js"></script>
 		<script>
-			genrl.docready(function(){
-				var usrinstagram="solucioneswebav";
-				var fetchobj;
-				var objetotexto;
-				var objetoimg;
-				g("#imagenes").child(2).css({
-					"background":"#000",
-					"height":"500px",
-					"width":"500px",
-				});
-				
-				g("#imagenes").getthis();
+		genrl.docready(function(){
+			let fetchobj=genrl.ajaxapi;
+			g("#btnsave").addAttrb("disabled","true");
+			function validateEmail(email) {
+			  const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			  return re.test(email);
+			}
+			g("#emailpassport").on("keyup",function(e){
+				if(validateEmail(g("#emailpassport").val())){
+					email=g("#emailpassport").val();
+					let strdata="{\"email\":\"" + email + "\"}";
+					let datos;
+					datos=strdata;
+					fetchobj
+					.post("/api/credentials/v1/validateEmail",datos)
+					.then(function(data){
+						genrl.log("***DATA EMAIL***");
+						genrl.log("***" + data + "***");						
+						if(data=="OK"){
+							g("#emailpassport").removeClass("is-danger");
+							g("#emailpassport").addClass("is-success");
+							g("#messageemail").removeClass("is-danger");
+							g("#messageemail").addClass("is-success");
+							g("#messageemail").html("This email is valid");
+							g("#btnsave").rmAttrb("disabled");
+						}
+						else{
+							g("#emailpassport").removeClass("is-danger");
+							g("#emailpassport").addClass("is-danger");
+							g("#messageemail").removeClass("is-danger");
+							g("#messageemail").addClass("is-danger");
+							g("#messageemail").html("This email is invalid");
+							g("#btnsave").addAttrb("disabled","true");
+						}
+						genrl.log("***DATA EMAIL***");
+					})
+				}
+				else{
+					g("#emailpassport").removeClass("is-danger");
+					g("#emailpassport").addClass("is-danger");
+					g("#messageemail").removeClass("is-danger");
+					g("#messageemail").addClass("is-danger");
+					g("#messageemail").html("This email is invalid");
+				}
+			}); 
+			g("#btnsave").click(function(){
+				nombre=g("#nompassport").val();
+				apellido=g("#apepassport").val();
+				email=g("#emailpassport").val();
+				numtelef=g("#telephonenum").val();
+				paiscod=g("#countries").val();
+				generou=g("#genero").val();
+				termsandcond=g("#termsandcond").val();
+				let strdata="{\"nombre\":\"" + nombre + "\",\"apellido\":\"" + apellido + "\",\"email\":\"" + email + "\",\"codpais\":\"" + paiscod + "\",\"numtelef\":\"" + numtelef + "\",\"generou\":\"" + generou + "\",\"termandcond\":\"" + termsandcond + "\"}";
+				datos=strdata;
+				fetchobj
+				.post("/api/credentials/v1/saveUser",datos)
+				.then(function(data){
+					console.log("DATA RECIBIDA: ");
+					console.log(data);
+					g("#datarecibida").html(data);
+				})
 			});
+		});
 		</script>
 	</body>
 </html>
