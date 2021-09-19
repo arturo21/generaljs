@@ -1740,11 +1740,11 @@ genrl=(function(global,factory){
 	        	return false;
 	        }
 	    },
-	    rReplace: function(direccion,variable,valor){
+	    lreplace: function(direccion,variable,valor){
 	        location.replace([direccion]+"?"+[variable]+"="+[valor]);
 			return this;
 	    },
-	    rHref: function(direccion,variable,valor){
+	    lhref: function(direccion,variable,valor){
 	        location.href([direccion]+"?"+[variable]+"="+[valor]);
 			return this;
 	    },
