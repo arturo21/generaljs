@@ -635,10 +635,17 @@ g=(function(global,factory){
 		      		}
 		      	}
 			},
-			child:function(number){
+			getChild:function(number){
 				if(child_(domel,number)){
 					let childelem=child_(domel,number);
 					return childelem;
+				}
+				return this;
+			},
+			child:function(number){
+				if(child_(domel,number)){
+					let childelem=child_(domel,number);
+					return this;
 				}
 				return this;
 			},
@@ -1359,6 +1366,7 @@ g=(function(global,factory){
 				if(typeof callbackCall==='function'){
 					callbackCall();
 				}
+				return this;
 			},
 		}
 	}
@@ -1564,9 +1572,10 @@ genrl=(function(global,factory){
 		},
 		createScope: function(){
 			//Crear Scope HTML - Javascript DOM
+			nameapp="appdata"+numapps;
 			scopenom="genrlapp-" + Math.floor(Math.random() * 27);
-			g("html").addAttrb("id","appdata"+numapps);
-			g("html").addAttrb("name","appdata"+numapps);
+			g("html").addAttrb("id",);
+			g("html").addAttrb("name",nameapp);
 			g("html").addAttrb("data-scope",scopenom);
 			g("html").addAttrb("data-gapp",scopenom);
 			let attrbdata=g("html").getAttrb("data-scope");
