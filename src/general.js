@@ -1740,12 +1740,12 @@ genrl=(function(global,factory){
 	        	return false;
 	        }
 	    },
-	    lreplace: function(direccion,variable,valor){
-	        location.replace([direccion]+"?"+[variable]+"="+[valor]);
+	    lreplace: function(direccion){
+	        location.replace(direccion);
 			return this;
 	    },
-	    lhref: function(direccion,variable,valor){
-	        location.href([direccion]+"?"+[variable]+"="+[valor]);
+	    lhref: function(direccion){
+	        location.href(direccion);
 			return this;
 	    },
 	    base64_encode: function(cadena){
