@@ -133,7 +133,7 @@ return{
 					return this;
 				}
 				else{
-					errormessage="ERROR DE CONEXION";
+					errormessage=ajax_.statusText;
 					ajaxapi.catch(errormessage);
 					return this;
 				}
