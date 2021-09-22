@@ -102,9 +102,6 @@ return{
 		bitgetjson=0;
 		bitupload=0;
 		bitload=0;
-		console.log("**DATA**");
-		console.log(data);
-		console.log("**DATA**");
 		ajax_=getSocket();
 		ajax_.open("POST", url, true);
 		ajax_.response='json';
@@ -123,8 +120,6 @@ return{
 		bitupload=1;
 		bitload=0;
 		ajax_=getSocket();
-		console.log("DATA A ENVIAR UPLOAD: ");		
-		console.log(data);
 		ajax_.open("POST", url, true);
 		ajax_.response='text';
 		ajax_.send(data);
