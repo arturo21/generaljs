@@ -20,16 +20,16 @@ storage=(function(){
 	//Submodulo Cookies
 	return{
 		setLocal:function(variable,valorvariable){
-			if (window.localStorage) {
-			  localStorage.setItem(variable, valorvariable);
+			try{
+				window.localStorage.setItem(variable, valorvariable);
 			}
-			else {
-			  throw new Error('Tu navegador no soporta LocalStorage!');
+			catch(e){
+				console.log(e);
 			}
 		},
 		getLocal:function(variable){
 			if (window.localStorage) {
-			  return localStorage.getItem("nombre");
+			  return window.localStorage.getItem(variable);
 			}
 			else {
 			  throw new Error('Tu navegador no soporta LocalStorage!');
@@ -37,7 +37,7 @@ storage=(function(){
 		},
 		rmLocal:function(variable){
 			if (window.localStorage) {
-			  localStorage.removeItem(variable);
+			  window.localStorage.removeItem(variable);
 			}
 			else {
 			  throw new Error('Tu navegador no soporta LocalStorage!');
@@ -45,7 +45,7 @@ storage=(function(){
 		},
 		setSession:function(variable,valorvariable){
 			if (window.sessionStorage) {
-				sessionStorage.setItem(variable, valorvariable);
+				window.sessionStorage.setItem(variable, valorvariable);
 			}
 			else {
 				throw new Error('Tu navegador no soporta SessionStorage!');
@@ -53,7 +53,7 @@ storage=(function(){
 		},
 		getSession:function(variable){
 			if (window.sessionStorage) {
-				sessionStorage.getItem(variable);
+				return window.sessionStorage.getItem(variable);
 			}
 			else {
 				throw new Error('Tu navegador no soporta SessionStorage!');
@@ -61,12 +61,12 @@ storage=(function(){
 		},
 		rmSession:function(variable){
 			if (window.sessionStorage) {
-				sessionStorage.removeItem(variable);
+				window.sessionStorage.removeItem(variable);
 			}
 			else {
 				throw new Error('Tu navegador no soporta SessionStorage!');
 			}
-		},
+		}
 	}
 }());
 module.exports=storage;
