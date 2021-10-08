@@ -541,12 +541,19 @@ g=(function(global,factory){
 		      	let objeto;
 		      	let objetohtml=getelem(domel);
 		      	let args=arguments;
-		      	if(args[0]!=undefined){
-		      		string=args[0];
-		      		objetohtml.innerHTML = string;
-		      		return this;
+		      	if(args[0]!=undefined || args[0]!=null){
+					if(args[0]!=''){
+				  		string=args[0];
+				  		objetohtml.innerHTML = string;
+				  		return this;
+					}
+					else{
+						return objetohtml.innerHTML;
+					}
 		      	}
-				return objeto.innerHTML;
+				else{
+					return objetohtml.innerHTML;					
+				}
 			},
 			text:function(){
 		      	let objeto;

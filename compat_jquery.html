@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Prueba Compat JQuery GeneralJS</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdn.underdevelopment.work/bulma/css/bulma.min.css">
+	<link rel="stylesheet" href="https://cdn.underdevelopment.work/materialicons/material-icons.css">
+  </head>
+  <body>
+	<div id="hola">
+		hola
+	</div>
+	<div id="result">
+		holaadios
+	</div>	
+	<script src="https://cdn.underdevelopment.work/generaljs/general.min.js"></script>
+
+	<script>
+		genrl.run(function(){
+			genrl.log(g("#hola").html());
+			g("#result").html(g("#hola").html());
+		});
+	</script>
+  </body>
+</html>
