@@ -1628,6 +1628,11 @@ genrl=(function(global,factory){
 			callback(elem);
 			return this;
 		},
+		getCreate:function(domelement){
+			let elem;
+			elem=document.createElement(domelement);
+			return elem;
+		},
 		slice: function(array,start,end,callbackslc){
 			if(array.isArray()){
 				callbackslc(array.slice(start, end));
