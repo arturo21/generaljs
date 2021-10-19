@@ -603,9 +603,8 @@ g=(function(global,factory){
 				}
 			},
 			remove:function(){
-		      	let objeto;
-		      	objetorm=getelem(domel);
-		      	objetorm.parentNode.removeChild(objeto);
+				let elem = document.getElementById(domel);
+				elem.parentNode.removeChild(elem);
 		      	return this;
 			},
 			replaceWith:function(string){
