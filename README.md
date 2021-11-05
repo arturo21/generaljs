@@ -32,26 +32,6 @@ JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworker
 	});
 ```
 
-## Log something to JS console
-```javascript
-	genrl.log("Hello World");
-```
-
-## Warning something to JS console
-```javascript
-	genrl.warn("Hello World");
-```
-
-## Info something to JS console
-```javascript
-	genrl.info("Hello World");
-```
-
-## Error something to JS console
-```javascript
-	genrl.error("Hello World");
-```
-
 ## How to select a DOMElement By ID
 ```javascript
 	g("#element");
@@ -334,6 +314,26 @@ g("#btnmover").click(function(){
 ### Use new function 
 ```javascript
 	genrl.fn.myfunction(options);
+```
+
+## Log something to JS console
+```javascript
+	genrl.log("Hello World");
+```
+
+## Warning something to JS console
+```javascript
+	genrl.warn("Hello World");
+```
+
+## Info something to JS console
+```javascript
+	genrl.info("Hello World");
+```
+
+## Error something to JS console
+```javascript
+	genrl.error("Hello World");
 ```
 
 Use the Source...
