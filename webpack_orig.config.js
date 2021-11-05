@@ -67,7 +67,7 @@ var config = module.exports = {
 			},
 		    { 
 			  test: /\.js$/,
-		      exclude: /(node_modules|bower_components|src)/,
+		      exclude: /(node_modules|bower_components)/,
 		      include: __dirname + "/mods/",
 		      loader: 'babel-loader', // 'babel-loader' is also a valid name to reference
 		      query: {

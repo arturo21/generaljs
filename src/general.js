@@ -1588,6 +1588,21 @@ genrl=(function(global,factory){
 			let model = new datab.Model(scopenom);
 			numapps++;
 		},
+		encodeuri: function(url){
+			let URItoenc = url;
+			let uriencoded="";
+			let aux=Array();
+			aux=URItoenc.split(" ");
+			for(i=0;i<aux.length;i++){
+				if(i>0){
+					uriencoded+='+' + aux[i]
+				}
+				else{
+					uriencoded+= aux[i]
+				}
+			}
+			return uriencoded;
+		},		
 		log: function(msg){
 			console.log(msg);
 			return this;
@@ -1756,7 +1771,7 @@ genrl=(function(global,factory){
 			return this;
 	    },
 	    lhref: function(direccion){
-	        location.href(direccion);
+	        location.href=direccion;
 			return this;
 	    },
 	    base64_encode: function(cadena){
