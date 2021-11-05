@@ -16,6 +16,22 @@ JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworker
 	});
 ```
 
+## Create a Web Component
+```javascript
+	genrl.run(function(){
+		component=genrl.components;
+		component.create({
+			name:"my-tag",
+			id:"my-tag",
+			template:"<div>EDITOR</div>",
+			observable:['saludo'],
+			callbackfnc:function(e){
+				genrl.log(e);
+			}
+		})
+	});
+```
+
 ## Log something to JS console
 ```javascript
 	genrl.log("Hello World");
