@@ -32,6 +32,11 @@ JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworker
 	});
 ```
 
+### Call tag created
+```html
+	<my-tag></my-tag>
+```
+
 ## How to select a DOMElement By ID
 ```javascript
 	g("#element");
