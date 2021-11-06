@@ -16,51 +16,12 @@
 */
 /*función - módulo interno components*/
 /************************************************/
-var config=[{}];
-var objectfinal=[{}];
-var coleccion=[{}];
-var componentes=[{}];
-var componentshad;
-class Component extends HTMLElement {
-  constructor() {
-    super();
-    // element created
-  }
+let config=[{}];
+let aux;
+let splitaux;
+let newcomponent;
+let Component;
 
-  connectedCallback() {
-    // browser calls this method when the element is added to the document
-    // (can be called many times if an element is repeatedly added/removed)
-	this.id=config.id;
-	this.name=config.id;
-	this.innerHTML=config.template;
-	const shadowRoot = this.attachShadow({mode: 'open'});
-	shadowRoot.innerHTML =config.template;
-	if(typeof config.callbackfnc==='function'){
-		config.callbackfnc(this.innerHTML);
-	}
-  }
-
-  disconnectedCallback() {
-    // browser calls this method when the element is removed from the document
-    // (can be called many times if an element is repeatedly added/removed)
-  }
-
-  static get observedAttributes() {
-    return config.observable;
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    // called when one of attributes listed above is modified
-    this.connectedCallback();
-  }
-
-  adoptedCallback() {
-    // called when the element is moved to a new document
-    // (happens in document.adoptNode, very rarely used)
-  }
-
-  // there can be other element methods and properties
-}
 components=(function(){
 	//Submodulo Components
 	return{
@@ -68,14 +29,35 @@ components=(function(){
 			//name
 			//id
 			//template
+			//Class (class debe estar afuera)
 			//defaults.observable
-			if(defaults.name!='' && defaults.id!='' && defaults.template!='' && defaults.callbackfnc!=''){
-				config=defaults;
-				window.customElements.define(config.name, Component);
-				componentes.push(config);
-			}
-			else{
-				genrl.log("Faltan datos");
+			config=defaults;
+			window.customElements.define(config.name, Component);
+			if(config.class!=''){
+				Component=config.class;
+				if(config.name!='' && config.id!='' && config.template!='' && config.callbackfnc!=''){
+					if(config.type=='external'){
+						aux=config.template;
+						splitaux=aux.split(".");
+						if(splitaux[(splitaux.length-1)]=="html"){
+							let fetchapi=genrl.ajaxapi;
+							fetchapi
+							.get(config.template)
+							.then(function(data){
+								config.template=data;
+								window.customElements.define(config.name, newcomponent);
+								newcomponent= new Component();
+							})
+							.catch(function(e){	
+								console.log("ERROR:" + e);
+							})
+						}
+					}
+					if(config.type=='embeded'){
+						window.customElements.define(config.name, newcomponent);
+						newcomponent= new Component();
+					}
+				}
 			}
 		}
 	}

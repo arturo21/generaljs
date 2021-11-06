@@ -18,11 +18,53 @@ JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworker
 
 ## Create a Web Component
 ```javascript
+	class Component extends HTMLElement {
+	  constructor() {
+		super();
+		//element created
+		this.contador=0;
+		this.active=0;
+	  }
+	  connectedCallback() {
+		// browser calls this method when the element is added to the document
+		// (can be called many times if an element is repeatedly added/removed)
+		this.id=config.id;
+		this.name=config.id;
+		this.innerHTML=config.template;	
+		const shadowRoot = this.attachShadow({mode: 'open'});
+		shadowRoot.innerHTML =config.template;
+		if(typeof config.callbackfnc==='function'){
+			config.callbackfnc(this.innerHTML);
+		}
+	  }
+
+	  disconnectedCallback() {
+		// browser calls this method when the element is removed from the document
+		// (can be called many times if an element is repeatedly added/removed)
+	  }
+
+	  static get observedAttributes() {
+		return config.observable;
+	  }
+
+	  attributeChangedCallback(name, oldValue, newValue) {
+		// called when one of attributes listed above is modified
+		this.connectedCallback();
+	  }
+
+	  adoptedCallback() {
+		// called when the element is moved to a new document
+		// (happens in document.adoptNode, very rarely used)
+	  }
+
+	  // there can be other element methods and properties
+	};
 	genrl.run(function(){
 		component=genrl.components;
 		component.create({
 			name:"my-tag",
 			id:"my-tag",
+			class:Component,
 			template:"<div>EDITOR</div>",
 			observable:['saludo'],
 			callbackfnc:function(e){

@@ -7,6 +7,7 @@
 		<div id="player_out"></div>
 		<div id="algo"></div>
 		<my-tag></my-tag>
+		<another-tag></another-tag>
 		aqui va a cargar el módulo en cuestion
 		<script src="../dist/general.min.js"></script>
 		<script>
@@ -15,12 +16,23 @@
 				component.create({
 					name:"my-tag",
 					id:"my-tag",
-					template:"<div>EDITOR</div>",
+					type:"external",
+					template:"index.html",
 					observable:['saludo'],
 					callbackfnc:function(e){
 						//genrl.log(e);
 					}
-				})
+				});
+				component.create({
+					name:"an-other-tag",
+					id:"an-other-tag",
+					type:"embeded",
+					template:"<p>HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</p>",
+					observable:['saludo'],
+					callbackfnc:function(e){
+						//genrl.log(e);
+					}
+				});
 			});
 		</script>
 	</body>
