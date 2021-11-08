@@ -25,40 +25,8 @@ let Component;
 components=(function(){
 	//Submodulo Components
 	return{
-		create:function(defaults){
-			//name
-			//id
-			//template
-			//Class (class debe estar afuera)
-			//defaults.observable
-			config=defaults;
-			window.customElements.define(config.name, Component);
-			if(config.class!=''){
-				Component=config.class;
-				if(config.name!='' && config.id!='' && config.template!='' && config.callbackfnc!=''){
-					if(config.type=='external'){
-						aux=config.template;
-						splitaux=aux.split(".");
-						if(splitaux[(splitaux.length-1)]=="html"){
-							let fetchapi=genrl.ajaxapi;
-							fetchapi
-							.get(config.template)
-							.then(function(data){
-								config.template=data;
-								window.customElements.define(config.name, newcomponent);
-								newcomponent= new Component();
-							})
-							.catch(function(e){	
-								console.log("ERROR:" + e);
-							})
-						}
-					}
-					if(config.type=='embeded'){
-						window.customElements.define(config.name, newcomponent);
-						newcomponent= new Component();
-					}
-				}
-			}
+		register:function(defaults){
+			window.customElements.define(defaults.tag, defaults.webcomp);
 		}
 	}
 }(window));

@@ -18,65 +18,49 @@ JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworker
 
 ## Create a Web Component
 ```javascript
-	class Component extends HTMLElement {
-	  constructor() {
-		super();
-		//element created
-		this.contador=0;
-		this.active=0;
-	  }
-	  connectedCallback() {
-		// browser calls this method when the element is added to the document
-		// (can be called many times if an element is repeatedly added/removed)
-		this.id=config.id;
-		this.name=config.id;
-		this.innerHTML=config.template;	
-		const shadowRoot = this.attachShadow({mode: 'open'});
-		shadowRoot.innerHTML =config.template;
-		if(typeof config.callbackfnc==='function'){
-			config.callbackfnc(this.innerHTML);
-		}
-	  }
-
-	  disconnectedCallback() {
-		// browser calls this method when the element is removed from the document
-		// (can be called many times if an element is repeatedly added/removed)
-	  }
-
-	  static get observedAttributes() {
-		return config.observable;
-	  }
-
-	  attributeChangedCallback(name, oldValue, newValue) {
-		// called when one of attributes listed above is modified
-		this.connectedCallback();
-	  }
-
-	  adoptedCallback() {
-		// called when the element is moved to a new document
-		// (happens in document.adoptNode, very rarely used)
-	  }
-
-	  // there can be other element methods and properties
-	};
-	genrl.run(function(){
+	let template = genrl.getCreate('template');
+	let fetchapi=genrl.ajaxapi;
+	fetchapi
+	.get("template.html")
+	.then(function(data){
 		component=genrl.components;
-		component.create({
-			name:"my-tag",
-			id:"my-tag",
-			class:Component,
-			template:"<div>EDITOR</div>",
-			observable:['saludo'],
-			callbackfnc:function(e){
-				genrl.log(e);
+		template.innerHTML=data;
+		class MyCounter extends HTMLElement {
+			constructor() {
+				super();
+				this.count = 0;
+				this.attachShadow({ mode: 'open' });
 			}
-		})
-	});
+			connectedCallback() {
+				this.shadowRoot.appendChild(template.content.cloneNode(true));
+				this.shadowRoot.getElementById('inc').onclick = () => this.inc();
+				this.shadowRoot.getElementById('dec').onclick = () => this.dec();
+				this.update(this.count);
+			}
+			inc() {
+				this.update(++this.count);
+			}
+			dec() {
+				this.update(--this.count);
+			}
+			update(count) {
+				this.shadowRoot.getElementById('count').innerHTML = count;
+			}
+		}
+
+		component.register({
+			tag:"my-counter",
+			webcomp: MyCounter
+		});
+	})
+	.catch(function(e){	
+		console.log("ERROR:" + e);
+	})
 ```
 
 ### Call tag created
 ```html
-	<my-tag></my-tag>
+	<my-counter></my-counter>
 ```
 
 ## How to select a DOMElement By ID

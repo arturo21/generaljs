@@ -27,7 +27,7 @@ let ws=require("./mods/websockets.js");
 let storage=require("./mods/cookies.js");
 let webapi=require("./mods/webapi.js");
 let ytapi=require("./mods/ytapi.js");
-let datab=require("./mods/data-bind.lite.min.js");
+let scope=require("./mods/data-bind.lite.min.js");
 let is=require("./mods/is.min.js");
 let watchjs = require("./mods/watch.min.js");
 let components = require("./mods/components.js");
@@ -37,7 +37,7 @@ let callWatchers = watchjs.callWatchers;
 let numapps=0;
 let elementactive="html";
 let varsint=[{}];
-let scope=[{}];
+let gscop;
 
 g=(function(global,factory){
 	this.elemaux='';
@@ -1586,7 +1586,7 @@ genrl=(function(global,factory){
 			g("html").addAttrb("data-scope",scopenom);
 			g("html").addAttrb("data-gapp",scopenom);
 			let attrbdata=g("html").getAttrb("data-scope");
-			let model = new datab.Model(scopenom);
+			gscop=new scope.Model(scopenom);
 			numapps++;
 		},
 		encodeuri: function(url){
@@ -2520,5 +2520,6 @@ genrl.extend({ ajaxapi });
 genrl.extend({ webapi });
 genrl.extend({ ytapi });
 genrl.extend({ components });
+genrl.extend({ gscop });
 genrl.init();
 module.exports=g;
