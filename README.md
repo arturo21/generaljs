@@ -46,7 +46,7 @@ JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworker
 	});
 ```
 
-### Call tag created
+### Call Web Component created
 ```html
 	<my-counter></my-counter>
 ```
