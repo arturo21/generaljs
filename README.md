@@ -154,7 +154,7 @@ g("#btnmover").click(function(){
 	let ajaxobj=genrl.ajaxapi;
 	g("#getjbtn").click(function(){
 		ajaxobj
-		.getJSON("http://localhost/sistemapmod/devtools/dev/general.js/config.json")
+		.getJSON("http://localhost/general.js/config.json")
 		.then(function(data){
 			console.log("DATA: " + data);
 			g("#titulo_widget").html("RESULTADO:");
@@ -170,7 +170,7 @@ g("#btnmover").click(function(){
 	let ajaxobj=genrl.ajaxapi;
 	g("#loadbtn").click(function(){
 		ajaxobj
-		.load("http://localhost/sistemapmod/devtools/dev/general.js/README.md")
+		.load("http://localhost/general.js/README.md")
 		.then(function(data){
 			console.log("DATA: " + data);
 			g("#titulo_widget").html("RESULTADO:");
