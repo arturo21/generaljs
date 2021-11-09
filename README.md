@@ -18,13 +18,8 @@ JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworker
 
 ## Create a Web Component
 ```javascript
-	let template = genrl.getCreate('template');
-	let fetchapi=genrl.ajaxapi;
-	fetchapi
-	.get("template.html")
-	.then(function(data){
-		component=genrl.components;
-		template.innerHTML=data;
+	component=genrl.components;
+	component.addcomponent("my-counter","template.html", function(template,data){
 		class MyCounter extends HTMLElement {
 			constructor() {
 				super();
@@ -47,15 +42,8 @@ JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworker
 				this.shadowRoot.getElementById('count').innerHTML = count;
 			}
 		}
-
-		component.register({
-			tag:"my-counter",
-			webcomp: MyCounter
-		});
-	})
-	.catch(function(e){	
-		console.log("ERROR:" + e);
-	})
+		component.register("my-counter",MyCounter);
+	});
 ```
 
 ### Call tag created

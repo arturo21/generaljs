@@ -25,9 +25,24 @@ let Component;
 components=(function(){
 	//Submodulo Components
 	return{
-		register:function(defaults){
-			window.customElements.define(defaults.tag, defaults.webcomp);
-		}
+		register:function(tag, webcomp){
+			window.customElements.define(tag, webcomp);
+		},
+		addcomponent:function(tag,templateJSX,callback){
+			let template = genrl.getCreate('template');
+			let fetchapi=genrl.ajaxapi;
+			fetchapi
+			.get(templateJSX)
+			.then(function(data){
+				template.innerHTML=data;
+				if(typeof callback==="function"){
+					callback(template, data);
+				}
+			})
+			.catch(function(e){	
+				console.log("ERROR:" + e);
+			})
+		},
 	}
 }(window));
 module.exports=components;

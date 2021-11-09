@@ -71,7 +71,7 @@ var config = module.exports = {
 		      include: __dirname + "/mods/",
 		      loader: 'babel-loader', // 'babel-loader' is also a valid name to reference
 		      query: {
-		        presets: ['es2015']
+		        presets: ['es2015',["babel-preset-primavera", ["@babel/preset-react", { "pragma": "dom" }]]]
 		      }
 		    }
 		]

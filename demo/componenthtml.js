@@ -16,13 +16,8 @@
 */
 /* Web Component*/
 /************************************************/
-	let template = genrl.getCreate('template');
-	let fetchapi=genrl.ajaxapi;
-	fetchapi
-	.get("template.html")
-	.then(function(data){
-		component=genrl.components;
-		template.innerHTML=data;
+	component=genrl.components;
+	component.addcomponent("my-counter","template.html", function(template,data){
 		class MyCounter extends HTMLElement {
 			constructor() {
 				super();
@@ -45,12 +40,5 @@
 				this.shadowRoot.getElementById('count').innerHTML = count;
 			}
 		}
-
-		component.register({
-			tag:"my-counter",
-			webcomp: MyCounter
-		});
-	})
-	.catch(function(e){	
-		console.log("ERROR:" + e);
-	})
+		component.register("my-counter",MyCounter);
+	});

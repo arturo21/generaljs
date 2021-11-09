@@ -19,6 +19,7 @@
 require("./requestAnimationFrame.js");
 require("./css/animate.css");
 /*************************************************/
+require("jsx-render");
 let cripto=require("./mods/gcrypto.js");
 let fetchapi=require("./mods/fetchapi.js");
 let ajaxapi=require("./mods/ajaxapi.js");
@@ -1581,7 +1582,7 @@ genrl=(function(global,factory){
 			//Crear Scope HTML - Javascript DOM
 			nameapp="appdata"+numapps;
 			scopenom="genrlapp-" + Math.floor(Math.random() * 27);
-			g("html").addAttrb("id",);
+			g("html").addAttrb("id",nameapp);
 			g("html").addAttrb("name",nameapp);
 			g("html").addAttrb("data-scope",scopenom);
 			g("html").addAttrb("data-gapp",scopenom);
