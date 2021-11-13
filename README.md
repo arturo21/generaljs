@@ -253,7 +253,7 @@ g("#btnmover").click(function(){
 ```javascript
 	genrl.log("*****FETCH API*****");
 	var fapi=genrl.fetchapi.getFetch();
-	if(fetchapi){
+	if(fapi){
 		g.log("FETCH API ha sido cargada exitosamente!");
 		g.log("***************************************");
 		var dataSrc={};
@@ -262,7 +262,7 @@ g("#btnmover").click(function(){
 			name:"arturo",
 			lastname:"vasquez"
 		}
-		genrl.fetchapi.post(
+		fapi.post(
 			"socket_fetch.php",
 			dataSrc,
 			function(data){
@@ -270,7 +270,7 @@ g("#btnmover").click(function(){
 				genrl.log(data);
 			}
 		);
-		genrl.fetchapi.get(
+		fapi.get(
 			"example.json",
 			function(data){
 				var datappal;
