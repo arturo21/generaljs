@@ -5,7 +5,14 @@
 	</head>
 	<body>
 		<my-counter></my-counter>
+		<div id="hola"></div>
 		<script src="../dist/general.min.js"></script>
 		<script src="componenthtml.js"></script>
+		<script>
+			genrl.run(function(){
+				scope=genrl.gscop;
+				scope.get("hola");
+			});
+		</script>
 	</body>
 </html>

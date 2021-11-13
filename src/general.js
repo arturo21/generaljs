@@ -38,7 +38,9 @@ let callWatchers = watchjs.callWatchers;
 let numapps=0;
 let elementactive="html";
 let varsint=[{}];
-let gscop;
+let nameapp="appdata"+numapps;
+let scopenom="genrlapp-" + Math.floor(Math.random() * 27);
+let gscop=new scope.Model(scopenom);
 
 g=(function(global,factory){
 	this.elemaux='';
@@ -1580,14 +1582,11 @@ genrl=(function(global,factory){
 		},
 		createScope: function(){
 			//Crear Scope HTML - Javascript DOM
-			nameapp="appdata"+numapps;
-			scopenom="genrlapp-" + Math.floor(Math.random() * 27);
 			g("html").addAttrb("id",nameapp);
 			g("html").addAttrb("name",nameapp);
 			g("html").addAttrb("data-scope",scopenom);
 			g("html").addAttrb("data-gapp",scopenom);
 			let attrbdata=g("html").getAttrb("data-scope");
-			gscop=new scope.Model(scopenom);
 			numapps++;
 		},
 		encodeuri: function(url){
@@ -2466,7 +2465,7 @@ genrl.__proto__.ds=function(iddataset){
 					Object.defineProperty(obj.dataset, nomvar, "data-variable");
 				}
   		},
-  		remove:function(nomvar){
+  		rm:function(nomvar){
   			idfinal="data-" + nomvar;
   			g(iddataset).rmAttrb(idfinal);
   		},
@@ -2480,7 +2479,7 @@ genrl.__proto__.isReady=function(){
 		return 0;
 	}
 }
-genrl.__proto__.isEmpty=function(string){
+genrl.__proto__.empty=function(string){
 	if(typeof string==='string'){
 		if(string.replace(/\s/g,"")==""){
 			return;
