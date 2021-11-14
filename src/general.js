@@ -804,7 +804,7 @@ g=(function(global,factory){
 		      	let objappe;
 		      	let elChild = document.createElement('div');
 				objappe=getelem(domel);
-				elChild.innerHTML=html;
+				elChild.append(html);
 				objappe.appendChild(elChild);
 				return this;
 			},
@@ -820,7 +820,7 @@ g=(function(global,factory){
 		      	let objclo;
 		      	objclo=getelem(domel);
 		      	objclo.cloneNode(true);
-		      	return this;
+		      	return objclo;
 			},
 			children:function(){
 		      	//write code below...
@@ -1253,6 +1253,10 @@ g=(function(global,factory){
 				control.removeEventListener(eventoCall,callback);
 				return this;
 			},
+			extend:function(callback){
+				//extiende las funcionalidades de la librería mediante la función interna extend
+				genrl.fn.extend(g,callback);
+			},
 			get: function(stylesStr){
 				let result;
 				let aux,i;
@@ -1295,10 +1299,6 @@ g=(function(global,factory){
 				}
 				return this;
 			},
-			extend:function(callback){
-				//extiende las funcionalidades de la librería mediante la función interna extend
-				genrl.fn.extend(g,callback);
-			},
 			css: function(style){
 				//Hacer callback un argumento opcional
 				let callbackCall;
@@ -1317,11 +1317,9 @@ g=(function(global,factory){
 				//Identificar que el callback es uuna finción
 				if(typeof arguments[1]==='function'){
 					callbackCall=arguments[1];
-					genrl.log("ES UNA FUNCION");
 				}
 				if(debugvar_(valaux)){
 					domelint=valaux;
-					genrl.log(domelint);
 				}
 				else{
 					if(debugvar_(valchildren)){
@@ -1336,8 +1334,18 @@ g=(function(global,factory){
 				if(typeof style==='object'){
 					genrl.log("ES UN OBJETO");
 					if(Array.isArray(domelint)){
+						genrl.log("ES UN OBJETO DENTRO");
 						if(style.length==undefined){
 							genrl.log("CONFIRMADO OBJETO");
+							genrl.log(style);
+							try{
+								g(domel).set(style);
+								return this;
+							}
+							catch(e){
+								genrl.log("ERROR TRY CATCH 1");
+								genrl.log(e);
+							}
 						}
 						else{
 							genrl.log("CONFIRMADO ARRAY");
@@ -2481,10 +2489,13 @@ genrl.__proto__.isReady=function(){
 }
 genrl.__proto__.empty=function(string){
 	if(typeof string==='string'){
-		if(string.replace(/\s/g,"")==""){
+		console.log(string);
+		if(string==""){
+			console.log(string);
 			return;
 		}
 		else{
+			console.log("ERROR");
 			return -2;
 		}
 	}
