@@ -196,16 +196,12 @@ g=(function(global,factory){
 			if(typeof id==='string'){
 				objeto=document.querySelector(id);
 				if(objeto){
-					console.log("FILTRO1");
 					tag=objeto.tagName;
 					tagf=tag.toLowerCase();
 					if(tagf=='input'){
-						console.log("FILTRO2");
 						attrib=objeto.getAttribute("type");
 						if(attrib!=null || attrib!=undefined || attrib!=''){
-							console.log("FILTRO2.5 " + attrib);	
 							if(attrib=='file'){
-								console.log("FILTRO3");
 								fileList = objeto.files;
 								callback(fileList);
 							}
@@ -232,7 +228,6 @@ g=(function(global,factory){
         let tovalue;
         obj=getelem(objval);
         if(obj.type!='select-one' && obj.type!="file"){
-			console.log("TIPO" + obj.type);
 			if(obj.type=="checkbox"){
 				if(obj.checked==true){
 					valor=true;
@@ -312,7 +307,6 @@ g=(function(global,factory){
 		return 0;
 	};
 	function getValAux_(){
-		console.log("ELEMAUX +" + this.elemaux);
 		return this.elemaux;
 	};
 	function emptyValAux_(){
@@ -324,7 +318,6 @@ g=(function(global,factory){
 		return 0;
 	};
 	function getChildrenAux_(){
-		console.log("CHILDRENAUX +" + this.childrenaux);
 		return this.childrenaux;
 	};
 	function emptyChildrenAux_(){
@@ -336,7 +329,6 @@ g=(function(global,factory){
 		return 0;
 	};
 	function getParentAux_(){
-		console.log("PARENTAUX +" + this.parentaux);
 		return this.parentaux;
 	};
 	function emptyParentAux_(){
@@ -428,7 +420,6 @@ g=(function(global,factory){
 				animpreffix=getAnimationEvent();
 				el.addEventListener(animpreffix,function(){
 					if(infiniteBool==true){
-						glog("INFINITO");
 						el.classList.remove('infinite');
 					}
 					el.classList.remove(animationName);
@@ -445,7 +436,6 @@ g=(function(global,factory){
 				el.classList.add('animated');
 				el.classList.add(animationName);
 				if(infiniteBool==true){
-					glog("INFINITO");
 					el.classList.add('infinite');
 				}
 				else{
@@ -468,7 +458,6 @@ g=(function(global,factory){
 				}
 				// The final 4 elements
 				if(found_elements.length>0){
-					glog(found_elements);
 					callbackfind(found_elements);
 				}
 				return this;
@@ -874,7 +863,10 @@ g=(function(global,factory){
 			},
 			addClass:function(classele){
 		      	//write code below...
-		      	let obj;let stringclass;let stringarr;let i;
+		      	let obj;
+				let stringclass;
+				let stringarr;
+				let i;
 				stringclass="";
 				stringclass=classele;
 		      	obj=getelem(domel);
@@ -1332,24 +1324,18 @@ g=(function(global,factory){
 					}
 				}
 				if(typeof style==='object'){
-					genrl.log("ES UN OBJETO");
 					if(Array.isArray(domelint)){
-						genrl.log("ES UN OBJETO DENTRO");
 						if(style.length==undefined){
-							genrl.log("CONFIRMADO OBJETO");
 							genrl.log(style);
 							try{
 								g(domel).set(style);
 								return this;
 							}
 							catch(e){
-								genrl.log("ERROR TRY CATCH 1");
 								genrl.log(e);
 							}
 						}
 						else{
-							genrl.log("CONFIRMADO ARRAY");
-							genrl.log(style);
 							let max=parseInt(style.length);
 							for(i=0;i<=max;i++){
 								aux=style[i];
@@ -1362,22 +1348,18 @@ g=(function(global,factory){
 							return objfinal;
 						}
 						if(style.length>0){
-							genrl.warn("ARRAY Cond 1");
 							try{
 								g(domel).set(style);
 								return this;
 							}
 							catch(e){
-								genrl.log("ERROR TRY CATCH 1");
 								genrl.log(e);
 							}
 						}
 					}
 				}
 				else{
-					genrl.warn("STRING Cond 2");
 					if(typeof style==='string'){
-						genrl.log("Es un string");
 						return g(domel).get(style);
 					}
 				}
@@ -2489,14 +2471,11 @@ genrl.__proto__.isReady=function(){
 }
 genrl.__proto__.empty=function(string){
 	if(typeof string==='string'){
-		console.log(string);
 		if(string==""){
-			console.log(string);
 			return;
 		}
 		else{
-			console.log("ERROR");
-			return -2;
+			return -1;
 		}
 	}
 	else{
