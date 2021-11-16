@@ -4,6 +4,11 @@
  
 JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworkers / Watch - UnWatch / Crypto / expansible 
 
+## Import library from NPM
+```javascript
+	npm i generaljs-2021	
+```
+
 ## Import library from CDN
 ```html
 	<script src="https://cdn.underdevelopment.work/generaljs/general.min.js">
