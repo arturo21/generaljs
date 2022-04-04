@@ -399,6 +399,13 @@ g=(function(global,factory){
 				}
 				return this;
 			},
+			eval: function(){
+		      	objeto=getelem(domel);
+				textobjeto=objeto.innerHTML;
+			    if(objeto!=''){
+					eval(textobjeto);
+			    }
+			},
 			animate:function(){
 				let infiniteBool=0;
 				let speedanim=0;
