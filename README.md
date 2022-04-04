@@ -118,6 +118,12 @@ g("#btnmover").click(function(){
 	});
 ```
 
+## Evaluates a Text as JS Function
+### <scriptid="scripttag">alert("HOLA");</script>
+```javascript
+	g("#scripttag").eval(data);
+```
+
 ## URL ROUTES
 ```javascript
 	genrl.path.map("#/prueba").to(function(){
