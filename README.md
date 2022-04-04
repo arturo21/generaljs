@@ -119,7 +119,7 @@ g("#btnmover").click(function(){
 ```
 
 ## Evaluates a Text as JS Function
-### <scriptid="scripttag">alert("HOLA");</script>
+### <script id="scripttag">alert("HOLA");</script>
 ```javascript
 	g("#scripttag").eval(data);
 ```
