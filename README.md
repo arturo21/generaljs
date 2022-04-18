@@ -138,7 +138,7 @@ g("#btnmover").click(function(){
 ### archivo is a file input
 ```javascript
 	g('#archivo').change(function(e){
-		console.log("Cambió el campo");
+		genrl.log("Cambió el campo");
 		dataf=g('#archivo').getFiles();
 	});
 ```
@@ -151,12 +151,12 @@ g("#btnmover").click(function(){
 		ajaxobj
 		.get("general.js/README.md")
 		.then(function(data){
-			console.log("DATA: " + data);
+			genrl.log("DATA: " + data);
 			g("#titulo_widget").html("RESULTADO:");
 			g("#mensajes").html(data);
 		})
 		.catch(function(e){	
-			console.log("ERROR:" + e);
+			genrl.log("ERROR:" + e);
 		})
 	});
 ```
@@ -167,12 +167,12 @@ g("#btnmover").click(function(){
 		ajaxobj
 		.getJSON("http://localhost/general.js/config.json")
 		.then(function(data){
-			console.log("DATA: " + data);
+			genrl.log("DATA: " + data);
 			g("#titulo_widget").html("RESULTADO:");
 			g("#mensajesb").html(data);
 		})
 		.catch(function(e){	
-			console.log("ERROR:" + e);
+			genrl.log("ERROR:" + e);
 		})
 	});
 ```
@@ -183,12 +183,12 @@ g("#btnmover").click(function(){
 		ajaxobj
 		.load("http://localhost/general.js/README.md")
 		.then(function(data){
-			console.log("DATA: " + data);
+			genrl.log("DATA: " + data);
 			g("#titulo_widget").html("RESULTADO:");
 			g("#mensajesa").html(data);
 		})
 		.catch(function(e){	
-			console.log("ERROR:" + e);
+			genrl.log("ERROR:" + e);
 		})
 	});
 ```
@@ -203,13 +203,13 @@ g("#btnmover").click(function(){
 		ajaxobj
 		.post("socketd.php",datos)
 		.then(function(data){
-			console.log("DATA RECIBIDA: ");
-			console.log(data);
+			genrl.log("DATA RECIBIDA: ");
+			genrl.log(data);
 			g("#titulo_widget").html("RESULTADO:");
 			g("#mensajesa").html(data);
 		})
 		.catch(function(e){	
-			console.log("ERROR:" + e);
+			genrl.log("ERROR:" + e);
 		})
 	});
 ```
@@ -219,7 +219,7 @@ g("#btnmover").click(function(){
 ```javascript
 	let ajaxobj=genrl.ajaxapi;
 	g('#archivo').change(function(e){
-		console.log("Cambió el campo");
+		genrl.log("Cambió el campo");
 		dataf=g('#archivo').getFiles();
 	});
 	g("#filebtn").click(function(){
@@ -232,7 +232,7 @@ g("#btnmover").click(function(){
 			g("#mensajesb").html(data);
 		})
 		.catch(function(e){	
-			console.log("ERROR:" + e);
+			genrl.log("ERROR:" + e);
 		})
 	});
 ```
