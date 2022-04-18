@@ -149,27 +149,25 @@ return{
   	},
 	then:function(callback){
 		ajax_.onreadystatechange = function(){
-			if(ajax_.readyState==4){
-				if(ajax_.status==200){
-					if(bitgetjson==1 || bitgetxml==1){
-						if(bitgetjson==1){
-							datares = JSON.parse(ajax_.responseText);
-						}
-						if(bitgetxml==1){
-							datares = ajax_.responseXML;
-						}
+			if(ajax_.readyState==4 && ajax_.status==200){
+				if(bitgetjson==1 || bitgetxml==1){
+					if(bitgetjson==1){
+						datares = JSON.parse(ajax_.responseText);
 					}
-					else{
-						datares = ajax_.responseText;
+					if(bitgetxml==1){
+						datares = ajax_.responseXML;
 					}
-					callback(datares);
-					return this;
 				}
 				else{
-					errormessage=ajax_.statusText;
-					ajaxapi.catch(errormessage);
-					return this;
+					datares = ajax_.responseText;
 				}
+				callback(datares);
+				return this;
+			}
+			else{
+				errormessage=ajax_.statusText;
+				ajaxapi.catch(errormessage);
+				return this;
 			}
 		};
 		return this;
