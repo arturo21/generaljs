@@ -147,6 +147,12 @@ return{
 		ajax_.send(data);
 		return this;
   	},
+  	event:function(event,callback){
+		if(typeof callback==='function'){
+			ajax_.addEventListener(event, callback)
+		}
+		return this;
+  	},
 	then:function(callback){
 		ajax_.onreadystatechange = function(){
 			if(ajax_.readyState==4 && ajax_.status==200){
