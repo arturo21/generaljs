@@ -799,9 +799,18 @@ g=(function(global,factory){
 		      	//write code below...
 		      	let objappe;
 		      	let elChild = document.createElement('div');
+				let firstNow = performance.now();
+
 				objappe=getelem(domel);
-				elChild.id="wrapper-" + objappe.id;
-				elChild.name="wrapper-" + objappe.id;
+				glog(objappe);
+				if(objappe.id==""){
+					id_aux="general";
+				}
+				else{
+					id_aux=objappe.id;
+				}
+				elChild.id="wrapper-" + id_aux + "-" + firstNow;
+				elChild.name="wrapper-" + id_aux + "-" + firstNow;
 				elChild.append(object);
 				objappe.appendChild(elChild);
 				return this;
