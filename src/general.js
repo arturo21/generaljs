@@ -795,12 +795,14 @@ g=(function(global,factory){
 				objbef.insertAdjacentHTML('beforebegin', htmlstr);
 				return this;
 			},
-			append:function(html){
+			append:function(object){
 		      	//write code below...
 		      	let objappe;
 		      	let elChild = document.createElement('div');
 				objappe=getelem(domel);
-				elChild.append(html);
+				elChild.id="wrapper-" + objappe.id;
+				elChild.name="wrapper-" + objappe.id;
+				elChild.append(object);
 				objappe.appendChild(elChild);
 				return this;
 			},
