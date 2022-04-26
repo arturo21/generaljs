@@ -2051,7 +2051,7 @@ genrl=(function(global,factory){
 	};
 }(window));
 ////////Módulo para extender el framework
-genrl.fn=(function(){
+genrl.fn=(function(global,factory){
 	let _class2type={};
 	function glogfn(msg){
 		console.log(msg);
@@ -2210,7 +2210,7 @@ genrl.fn=(function(){
 			return target;
 		}
 	}
-}());
+}(window));
 //Módulo - Path.JS - Enrutado
 /************************************************/
 genrl.path=(function(){
