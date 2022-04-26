@@ -1628,13 +1628,6 @@ genrl=(function(global,factory){
 			console.warn(msg);
 			return this;
 		},
-		map: function(array,callbackmap){
-			let val,index;
-			if(array.isArray()){
-				array.map(callbackmap);
-			}
-			return this;
-	  	},
 		propAll:function(prper){
 	      	//busca dentro del objeto y devuelve solo la primera acepcion
 			let obj;
@@ -1667,6 +1660,13 @@ genrl=(function(global,factory){
 	    decb64: function(string){
 				return btoa(string);
 	    },
+		map: function(array,callbackmap){
+			let val,index;
+			if(array.isArray()){
+				array.map(callbackmap);
+			}
+			return this;
+	  	},
 		each:function(objeto,callbackeach){
 			let objProc;
 			let x,y,valor,indice;
