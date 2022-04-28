@@ -85,11 +85,11 @@ genrl.each(h,function(x,index){
 
 ## How to set CSS attributes
 ```javascript
-	g("#element").css({
-		'height': '400px',
-		'width': '200px',
-		'opacity': '1'
-	});
+g("#element").css({
+	'height': '400px',
+	'width': '200px',
+	'opacity': '1'
+});
 ```
 ## Bind an event
 ```javascript
