@@ -56,12 +56,20 @@ JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworker
 	<my-counter></my-counter>
 ```
 
-## How to select a DOMElement By ID
+## How to getElement Object
+```javascript
+	g("#element").getEl();
+```
+
+```javascript
+	g("#element").getEl();
+```
+
+## How to select a DOMElement 
 ```javascript
 	g("#element");
 ```
 
-## How to select a DOMElement By ClassName
 ```javascript
 	g(".element");
 ```
