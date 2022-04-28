@@ -128,7 +128,7 @@ g("#btnmover").click(function(){
 
 ## Evaluates a Text as JS Function
 ```html
-	<script id="scripttag">alert("HOLA");</script>
+	data='<script id="scripttag">alert("HOLA");</script>';
 ```
 
 ```javascript
