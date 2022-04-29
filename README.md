@@ -6,7 +6,7 @@ JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworker
 
 ## Import library from NPM
 ```javascript
-	npm i generaljs-2021	
+	npm i gnrl.js
 ```
 
 ## Import library from CDN
