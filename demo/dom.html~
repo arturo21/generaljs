@@ -85,7 +85,10 @@
 		<script src="../dist/general.min.js"></script>
 		<script>
 		genrl.docready(function(){
-			genrl.log(g("#imagenes").css(["float"]));
+			genrl.log(g("#imagenes").css({
+				"float":"left",
+			}));
+			genrl.log(g("#imagenes").css());
 		});
 		</script>
 	</body>
