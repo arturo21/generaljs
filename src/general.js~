@@ -469,22 +469,9 @@ g=(function(global,factory){
 			},
 			find:function(selector,callbackfind){
 				// Final found elements
-				let found_elements = [];
-				let i;
-				// Find all the outer matched elements
-				let outers = getelem(domel);
-				for(i=0;i<outers.length;i++){
-					let elements_in_outer=outers[i].querySelectorAll(selector);
-					// document.querySelectorAll() returns an "array-like" collection of elements
-				// convert this "array-like" collection to an array
-					elements_in_outer=Array.prototype.slice.call(elements_in_outer);
-					found_elements=found_elements.concat(elements_in_outer);
-				}
-				// The final 4 elements
-				if(found_elements.length>0){
-					callbackfind(found_elements);
-				}
-				return this;
+		      	let objeto=getelem(domel);
+				
+				return objeto.querySelectorAll(selector);
 		   },
 			each:function(callbackeach){
 		      	let objeto;
@@ -521,37 +508,6 @@ g=(function(global,factory){
 				if(is.isObject(obj)){
 					return obj;
 				}
-				return this;
-			},
-			wrap:function(){
-		      	let objeto;
-		      	let content;
-		      	objeto=getelem(domel);
-		      	content=document.createElement('div');
-		      	content.class="wrap";
-		      	content.name="wrap";
-		      	content.id="wrap";
-				wrap(objeto, content);
-				return this;
-			},
-			wrapAll:function(){
-				let wrapper = document.createElement('div');
-				let objeto=getelems(domel);
-				objeto[0].before(wrapper);
-				elements.forEach(function(element) {
-				    wrapper.append(element);
-				});
-				return this;
-			},
-			unwrap:function(docunw){
-		      	let objeto;
-		      	objeto=getelem(docunw);
-				// get the element's parent node
-				let parent = objeto.parentNode;
-				// move all children out of the element
-				while (objeto.firstChild) parent.insertBefore(objeto.firstChild, objeto);
-				// remove the empty element
-				parent.removeChild(objeto);
 				return this;
 			},
 			html:function(){
@@ -818,24 +774,52 @@ g=(function(global,factory){
 				objbef.insertAdjacentHTML('beforebegin', htmlstr);
 				return this;
 			},
-			append:function(object){
-		      	//write code below...
-		      	let objappe;
-		      	let elChild = document.createElement('div');
+			wrap:function(objeto){
+		      	let content;
 				let firstNow = performance.now();
-
-				objappe=getelem(domel);
-				glog(objappe);
+		      	let objappe=getelem(domel);
+			  	let elChild = document.createElement('div');
 				if(objappe.id==""){
-					id_aux="general";
+					id_aux="generaljs";
 				}
 				else{
 					id_aux=objappe.id;
 				}
 				elChild.id="wrapper-" + id_aux + "-" + firstNow;
 				elChild.name="wrapper-" + id_aux + "-" + firstNow;
-				elChild.append(object);
+				elChild.append(objeto);
 				objappe.appendChild(elChild);
+				return this;
+			},
+			wrapAll:function(){
+				let wrapper = document.createElement('div');
+				let objeto=getelems(domel);
+				objeto[0].before(wrapper);
+				elements.forEach(function(element) {
+				    wrapper.append(element);
+				});
+				return this;
+			},
+			unwrap:function(docunw){
+		      	let objeto;
+		      	objeto=getelem(docunw);
+				// get the element's parent node
+				let parent = objeto.parentNode;
+				// move all children out of the element
+				while (objeto.firstChild){
+					parent.insertBefore(objeto.firstChild, objeto);
+				}
+				// remove the empty element
+				parent.removeChild(objeto);
+				return this;
+			},
+			append:function(objeto){
+		      	let objappe;
+				let bitwrap;
+				objappe=getelem(domel);
+				if(typeof objeto==='object'){
+					objappe.appendChild(objeto);
+				}
 				return this;
 			},
 			prepend:function(html){
