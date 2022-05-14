@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2021 Arturo Vasquez Soluciones Web.
+  Copyright (C) 2022 Arturo Vasquez Soluciones Web.
   Todos los derechos reservados.
 
   La redistribución y uso en formatos fuente y binario están permitidas
@@ -28,7 +28,7 @@ let ws=require("./mods/websockets.js");
 let storage=require("./mods/cookies.js");
 let webapi=require("./mods/webapi.js");
 let ytapi=require("./mods/ytapi.js");
-let scope=require("./mods/data-bind.lite.min.js");
+let scopescope=require("./mods/data-bind.lite.min.js");
 let is=require("./mods/is.min.js");
 let watchjs = require("./mods/watch.min.js");
 let components = require("./mods/components.js");
@@ -1975,7 +1975,8 @@ genrl=(function(global,factory){
 			return JSON.stringify(json);
 		},
 		now:function(){
-			return Date.now();
+			let nowdate=performance.now();
+			return nowdate;
 		},
 		dialog:function(type,content,callback){
 			switch(type){
