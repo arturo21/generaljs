@@ -400,6 +400,14 @@ g=(function(global,factory){
 				}
 				return this;
 			},
+			srcimg: function(source){
+				let domelement;
+				domelement=getelem(domel);
+				if(domelement.src!='' || domelement.src!=undefined || domelement.src!=null){
+					domelement.src=source;
+				}
+				return this;
+			},
 			height: function(){
 				let domelement;
 				domelement=getelem(domel);
