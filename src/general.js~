@@ -1701,15 +1701,22 @@ genrl=(function(global,factory){
 	      	return this;
 		},
 	    preventDefault: function(e){
-			if(e.preventDefault){
-				e.preventDefault();
-			}
+			obj=getelem(domel);
+			obj.addEventListener('click', function(e){ //say this is an anchor
+				if(e.preventDefault){
+					e.preventDefault();
+				}
+			});
 			return this;
 	    },
 	    stopPropagation: function(e){
-			if(e.stopPropagation){
-				e.stopPropagation();
-			}
+			return this;
+			obj=getelem(domel);
+			obj.addEventListener('click', function(e){ //say this is an anchor
+				if(e.stopPropagation){
+					e.stopPropagation();
+				}
+			});
 			return this;
 	    },
 		watch:function(object,attrib,callback){
