@@ -389,6 +389,25 @@ g=(function(global,factory){
 				}
 				return this;
 			},
+			preventDefault: function(e){
+				obj=getelem(domel);
+				obj.addEventListener('click', function(e){ //say this is an anchor
+					if(e.preventDefault){
+						e.preventDefault();
+					}
+				});
+				return this;
+			},
+			stopPropagation: function(e){
+				return this;
+				obj=getelem(domel);
+				obj.addEventListener('click', function(e){ //say this is an anchor
+					if(e.stopPropagation){
+						e.stopPropagation();
+					}
+				});
+				return this;
+			},
 			hide: function(){
 				let domelement;
 				if(!document.getElementById){
@@ -1700,25 +1719,6 @@ genrl=(function(global,factory){
 	      	}
 	      	return this;
 		},
-	    preventDefault: function(e){
-			obj=getelem(domel);
-			obj.addEventListener('click', function(e){ //say this is an anchor
-				if(e.preventDefault){
-					e.preventDefault();
-				}
-			});
-			return this;
-	    },
-	    stopPropagation: function(e){
-			return this;
-			obj=getelem(domel);
-			obj.addEventListener('click', function(e){ //say this is an anchor
-				if(e.stopPropagation){
-					e.stopPropagation();
-				}
-			});
-			return this;
-	    },
 		watch:function(object,attrib,callback){
 			//Función Watch
 			elementDOM=getelem(object);
