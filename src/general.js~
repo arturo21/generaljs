@@ -226,6 +226,8 @@ g=(function(global,factory){
         let obj;
         let args;
         let tovalue;
+		let radio;
+		let objradio;
         obj=getelem(objval);
         if(obj.type!='select-one' && obj.type!="file"){
 			if(obj.type=="checkbox"){
@@ -237,8 +239,22 @@ g=(function(global,factory){
 				}
 			}
 			else{
-				valor=obj.value;
+				if(obj.type=='radio'){
+			        objradio=getelems(objval);
+					if(objradio.length>0){
+						for(i=0;i<;i++){
+							if(objradio[i].checked){
+								valor=objradio[i].value;
+								break;								
+							}
+						}
+					}
+				}
+				else{
+					valor=obj.value;
+				}
 			}
+			return valor;
         }
         else{
         	if(obj.type=="file"){
@@ -387,6 +403,25 @@ g=(function(global,factory){
 						}
 					}
 				}
+				return this;
+			},
+			preventDefault: function(e){
+				obj=getelem(domel);
+				obj.addEventListener('click', function(e){ //say this is an anchor
+					if(e.preventDefault){
+						e.preventDefault();
+					}
+				});
+				return this;
+			},
+			stopPropagation: function(e){
+				return this;
+				obj=getelem(domel);
+				obj.addEventListener('click', function(e){ //say this is an anchor
+					if(e.stopPropagation){
+						e.stopPropagation();
+					}
+				});
 				return this;
 			},
 			hide: function(){

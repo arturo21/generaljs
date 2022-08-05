@@ -226,6 +226,8 @@ g=(function(global,factory){
         let obj;
         let args;
         let tovalue;
+		let radio;
+		let objradio;
         obj=getelem(objval);
         if(obj.type!='select-one' && obj.type!="file"){
 			if(obj.type=="checkbox"){
@@ -237,8 +239,22 @@ g=(function(global,factory){
 				}
 			}
 			else{
-				valor=obj.value;
+				if(obj.type=='radio'){
+			        objradio=getelems(objval);
+					if(objradio.length>0){
+						for(i=0;i<objradio.length;i++){
+							if(objradio[i].checked){
+								valor=objradio[i].value;
+								break;								
+							}
+						}
+					}
+				}
+				else{
+					valor=obj.value;
+				}
 			}
+			return valor;
         }
         else{
         	if(obj.type=="file"){
