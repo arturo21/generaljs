@@ -228,42 +228,55 @@ g=(function(global,factory){
         let tovalue;
 		let radio;
 		let objradio;
+		let objcheck;
+		let valores;
         obj=getelem(objval);
-        if(obj.type!='select-one' && obj.type!="file"){
-			if(obj.type=="checkbox"){
-				if(obj.checked==true){
-					valor=true;
-				}
-				else{
-					valor=false;
-				}
-			}
-			else{
-				if(obj.type=='radio'){
-			        objradio=getelems(objval);
-					if(objradio.length>0){
-						for(i=0;i<;i++){
-							if(objradio[i].checked){
-								valor=objradio[i].value;
-								break;								
+		if(obj!=null || obj!=undefined || obj!=''){
+			if(obj.type!=null || obj.type!=undefined || obj.type!=''){
+				if(obj.type!='select-one' && obj.type!="file"){
+					if(obj.type=="checkbox"){
+						objcheck=getelems(objval);
+						if(objcheck.length>0){
+							for(i=0;i<objcheck.length;i++){
+								glog("CHECKED " + objcheck[i].checked);
+								if(objcheck[i].checked==true){
+									valores[i]=objcheck[i].value;
+								}
 							}
+							return valores;
 						}
 					}
+					else{
+						if(obj.type=='radio'){
+							objradio=getelems(objval);
+							if(objradio.length>0){
+								for(i=0;i<objradio.length;i++){
+									glog("CHECKED " + objradio[i].checked);
+									if(objradio[i].checked==true){
+										valor=objradio[i].value;
+									}
+								}
+							}
+						}
+						else{
+							valor=obj.value;
+						}
+					}
+					return valor;
 				}
 				else{
-					valor=obj.value;
+					if(obj.type=="file"){
+						valor=obj.files[0];
+					}
+					else{
+						valor=obj.options[obj.selectedIndex].value;
+					}
 				}
 			}
-			return valor;
-        }
-        else{
-        	if(obj.type=="file"){
-        		valor=obj.files[0];
-        	}
-        	else{
-        		valor=obj.options[obj.selectedIndex].value;
-        	}
-        }
+		}
+		else{
+			return getelems(objval);
+		}
         return valor;
    };
    function setval(objval,value){
