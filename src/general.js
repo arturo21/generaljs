@@ -588,10 +588,23 @@ g=(function(global,factory){
 			prop:function(property){
 		      	//busca dentro del objeto y devuelve solo la primera acepcion
 				let obj;
-				//Llama a funcion interna prop(domel,prper)
-				obj=prop_(domel,property);
+				let val;
+				let valueold;
+				obj=getelem(domel);
 				if(is.isObject(obj)){
-					return obj;
+					if(arguments.length>1){
+						if(arguments[1]!=undefined || arguments[1]!=null || arguments[1]!=''){
+							let newvalue=arguments[1];
+							g(domel).getEl().setAttribute(property,newvalue);
+							glog("cambio añadido!");
+						}
+						else{
+						  	valueold=obj[0].getAttribute(property);
+						}
+					}
+					else{
+						return valueold;
+					}
 				}
 				return this;
 			},
@@ -1505,15 +1518,6 @@ genrl=(function(global,factory){
 	        }
 	    }
 		return foundIndex;
-	};
-	function prop_(element,proper){
-		let obj; //busca dentro del objeto y devuelve solo la primera acepcion
-		let val;
-		obj=getelems(element);
-		if(is.isObject(obj)){
-		  	result=obj[0].getAttribute(proper);
-			return result;
-		}
 	};
 	function propAll_(proper){
 		let val=''; //busca dentro del objeto y devuelve solo la primera acepcion
