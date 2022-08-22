@@ -275,21 +275,19 @@ g=(function(global,factory){
 							}
 						}
 					}
-					else{
-						if(obj.type=='radio'){
-							objradio=getelems(objval);
-							if(objradio.length>0){
-								for(i=0;i<objradio.length;i++){
-									glog("CHECKED " + objradio[i].checked);
-									if(objradio[i].checked==true){
-										valor=objradio[i].value;
-									}
+					else if(obj.type=='radio'){
+						objradio=getelems(objval);
+						if(objradio.length>0){
+							for(i=0;i<objradio.length;i++){
+								glog("CHECKED " + objradio[i].checked);
+								if(objradio[i].checked==true){
+									valor=objradio[i].value;
 								}
 							}
 						}
-						else{
-							valor=obj.value;
-						}
+					}
+					else{
+						valor=obj.value;
 					}
 					return valor;
 				}
@@ -301,6 +299,9 @@ g=(function(global,factory){
 						valor=obj.options[obj.selectedIndex].value;
 					}
 				}
+			}
+			else{
+				valor=obj.value;
 			}
 		}
 		else{
