@@ -2095,6 +2095,11 @@ genrl=(function(global,factory){
 			}
 			return KeyCode;
 		},
+		decodeHtml: function(str){
+			return str.replace(/&#(\d+);/g, function(match, dec) {
+				return String.fromCharCode(dec);
+			});
+		},
 		getChar: function(e){
 	       	let cadena;
 			//bloquear teclado a solo numeros

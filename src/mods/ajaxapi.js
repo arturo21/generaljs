@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2021 Arturo Vasquez Soluciones Web.
+  Copyright (C) 2022 Arturo Vasquez Soluciones Web.
   Todos los derechos reservados.
 
   La redistribución y uso en formatos fuente y binario están permitidas
@@ -28,6 +28,7 @@ ajaxapi=(function(global,factory){
 	let errormessage="";
 	let bitgetxml=0;
 	let datares="";
+	let headers="";
 	//write code below
 	function getSocket(){
 		// code for modern browsers
@@ -52,6 +53,13 @@ return{
 		if(bitload==1){
 			console.log("BITLOAD=1");
 			ajax_.open("GET", url, true);
+			if(headers!=''){
+				ajax_.setRequestHeader("Content-Type", headers);
+			}
+			else{
+				headers="application/json";
+				ajax_.setRequestHeader("Content-Type", headers);
+			}
 			ajax_.send(null);
 			return this;
 		}
@@ -68,8 +76,14 @@ return{
 		bitupload=0;
 		bitload=0;
 		if(bitget==1){
-			console.log("BITGET=1");
 			ajax_.open("GET", url, true);
+			if(headers!=''){
+				ajax_.setRequestHeader("Content-Type", headers);
+			}
+			else{
+				headers="application/json";
+				ajax_.setRequestHeader("Content-Type", headers);
+			}
 			ajax_.send(null);
 			return this;
 		}
@@ -89,6 +103,13 @@ return{
 		if(bitgetjson==1){
 			console.log("BITJSON=1");
 			ajax_.open("GET", url, true);
+			if(headers!=''){
+				ajax_.setRequestHeader("Content-Type", headers);
+			}
+			else{
+				headers="application/json";
+				ajax_.setRequestHeader("Content-Type", headers);
+			}
 			ajax_.send(null);
 			return this;
 		}
@@ -108,10 +129,22 @@ return{
 		if(bitgetxml==1){
 			console.log("BITXML=1");
 			ajax_.open("GET", url, true);
+			if(headers!=''){
+				ajax_.setRequestHeader("Content-Type", headers);
+			}
+			else{
+				headers="application/json";
+				ajax_.setRequestHeader("Content-Type", headers);
+			}
 			ajax_.send(null);
 			return this;
 		}
   	},
+	setContentType:function(setting){
+		if(setting!=''){
+			headers=setting;
+		}
+	},
   	post:function(url,data){
 		let options;
 		let respjson;
@@ -125,6 +158,13 @@ return{
 		bitload=0;
 		ajax_=getSocket();
 		ajax_.open("POST", url, true);
+		if(headers!=''){
+			ajax_.setRequestHeader("Content-Type", headers);
+		}
+		else{
+			headers="application/json";
+			ajax_.setRequestHeader("Content-Type", headers);
+		}
 		ajax_.response='json';
 		ajax_.send(data);
 		return this;
@@ -142,6 +182,13 @@ return{
 		bitload=0;
 		ajax_=getSocket();
 		ajax_.open("POST", url, true);
+		if(headers!=''){
+			ajax_.setRequestHeader("Content-Type", headers);
+		}
+		else{
+			headers="application/json";
+			ajax_.setRequestHeader("Content-Type", headers);
+		}
 		ajax_.response='text';
 		ajax_.send(data);
 		return this;
