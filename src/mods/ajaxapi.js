@@ -29,6 +29,7 @@ ajaxapi=(function(global,factory){
 	let bitgetxml=0;
 	let datares="";
 	let headers="";
+	let boolwithcred=false;
 	//write code below
 	function getSocket(){
 		// code for modern browsers
@@ -38,6 +39,16 @@ ajaxapi=(function(global,factory){
 return{
     getAjax:function(){
 		return ajax_;
+  	},
+    getAjax:function(){
+		return ajax_;
+  	},
+	withCredentials:function(boolean){
+		boolwithcred = false
+		if(boolean==true){
+			boolwithcred = true
+		}
+		return this;
   	},
 	load:function(url){
 		let options;
@@ -51,8 +62,10 @@ return{
 		bitupload=0;
 		bitload=1;
 		if(bitload==1){
-			console.log("BITLOAD=1");
 			ajax_.open("GET", url, true);
+			if(boolwithcred==true){
+				ajax_.withCredentials = true;
+			}
 			if(headers!=''){
 				ajax_.setRequestHeader("Content-Type", headers);
 			}
@@ -101,7 +114,6 @@ return{
 		bitupload=0;
 		bitload=0;
 		if(bitgetjson==1){
-			console.log("BITJSON=1");
 			ajax_.open("GET", url, true);
 			if(headers!=''){
 				ajax_.setRequestHeader("Content-Type", headers);
@@ -127,7 +139,6 @@ return{
 		bitupload=0;
 		bitload=0;
 		if(bitgetxml==1){
-			console.log("BITXML=1");
 			ajax_.open("GET", url, true);
 			if(headers!=''){
 				ajax_.setRequestHeader("Content-Type", headers);
@@ -158,6 +169,9 @@ return{
 		bitload=0;
 		ajax_=getSocket();
 		ajax_.open("POST", url, true);
+		if(boolwithcred==true){
+			ajax_.withCredentials = true;
+		}
 		if(headers!=''){
 			ajax_.setRequestHeader("Content-Type", headers);
 		}
@@ -182,6 +196,9 @@ return{
 		bitload=0;
 		ajax_=getSocket();
 		ajax_.open("POST", url, true);
+		if(boolwithcred==true){
+			ajax_.withCredentials = true;
+		}
 		if(headers!=''){
 			ajax_.setRequestHeader("Content-Type", headers);
 		}
@@ -225,7 +242,9 @@ return{
 		return this;
 	},
 	catch:function(e){
-		console.log(e);
+		if(e!='OK'){
+			console.log(e);
+		}
 	}
   }
 }(window));

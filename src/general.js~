@@ -175,11 +175,16 @@ g=(function(global,factory){
 		if(id!=undefined){
 			if(typeof id==='string'){
 				objeto=document.querySelector(id);
-				if(objeto){
-					return objeto;
+				if(objeto!=null){
+					if(objeto){
+						return objeto;
+					}
+					if(typeof objeto==='object'){
+						return objeto;
+					}
 				}
-				if(typeof objeto==='object'){
-					return objeto;
+				else{
+					return this;
 				}
 			}
 			else{
@@ -981,9 +986,13 @@ g=(function(global,factory){
 			hasClass:function(classElem){
 		      	let objetohasc;
 		      	objetohasc=getelem(domel);
-		      	if(objetohasc.classList.contains(classElem)){
-					return this;
+				genrl.log(objetohasc.classList.contains(classElem));
+		      	if(objetohasc.classList.contains(classElem)==true){
+					return true;
 		      	}
+				else{
+					return false;
+				}
 			},
 			addClass:function(classele){
 		      	//write code below...
@@ -1797,43 +1806,81 @@ genrl=(function(global,factory){
 	    browser: function(){
 			//Detect browser and write the corresponding name
 			if (navigator.userAgent.search("MSIE") >= 0){
-				glog('"MS Internet Explorer ');
 				let position = navigator.userAgent.search("MSIE") + 5;
 				let end = navigator.userAgent.search("; Windows");
 				let version = navigator.userAgent.substring(position,end);
 				glog(version + '"');
+				return "MS Internet Explorer";
 			}
 			else if (navigator.userAgent.search("Chrome") >= 0){
-				glog('"Google Chrome ');
 				let position = navigator.userAgent.search("Chrome") + 7;
 				let end = navigator.userAgent.search(" Safari");
 				let version = navigator.userAgent.substring(position,end);
 				glog(version + '"');
+				return "Google Chrome";
 			}
 			else if (navigator.userAgent.search("Firefox") >= 0){
-				glog('"Mozilla Firefox ');
 				let position = navigator.userAgent.search("Firefox") + 8;
 				let version = navigator.userAgent.substring(position);
 				glog(version + '"');
+				return "Mozilla Firefox";
 			}
 			else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0){//<< Here
-				glog('"Apple Safari ');
 				let position = navigator.userAgent.search("Version") + 8;
 				let end = navigator.userAgent.search(" Safari");
 				let version = navigator.userAgent.substring(position,end);
 				glog(version + '"');
+				return "Apple Safari";
 			}
 			else if (navigator.userAgent.search("Opera") >= 0){
-				glog('"Opera ');
 				let position = navigator.userAgent.search("Version") + 8;
 				let version = navigator.userAgent.substring(position);
 				glog(version + '"');
+				return "Opera";
 			}
 			else{
-				glog('"Other"');
+				return "Other";
 			}
 			return navigator.userAgent;
 	    },
+		device: function(){
+			if(navigator.userAgent.toLowerCase().match(/mobile/i)){
+				if(navigator.userAgent.toLowerCase().match(/iphone/i)){
+					return "IPHONE";
+				}
+				else if(navigator.userAgent.toLowerCase().match(/ipad/i)){
+					return "IPAD"
+				}
+				else if(navigator.userAgent.toLowerCase().match(/tablet/i)){
+					return "TABLET"
+				}
+				else if(navigator.userAgent.toLowerCase().match(/android/i)){
+					return "ANDROID"
+				}
+			}
+			else{
+				return "PC"
+			}
+		},
+		ifmobile: function(){
+			var isMobile = navigator.userAgent.toLowerCase().match(/mobile/i);
+			if (isMobile) {
+				console.log("Is mobile device");
+				return "MOBILE"
+			}
+			else{ 
+				console.log("Not mobile device");
+				return "PC/COMPUTER"
+			}
+		},
+		getOS: function(){
+			let osname='';
+			if (navigator.appVersion.indexOf('Win') != -1) osname = 'Windows';
+			if (navigator.appVersion.indexOf('Mac') != -1) osname = 'MacOS';
+			if (navigator.appVersion.indexOf('X11') != -1) osname = 'UNIX';
+			if (navigator.appVersion.indexOf('Linux') != -1) osname = 'Linux';
+			return osname;
+		},
 	    isArray: function(arr){
 	    	if(Object.prototype.toString.call(arr) === "[object Array]"){
 	    		return true;
