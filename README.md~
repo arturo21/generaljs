@@ -77,12 +77,12 @@ JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworker
 
 ## Create a Toggle Button to change classname
 ```javascript
-	g("#campoeval").on('change',function(){
-		if(g("#campoconclase").hasClass("is-hidden")==true){
-			g("#campoconclase").removeClass("is-hidden");
+	g("#bton").on('change',function(){
+		if(g("#campovencimiento").hasClass("is-hidden")==true){
+			g("#campovencimiento").removeClass("is-hidden");
 		}
 		else{
-			g("#campoconclase").addClass("is-hidden")
+			g("#campovencimiento").addClass("is-hidden")
 		}
 	});
 ```
