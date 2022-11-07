@@ -32,6 +32,7 @@ let scope=require("./mods/data-bind.lite.min.js");
 let is=require("./mods/is.min.js");
 let watchjs = require("./mods/watch.min.js");
 let components = require("./mods/components.js");
+let he=require("he")
 let watch = watchjs.watch;
 let unwatch = watchjs.unwatch;
 let callWatchers = watchjs.callWatchers;
@@ -986,7 +987,6 @@ g=(function(global,factory){
 			hasClass:function(classElem){
 		      	let objetohasc;
 		      	objetohasc=getelem(domel);
-				genrl.log(objetohasc.classList.contains(classElem));
 		      	if(objetohasc.classList.contains(classElem)==true){
 					return true;
 		      	}
@@ -1378,6 +1378,24 @@ g=(function(global,factory){
 				control.removeEventListener(eventoCall,callback);
 				return this;
 			},
+			setData:function(namevarval, valvariable){
+				let element;
+				element=g(domel).getEl();
+				element.dataset[namevarval]=valvariable;
+				return this;
+			},
+			getData:function(namevarval){
+				let element;
+	  			idfinal=namevarval;
+				element=g(domel).getEl();
+	  			return element.dataset[namevarval];
+			},
+	  		rmData:function(namevarval){
+				let element;
+				element=g(domel).getEl();
+				delete element.dataset[namevarval];
+	  			return this;
+	  		},
 			extend:function(callback){
 				//extiende las funcionalidades de la librería mediante la función interna extend
 				genrl.fn.extend(g,callback);
@@ -2144,7 +2162,8 @@ genrl=(function(global,factory){
 		},
 		decodeHtml: function(str){
 			return str.replace(/&#(\d+);/g, function(match, dec) {
-				return String.fromCharCode(dec);
+				let stringtxt=String.fromCharCode(dec);
+				return he.decode(stringtxt)
 			});
 		},
 		getChar: function(e){
@@ -2589,32 +2608,6 @@ genrl.__proto__.ajax=function(){
 	let sock;
 	sock=genrl.getxhr();
 	return sock;
-};
-genrl.__proto__.ds=function(iddataset){
-  	let obj;
-  	let idfinal;
-  	obj=g.getelems(iddataset);
-  	return{
-  		get:function(nomvar){
-  			let result;
-			idfinal="data-" + nomvar;
-			result=g(iddataset).prop(idfinal);
-			return result;
-  		},
-  		set:function(nomvar,val){
-				if(obj.dataset==undefined){
-	  			idfinal="data-" + nomvar;
-	  			g(iddataset).addAttrb(idfinal,val);
-				}
-				else{
-					Object.defineProperty(obj.dataset, nomvar, "data-variable");
-				}
-  		},
-  		rm:function(nomvar){
-  			idfinal="data-" + nomvar;
-  			g(iddataset).rmAttrb(idfinal);
-  		},
-	}
 };
 genrl.__proto__.isReady=function(){
 	if(document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
