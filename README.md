@@ -87,6 +87,28 @@ JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworker
 	});
 ```
 
+## Working with data-values
+### setData
+```javascript
+	g("#campoeval").on('change',function(){
+		g("#campoeval").setData("idproducto",idproducto);
+	});
+```
+
+### getData
+```javascript
+	g("#campoeval").on('change',function(){
+		let idprod=g("#campoeval").getData("idproducto");
+	});
+```
+
+### rmData
+```javascript
+	g("#campoeval").on('change',function(){
+		g("#campoeval").rmData("idproducto");
+	});
+```
+
 ## How to read an object
 ```javascript
 genrl.each(h,function(x,index){
