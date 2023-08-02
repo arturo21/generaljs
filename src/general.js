@@ -2166,26 +2166,29 @@ genrl=(function(global,factory){
 				return he.decode(stringtxt)
 			});
 		},
+		isNumeric: function(n){ 
+		      return !isNaN(parseFloat(n)) && isFinite(n); 
+		},
 		getChar: function(e){
 	       	let cadena;
 			//bloquear teclado a solo numeros
-			teclan=g.getKey(e);
+			teclan=genrl.getKey(e);
 			cadena=String.fromCharCode(teclan);
 			return String.fromCharCode(cadena);
 		},
 		blockChar: function(e){
 			//bloquear teclado a solo letras
-			teclap=g.getKey(e);
+			teclap=genrl.getKey(e);
 			teclan=String.fromCharCode(teclap);
-			if(IsNumeric(teclan)==true){
+			if(genrl.IsNumeric(teclan)==true){
 				return "Solo está peritido escribir letras";
 			}
 			return this;
 		},
 		bloqNum: function(e){
-			teclap=g.getKey(e);
+			teclap=genrl.getKey(e);
 			teclan=String.fromCharCode(teclap);
-			if(IsNumeric(teclan)==false){
+			if(genrl.IsNumeric(teclan)==false){
 				return "Solo esta permitido escribir numeros";
 			}
 			return this;
