@@ -606,10 +606,11 @@ g=(function(global,factory){
 							glog("cambio añadido!");
 						}
 						else{
-						  	valueold=obj[0].getAttribute(property);
+							valueold=g(domel).getEl().getAttribute(property);
 						}
 					}
 					else{
+						valueold=g(domel).getEl().getAttribute(property);
 						return valueold;
 					}
 				}
