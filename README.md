@@ -1,18 +1,48 @@
-# general.js
+<h1 align="center">⚙️ General.JS</h1>
 
-**JS library to do high performance solutions**
- 
-JS Library that handles DOM / Events - DOM / AJAX - FETCH / WebSockets-Webworkers / Watch - UnWatch / Crypto / expansible 
+<p align="center">
+  <strong>Librería JavaScript para soluciones de alto rendimiento</strong><br>
+  <em>DOM, eventos, AJAX, WebSockets, WebWorkers, rutas, componentes, extensiones y más</em>
+</p>
 
-## Import library from NPM
-```javascript
-	npm i gnrl.js
-```
+<p align="center">
+  <img src="https://img.shields.io/badge/version-1.0.0-blue.svg" alt="Versión estable">
+  <img src="https://img.shields.io/badge/status-activo-brightgreen.svg" alt="Estado del proyecto">
+  <img src="https://img.shields.io/badge/license-MIT-yellow.svg" alt="Licencia MIT">
+</p>
 
-## Import library from CDN
-```html
-	<script src="https://cdn.underdevelopment.work/generaljs/general.min.js">
-```
+---
+
+## 🚀 ¿Qué es General.JS?
+
+**General.JS** es una librería JavaScript ligera, extensible y sin dependencias externas. Diseñada para desarrolladores que buscan rendimiento, modularidad y control total sobre el DOM, eventos, rutas, componentes y comunicación asincrónica.
+
+---
+
+## ✨ Características destacadas
+
+| 🧩 Módulo             | ⚡ Funcionalidad |
+|----------------------|------------------|
+| 📦 DOM               | Selección, manipulación, atributos, clases, estilos |
+| 🔁 Eventos           | `on`, `click`, `change`, `hover`, `animate`, `toggle` |
+| 🌐 AJAX / FETCH      | `get`, `post`, `upload`, `load`, `getJSON`, `fetchapi` |
+| 🧠 WebWorkers        | Procesos en segundo plano |
+| 📡 WebSockets        | Comunicación en tiempo real |
+| 🧬 Componentes       | Web Components con templates encapsulados |
+| 🛣️ Rutas             | Sistema de rutas con `map` y `listen` |
+| 🧰 Extensiones       | `extend` público, privado y por selector |
+| 🔒 Crypto            | Utilidades criptográficas integradas |
+| 📁 Archivos          | Lectura, carga y subida de archivos |
+| 🎯 Scroll suave      | `smooth()` con duración, offset y callback |
+| 🧪 Devtools          | `log`, `warn`, `info`, `error` para consola JS |
+
+---
+
+## 📦 Instalación
+
+### Desde NPM
+```bash
+npm i gnrl.js
 
 ## How to init the library
 ```javascript

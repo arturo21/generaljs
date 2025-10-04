@@ -1,24 +1,13 @@
 var path = require('path');
 var webpack = require("webpack");
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const sourcePath = __dirname + '/src';
 const destinationPath = __dirname + '/dist';
 
 var config = module.exports = {
-	optimization: {
-	    minimizer: [new UglifyJsPlugin({
-	    	include: /\/css/,
-	    	include: /\/mods/,
-			sourceMap: true,
-	    })],
-	},
 	context: sourcePath,
 	watch: false,
 	devtool: 'source-map',
 	mode:"production",
-	  optimization: {
-		minimizer: [new UglifyJsPlugin()],
-	  },
 	entry: {
 		app: ["./main.js"]
 	},
@@ -47,7 +36,7 @@ var config = module.exports = {
            	},
            	{
                 test   : /\.(jpeg|jpg|png(2)?)(\?[a-z0-9=&.]+)?$/,
-				loader: 'file-loader?name=img/[name].[ext]',
+				loader: 'file-loader',
 				options: {
 					useRelativePath:true,
 					name: 'img_inner/[name].[ext]'
@@ -65,15 +54,11 @@ var config = module.exports = {
 				test: /\.css$/, 
 				loader: "css-loader"
 			},
-		    { 
-			  test: /\.js$/,
-		      exclude: /(node_modules|bower_components|src)/,
-		      include: __dirname + "/mods/",
-		      loader: 'babel-loader', // 'babel-loader' is also a valid name to reference
-		      query: {
-		        presets: ['es2015',["babel-preset-primavera", ["@babel/preset-react", { "pragma": "dom" }]]]
-		      }
-		    }
+			{
+		    	test: /\.(js)$/,
+		    	exclude: /node_modules/,
+		    	use: ['babel-loader']
+			}
 		]
 	},
 };

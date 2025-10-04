@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2022 Arturo Vasquez Soluciones Web.
+  Copyright (C) 2025 Arturo Vasquez Soluciones Web.
   Todos los derechos reservados.
 
   La redistribución y uso en formatos fuente y binario están permitidas
@@ -30,6 +30,7 @@ ajaxapi=(function(global,factory){
 	let datares="";
 	let headers="";
 	let boolwithcred=false;
+	let errorCallback = null;
 	//write code below
 	function getSocket(){
 		// code for modern browsers
@@ -241,10 +242,15 @@ return{
 		};
 		return this;
 	},
-	catch:function(e){
-		if(e!='OK'){
-			console.log(e);
-		}
+	catch:function(callback){
+    if (typeof callback === 'function') {
+      errorCallback = callback;
+      callback();
+    }
+    else{
+    	console.log(callback);
+    }
+    return this;
 	}
   }
 }(window));
