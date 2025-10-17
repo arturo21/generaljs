@@ -168,6 +168,16 @@ g("#miBoton").extend("activar", function(){
 g("#miBoton").activar();
 ```
 
+| ✅ Ventaja                         | 📘 Descripción                                                                 |
+|----------------------------------|--------------------------------------------------------------------------------|
+| Encadenamiento fluido            | Las funciones extendidas pueden encadenarse con otras llamadas (`genrl.fn1().fn2()`). |
+| Modularidad                      | Puedes agregar funciones específicas sin alterar el núcleo original.           |
+| Separación público/privado       | `genrl.extend()` para funciones públicas, `genrl.fn.extend()` para internas.   |
+| Adaptación contextual            | `g(selector).extend()` permite extender elementos DOM individualmente.         |
+| Seguridad                        | Las extensiones respetan el patrón Module Revealed y no exponen variables internas. |
+| Reusabilidad                     | Las funciones extendidas pueden reutilizarse en múltiples contextos del sistema. |
+| Integración pedagógica           | Permite crear funciones adaptadas a fichas, sliders, rutas y ámbitos educativos. |
+
 ## 📦 Instalación
 
 ```bash
