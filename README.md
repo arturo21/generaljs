@@ -33,16 +33,92 @@
 
 ---
 
-| 🧩 Característica                          | 📘 Descripción                                                                 |
-|-------------------------------------------|--------------------------------------------------------------------------------|
-| Patrón Module Revealed                    | Encapsula funciones privadas y expone solo lo necesario para mayor seguridad. |
-| Encadenamiento fluido                     | Todos los métodos retornan `this` o el módulo, permitiendo llamadas encadenadas. |
-| Métodos extendidos                        | Nuevos métodos como `setScope`, `createScope`, `safeEval`, `now`, `uuid`, `timestamp`. |
-| Integración con gdom                      | Métodos como `createElem`, `appendTo`, `on`, `html`, `attr`, `addClass`, `remove`. |
-| Registro y montaje dinámico de componentes| `register`, `addcomponent`, `loadAll`, `mount`, `unmount`, `setDefaults`.       |
-| Seguridad mejorada                        | Reemplazo de `eval()` por `safeEval()`, validaciones de tipo y control de errores. |
-| Nuevas utilidades y validaciones          | Validadores (`email`, `url`), sanitizadores (`html`, `text`, `json`), y herramientas de consola. |
+| 🧩 Función                          | 📘 Descripción                                                                 |
+|-----------------------------------|--------------------------------------------------------------------------------|
+| Module Revealed                   | Encapsula funciones privadas y expone solo lo necesario.                      |
+| Encadenamiento fluido             | Todos los métodos retornan `this` o el módulo para llamadas encadenadas.      |
+| setScope(nombre)                  | Define el ámbito activo en el DOM (`data-scope`).                             |
+| createScope()                     | Inicializa atributos `id`, `name`, `data-scope`, `data-gapp` en `<html>`.     |
+| safeEval(fn)                      | Ejecuta funciones de forma segura (sin `eval()` inseguro).                    |
+| now()                             | Devuelve tiempo de ejecución como entero positivo.                            |
+| uuid() / timestamp()              | Genera identificadores únicos y marcas de tiempo ISO.                         |
+| validate / sanitize               | Validación de email, URL y sanitización de HTML, texto y JSON.               |
+| logEvent(), getLog(), clearLog() | Registro interno de eventos para depuración.
 
+### Submódulo Components
+
+| 🧩 Función                          | 📘 Descripción                                                                 |
+|-----------------------------------|--------------------------------------------------------------------------------|
+| register(tag, class)              | Registra un Web Component personalizado.                                      |
+| addcomponent(tag, url, cb, opts)  | Carga plantilla externa y la asocia al componente.                            |
+| loadAll(manifest)                 | Carga múltiples componentes desde un manifiesto.                              |
+| mount(tag, selector)              | Inserta el componente en el DOM.                                              |
+| unmount(tag)                      | Elimina instancias del componente del DOM.                                    |
+| setDefaults(opts)                 | Define estilos y atributos comunes para todos los componentes.                |
+| isRegistered(tag)                 | Verifica si un componente ya fue registrado.                                  |
+
+
+### Submódulo AjaxAPI
+
+| 🧩 Función                          | 📘 Descripción                                                                 |
+|-----------------------------------|--------------------------------------------------------------------------------|
+| get(url)                          | Realiza una petición GET.                                                     |
+| getJSON(url)                      | Realiza una petición GET y parsea JSON.                                       |
+| post(url, data)                   | Envía datos por POST.                                                         |
+| upload(url, FormData)             | Sube archivos mediante POST asincrónico.                                      |
+| load(url)                         | Carga contenido externo en el DOM.                                            |
+
+### Submódulo bind
+
+| 🧩 Función                          | 📘 Descripción                                                                 |
+|-----------------------------------|--------------------------------------------------------------------------------|
+| setData(key, value)               | Asocia un valor a un elemento DOM.                                            |
+| getData(key)                      | Recupera el valor asociado.                                                   |
+| rmData(key)                       | Elimina el valor asociado.                                                    |
+| bind(selector, model)            | Enlaza datos a elementos DOM dinámicamente.                                   |
+
+
+### Submódulo Animate
+
+| 🧩 Función                          | 📘 Descripción                                                                 |
+|-----------------------------------|--------------------------------------------------------------------------------|
+| animate(type, duration, cb)       | Aplica animaciones con duración y callback.                                   |
+| smooth(target, opts)              | Realiza scroll suave hacia un objetivo.                                       |
+| setAnimationDuration(el, speed)   | Establece duración de animación con prefijo de navegador.                     |
+
+
+### Submódulo Cripto
+
+| 🧩 Función                          | 📘 Descripción                                                                 |
+|-----------------------------------|--------------------------------------------------------------------------------|
+| base64_encode(str)                | Codifica en base64.                                                           |
+| base64_decode(str)                | Decodifica base64.                                                            |
+| utf8_encode(str)                  | Codifica UTF-8.                                                               |
+| utf8_decode(str)                  | Decodifica UTF-8.                                                             |
+### Submódulo WebSockets
+
+| 🧩 Función                          | 📘 Descripción                                                                 |
+|-----------------------------------|--------------------------------------------------------------------------------|
+| connect(url)                      | Establece conexión WebSocket.                                                 |
+| send(data)                        | Envía datos por WebSocket.                                                    |
+| onMessage(cb)                     | Escucha mensajes entrantes.                                                   |
+
+### Submódulo WebWorkers
+
+| 🧩 Función                          | 📘 Descripción                                                                 |
+|-----------------------------------|--------------------------------------------------------------------------------|
+| createWorker(script)              | Crea un Web Worker.                                                           |
+| postMessage(data)                 | Envía datos al worker.                                                        |
+| onMessage(cb)                     | Escucha respuesta del worker.                                                 |
+                              |
+### Submódulo Routing.general
+
+| 🧩 Función                          | 📘 Descripción                                                                 |
+|-----------------------------------|--------------------------------------------------------------------------------|
+| map(route).to(fn)            | Asocia una ruta hash a una función.                                           |
+| listen()                     | Activa el sistema de rutas y escucha cambios.                                 |
+| navigate(url)                | Navega programáticamente a una ruta.                                          |
+| getCurrent()                 | Obtiene la ruta actual.                                                       |
 
 ## 📦 Instalación
 
@@ -59,6 +135,28 @@ genrl.run(() => {
     .theme("claro")
     .log("Ámbito y tema establecidos");
 });
+```
+
+## Registro de Web Components básico
+```js
+components
+  .setDefaults({
+    styles: `.ficha { border-left: 4px solid #c25; padding: 1em; }`,
+    attributes: { "data-tipo": "editorial" }
+  })
+  .loadAll([
+    {
+      tag: "mi-ficha",
+      templateURL: "ficha.html",
+      callback: (tpl) => {
+        const el = document.createElement("mi-ficha");
+        el.appendChild(tpl.content.cloneNode(true));
+        document.body.appendChild(el);
+      }
+    }
+  ])
+  .mount("mi-ficha", "#contenedor")
+  .unmount("mi-ficha");
 ```
 
 ## Registro de Web Components con plantilla externa
