@@ -178,6 +178,50 @@ g("#miBoton").activar();
 | Reusabilidad                     | Las funciones extendidas pueden reutilizarse en múltiples contextos del sistema. |
 | Integración pedagógica           | Permite crear funciones adaptadas a fichas, sliders, rutas y ámbitos educativos. |
 
+## 🔌 Sistema de plugins en General.JS v2
+
+### Métodos disponibles
+
+| Método        | Descripción                                                                 |
+|---------------|------------------------------------------------------------------------------|
+| `.extend(name, fn)` | Añade métodos directamente al núcleo de `General`.                     |
+| `.use(plugin, options)` | Registra e inicializa un plugin externo con configuración opcional. |
+| `.plugins()`   | Devuelve un array con los nombres de los plugins registrados.
+---
+## Ventajas del sistema de plugins (`General.JS v2`)
+
+| ✅ Ventaja                        | 📘 Descripción                                                                 |
+|----------------------------------|--------------------------------------------------------------------------------|
+| Modularidad total                | Permite agregar funcionalidades sin alterar el núcleo de `General`.           |
+| Registro seguro                  | Evita duplicaciones y colisiones mediante control de nombres únicos.          |
+| Inicialización flexible          | Cada plugin puede recibir opciones personalizadas al momento de registrarse. |
+| Encadenamiento fluido            | Los métodos añadidos por plugins se integran al flujo encadenable de `gdom`.  |
+| Compatibilidad transversal       | Los plugins pueden interactuar con `animate`, `bind`, `routing`, `reactive`.  |
+| Trazabilidad clara               | `.plugins()` devuelve los nombres de todos los plugins activos.               |
+| Ideal para entornos pedagógicos | Permite crear extensiones visuales, estructurales y educativas.              |
+| Listo para producción            | Soporta plugins visuales, de seguridad, AJAX, formularios y más.             |
+   |
+
+### Ejemplo de uso
+
+```js
+function shakePlugin(General, opts) {
+  General.shake = function (el, duration = 300) {
+    el.style.transform = 'translateX(0)';
+    animate.animate(-10, 10, duration / 2, 'easeOutQuad', val => {
+      el.style.transform = `translateX(${val}px)`;
+    }, () => {
+      animate.animate(10, 0, duration / 2, 'easeInQuad', val => {
+        el.style.transform = `translateX(${val}px)`;
+      });
+    });
+  };
+}
+
+genrl.use(shakePlugin);
+genrl.shake(document.querySelector("#boton"), 400);
+```
+
 ## 📦 Instalación
 
 ```bash

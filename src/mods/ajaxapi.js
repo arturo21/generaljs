@@ -15,7 +15,7 @@
   GARANTÍAS DE COMERCIALIZACIÓN Y APTITUD PARA UN PROPÓSITO PARTICULAR.
 */
 /************************************************/
-/**********************AJAX API*****************/
+/***********************AJAX*API*****************/
 /************************************************/
 ajaxapi=(function(global,factory){
 	let ajax_=getSocket();
@@ -254,4 +254,3 @@ return{
 	}
   }
 }(window));
-module.exports=ajaxapi;

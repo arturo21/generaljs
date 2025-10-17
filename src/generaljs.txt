@@ -1,0 +1,266 @@
+/*
+  Copyright (C) 2025 Arturo Vasquez Soluciones Web.
+  Todos los derechos reservados.
+
+  La redistribución y uso en formatos fuente y binario están permitidas
+  siempre que el aviso de copyright anterior y este párrafo son
+  duplicado en todas esas formas y que cualquier documentación,
+  materiales de publicidad y otros materiales relacionados con dicha
+  distribución y uso reconocen que el software fue desarrollado
+  por el Arturo Vasquez Soluciones Web. El nombre de
+  Arturo Vasquez Soluciones Web No se puede utilizar para respaldar o promocionar productos derivados
+  de este software sin el permiso previo por escrito.
+  ESTE SOFTWARE SE PROPORCIONA '' tal cual '' Y SIN EXPRESA O
+  Garantías implícitas, incluyendo, sin limitación, los implicados
+  GARANTÍAS DE COMERCIALIZACIÓN Y APTITUD PARA UN PROPÓSITO PARTICULAR.
+*/
+/*Integrado GDOM para el manejo del DOM / eventos / AJAX */
+/*Este archivo lo necesita Function SMOOTH SCROLL*/
+let cripto=require("./mods/gcrypto.js");
+let fetchapi=require("./mods/fetchapi.js");
+let ajaxapi=require("./mods/ajaxapi.js");
+let ww=require("./mods/webworkers.js");
+let ws=require("./mods/websockets.js");
+let storage=require("./mods/cookies.js");
+let webapi=require("./mods/webapi.js");
+let ytapi=require("./mods/ytapi.js");
+let bind=require("./mods/databind.js");
+let components = require("./mods/components.js");
+let numapps=0;
+let elementactive="html";
+let varsint=[{}];
+let nameapp="appdata"+numapps;
+let scopenom="genrlapp-" + Math.floor(Math.random() * 27);
+
+//CLASE GENERAL - GENRL
+genrl = (function (global) {
+  const _logStore = [];
+
+  function isFunction(fn) {
+    return typeof fn === 'function';
+  }
+
+  function isObject(obj) {
+    return obj !== null && typeof obj === 'object';
+  }
+
+  function isHTMLElement(el) {
+    return el instanceof HTMLElement;
+  }
+
+  function escapeHTML(str) {
+    return str.replace(/[&<>"']/g, m => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[m]);
+  }
+
+  function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  function validatePhone(phone) {
+    return /^\+?[0-9\s\-]{7,15}$/.test(phone);
+  }
+
+  function validateURL(url) {
+    try { new URL(url); return true; } catch { return false; }
+  }
+
+  const genrl = {
+    // 🔧 Extensión dinámica
+    extend(name, method) {
+      if (typeof name === 'string' && isFunction(method)) {
+        this[name] = function (...args) {
+          const result = method.apply(this, args);
+          return result === undefined ? this : result;
+        };
+      }
+      return this;
+    },
+	g(selector) {
+	  return typeof gdom !== 'undefined' ? gdom(selector) : null;
+	},
+	createElem(tag, attrs = {}, children = []) {
+	  if (typeof gdom !== 'undefined' && gdom.create) {
+	    return gdom.create(tag, attrs, children);
+	  }
+	  return null;
+	},
+	appendTo(target, element) {
+	  if (typeof gdom !== 'undefined' && gdom.append) {
+	    gdom.append(target, element);
+	  }
+	  return this;
+	},
+	setScope(nombre = "general") {
+	  const html = document.documentElement;
+	  html.setAttribute("data-scope", nombre);
+	  html.classList.add(`scope-${nombre}`, "app-general");
+	  return this;
+	},
+	getScope() {
+	  return document.documentElement.getAttribute("data-scope");
+	},
+	hasScope(nombre) {
+	  return this.getScope() === nombre;
+	},
+    // 🔧 Acceso funcional
+    fn(name) {
+      const method = this[name];
+      return isFunction(method) ? method.bind(this) : undefined;
+    }
+  };
+
+  // 🔧 Submétodo extend dentro de fn
+  genrl.fn.extend = function (name, method) {
+    if (typeof name === 'string' && isFunction(method)) {
+      genrl[name] = function (...args) {
+        const result = method.apply(genrl, args);
+        return result === undefined ? genrl : result;
+      };
+    }
+    return genrl;
+  };
+
+  // 🎯 Métodos encadenables
+  Object.assign(genrl, {
+    log(msg) {
+      console.log(msg);
+      return this;
+    },
+    warn(msg) {
+      console.warn(msg);
+      return this;
+    },
+    info(msg) {
+      console.info(msg);
+      return this;
+    },
+    error(msg) {
+      console.error(msg);
+      return this;
+    },
+    theme(name) {
+      document.documentElement.setAttribute('data-theme', name);
+      return this;
+    },
+    css(el, styles) {
+      if (isHTMLElement(el)) {
+        Object.entries(styles).forEach(([prop, val]) => {
+          el.style[prop] = val;
+        });
+      }
+      return this;
+    },
+    logEvent(event) {
+      if (isObject(event)) {
+        event.timestamp = new Date().toISOString();
+        _logStore.push(event);
+      }
+      return this;
+    },
+    getLog(filter = null) {
+      if (!filter) return _logStore;
+      return _logStore.filter(e => e.type === filter);
+    },
+    clearLog() {
+      _logStore.length = 0;
+      return this;
+    },
+    validate: {
+      email: validateEmail,
+      phone: validatePhone,
+      url: validateURL
+    },
+    sanitize: {
+      html: escapeHTML,
+      text: str => str.replace(/[^\w\s]/gi, ''),
+      json: obj => {
+        try { return JSON.parse(JSON.stringify(obj)); } catch { return null; }
+      }
+    },
+    uuid() {
+      return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+      );
+    },
+    timestamp() {
+      return new Date().toISOString();
+    }
+  });
+
+  return genrl;
+})(window);
+
+////////PROTOTIPOS//////////
+genrl.__proto__.extend_=function(callback){
+	//extiende las funcionalidades de la librería mediante la función interna extend
+	genrl.fn.extend(genrl,callback);
+};
+genrl.__proto__.watch_=function(objeto,attrib,callback){
+	//funcion Watch
+	DOMelement=g.getelem(objeto);
+	watch(DOMelement,attrib,callback);
+};
+genrl.__proto__.unwatch_=function(objeto,attrib,callback){
+	//Funcion Unwatch
+	DOMelement=g.getelem(objeto);
+	unwatch(DOMelement,attrib,callback);
+};
+genrl.__proto__.ajax=function(){
+	let sock;
+	sock=genrl.getxhr();
+	return sock;
+};
+genrl.__proto__.isReady=function(){
+	if(document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
+genrl.__proto__.empty=function(string){
+	if(typeof string==='string'){
+		if(string==""){
+			return;
+		}
+		else{
+			return -1;
+		}
+	}
+	else{
+		return -1;
+	}
+};
+genrl.__proto__.getelem=function(id){
+	let objeto;
+	if(typeof id==='string'){
+		objeto=document.querySelector(id);
+		if(typeof objeto==='object'){
+			return objeto;
+		}
+	}
+};
+genrl.__proto__.getelems=function(tag){
+	let arrtags=[];
+	if(tag!=undefined){
+		arrtags=document.querySelectorAll(tag);
+		return arrtags;
+	}
+	else{
+		return -1;
+	}
+};
+genrl.extend({ cripto });
+genrl.extend({ ww });
+genrl.extend({ ws });
+genrl.extend({ storage });
+genrl.extend({ fetchapi });
+genrl.extend({ ajaxapi });
+genrl.extend({ webapi });
+genrl.extend({ ytapi });
+genrl.extend({ components });
+genrl.extend({ bind });
+genrl.init();
+module.exports=g;
