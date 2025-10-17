@@ -120,6 +120,14 @@
 | navigate(url)                | Navega programáticamente a una ruta.                                          |
 | getCurrent()                 | Obtiene la ruta actual.                                                       |
 
+## Métodos Nuevos
+```js
+genrl.setScope("pedagogico");
+genrl.safeEval(() => console.log("Ejecutando código seguro"));
+genrl.now(); // → número entero positivo
+genrl.extend("saludar", () => console.log("¡Hola Arturo!")).saludar();
+```
+
 ## 📦 Instalación
 
 ```bash
@@ -174,10 +182,48 @@ components
   });
 ```
 
-## Métodos Nuevos
+## Ejemplo: Contador
 ```js
-genrl.setScope("pedagogico");
-genrl.safeEval(() => console.log("Ejecutando código seguro"));
-genrl.now(); // → número entero positivo
-genrl.extend("saludar", () => console.log("¡Hola Arturo!")).saludar();
+genrl.run(() => {
+  components
+    .register("contador-js", class extends HTMLElement {
+      constructor() {
+        super();
+        this.valor = 0;
+        this.attachShadow({ mode: "open" });
+      }
+
+      connectedCallback() {
+        components.addcomponent("contador-js", "contador.html", (template) => {
+          this.shadowRoot.appendChild(template.content.cloneNode(true));
+          this.input = this.shadowRoot.getElementById("valor");
+          this.btnInc = this.shadowRoot.getElementById("incrementar");
+          this.btnDec = this.shadowRoot.getElementById("decrementar");
+
+          this.btnInc.onclick = () => this.incrementar();
+          this.btnDec.onclick = () => this.decrementar();
+          this.actualizar();
+        });
+      }
+
+      incrementar() {
+        this.valor++;
+        this.actualizar();
+      }
+
+      decrementar() {
+        this.valor--;
+        this.actualizar();
+      }
+
+      actualizar() {
+        this.input.value = this.valor;
+      }
+    });
+});
+```
+
+## Ejemplo de Uso en HTML
+```html
+<contador-js></contador-js>
 ```
