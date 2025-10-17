@@ -128,6 +128,46 @@ genrl.now(); // → número entero positivo
 genrl.extend("saludar", () => console.log("¡Hola Arturo!")).saludar();
 ```
 
+## 🔧 Extensibilidad de la clase genrl
+
+| 🧩 Método de extensión       | 📘 Descripción                                                                 |
+|-----------------------------|--------------------------------------------------------------------------------|
+| `genrl.extend(nombre, fn)`  | Agrega una función pública directamente al objeto `genrl`.                    |
+| `genrl.fn.extend(nombre, fn)` | Agrega una función privada o interna que puede ser invocada desde `genrl.fn`. |
+| `g(selector).extend(nombre, fn)` | Agrega una función personalizada a un selector DOM específico.               |
+
+
+## Ejemplos de uso
+
+### 1. Extender genrl con una función pública
+```js
+genrl.extend("saludar", function(nombre){
+  console.log("¡Hola " + nombre + "!");
+  return this;
+});
+```
+
+### 2. Extender genrl.fn con una función interna (recomendado para plugins)
+```js
+genrl.fn.extend("multiplicar", function(a, b){
+  return a * b;
+});
+
+// Invocación
+let resultado = genrl.fn("multiplicar")(3, 4); // → 12
+```
+
+### 3. Extender un selector DOM con una función personalizada
+```js
+g("#miBoton").extend("activar", function(){
+  this.addClass("activo");
+  console.log("Botón activado");
+});
+
+// Invocación
+g("#miBoton").activar();
+```
+
 ## 📦 Instalación
 
 ```bash
