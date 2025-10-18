@@ -31,6 +31,15 @@ let elementactive="html";
 let varsint=[{}];
 let nameapp="appdata"+numapps;
 let scopenom="genrlapp-" + Math.floor(Math.random() * 27);
+const genrl = (() => {
+  const watchers = new WeakMap();
+
+  return {
+    watch,
+    unwatch,
+    run
+  };
+})();
 
 //CLASE GENERAL - GENRL
 genrl = (function (global) {
@@ -294,7 +303,80 @@ genrl = (function (global) {
     },
     nowFloat() {
       return performance.now();
-    }
+    },
+	// 🔍 Define propiedad reactiva
+	defineReactive(obj, prop, path = [prop]) {
+		let value = obj[prop];
+
+		// Si es objeto, observar profundamente
+		if (value && typeof value === 'object') {
+		  observeDeep(value, path);
+		}
+
+		Object.defineProperty(obj, prop, {
+		  get() {
+		    return value;
+		  },
+		  set(newVal) {
+		    const oldVal = value;
+		    value = newVal;
+
+		    // Si nuevo valor es objeto, observarlo
+		    if (newVal && typeof newVal === 'object') {
+		      observeDeep(newVal, path);
+		    }
+
+		    triggerWatchers(obj, path.join('.'), newVal, oldVal);
+		  },
+		  configurable: true,
+		  enumerable: true
+		});
+	},
+	// 🔁 Observación profunda recursiva
+	observeDeep(obj, basePath = []) {
+		Object.keys(obj).forEach(key => {
+		  defineReactive(obj, key, [...basePath, key]);
+		});
+	},
+	// 🧠 Ejecuta callbacks registrados
+	triggerWatchers(obj, fullPath, newVal, oldVal) {
+		const map = watchers.get(obj);
+		if (!map) return;
+
+		Object.keys(map).forEach(path => {
+		  if (fullPath.startsWith(path)) {
+		    map[path].forEach(fn => fn(newVal, oldVal, fullPath));
+		  }
+		});
+	},
+	// ✅ Registrar observador
+	watch(obj, path, callback) {
+		if (!watchers.has(obj)) {
+		  watchers.set(obj, {});
+		}
+		const map = watchers.get(obj);
+		if (!map[path]) {
+		  map[path] = [];
+		}
+		map[path].push(callback);
+
+		// Activar observación profunda si es necesario
+		const keys = path.split('.');
+		let target = obj;
+		for (let i = 0; i < keys.length - 1; i++) {
+		  target = target[keys[i]];
+		  if (!target || typeof target !== 'object') return;
+		}
+		defineReactive(target, keys[keys.length - 1], keys);
+		},
+
+		// ❌ Eliminar observador
+		unwatch(obj, path) {
+		const map = watchers.get(obj);
+		if (map && map[path]) {
+		  delete map[path];
+		}
+	}
   });
 
   return genrl;
