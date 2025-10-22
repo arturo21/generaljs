@@ -9,7 +9,7 @@ var config = module.exports = {
 	devtool: 'source-map',
 	mode:"production",
 	entry: {
-		app: ["./main.js"]
+		app: ["./general.js"]
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),

@@ -1,43 +1,88 @@
-	/*
-  Copyright (C) 2022 Arturo Vasquez Soluciones Web.
-  Todos los derechos reservados.
+const components = (function () {
+  const registry = new Set();
+  const defaults = {
+    styles: "",
+    attributes: {}
+  };
 
-  La redistribución y uso en formatos fuente y binario están permitidas
-  siempre que el aviso de copyright anterior y este párrafo son
-  duplicado en todas esas formas y que cualquier documentación,
-  materiales de publicidad y otros materiales relacionados con dicha
-  distribución y uso reconocen que el software fue desarrollado
-  por el Arturo Vasquez Soluciones Web. El nombre de
-  Arturo Vasquez Soluciones Web No se puede utilizar para respaldar o promocionar productos derivados
-  de este software sin el permiso previo por escrito.
-  ESTE SOFTWARE SE PROPORCIONA '' tal cual '' Y SIN EXPRESA O
-  Garantías implícitas, incluyendo, sin limitación, los implicados
-  GARANTÍAS DE COMERCIALIZACIÓN Y APTITUD PARA UN PROPÓSITO PARTICULAR.
-*/
-/*función - módulo interno components*/
-/************************************************/
+  return {
+    register(tag, webcomp) {
+      if (!registry.has(tag)) {
+        window.customElements.define(tag, webcomp);
+        registry.add(tag);
+      } else {
+        console.warn(`Componente "${tag}" ya registrado`);
+      }
+      return this;
+    },
 
-let components=(function(){
-	//Submodulo Components
-	return{
-		register:function(tag, webcomp){
-			window.customElements.define(tag, webcomp);
-		},
-		addcomponent:function(tag,templateJSX,callback){
-			let template = genrl.getCreate('template');
-			let fetchapi=genrl.ajaxapi;
-			fetchapi
-			.get(templateJSX)
-			.then(function(data){
-				template.innerHTML=data;
-				if(typeof callback==="function"){
-					callback(template, data);
-				}
-			})
-			.catch(function(e){	
-				console.log("ERROR:" + e);
-			})
-		},
-	}
-}(window));
+    addcomponent(tag, templateURL, callback, options = {}) {
+      const template = (typeof genrl !== 'undefined' && genrl.getCreate)
+        ? genrl.getCreate('template')
+        : document.createElement('template');
+
+      const fetcher = (typeof genrl !== 'undefined' && genrl.ajaxapi)
+        ? genrl.ajaxapi
+        : { get: url => fetch(url).then(res => res.text()) };
+
+      fetcher.get(templateURL)
+        .then(data => {
+          template.innerHTML = data;
+
+          if (options.styles || defaults.styles) {
+            const style = document.createElement('style');
+            style.textContent = options.styles || defaults.styles;
+            template.content.prepend(style);
+          }
+
+          if (options.attributes || defaults.attributes) {
+            Object.entries({ ...defaults.attributes, ...options.attributes }).forEach(([key, val]) => {
+              template.setAttribute(key, val);
+            });
+          }
+
+          if (typeof callback === 'function') {
+            callback(template, data);
+          }
+        })
+        .catch(e => console.error("ERROR:", e));
+
+      return this;
+    },
+
+    loadAll(manifest = []) {
+      manifest.forEach(entry => {
+        this.addcomponent(entry.tag, entry.templateURL, entry.callback, entry.options);
+      });
+      return this;
+    },
+
+    mount(tag, targetSelector) {
+      const target = document.querySelector(targetSelector);
+      if (target) {
+        const el = document.createElement(tag);
+        target.appendChild(el);
+      } else {
+        console.warn(`Elemento destino "${targetSelector}" no encontrado`);
+      }
+      return this;
+    },
+
+    unmount(tag) {
+      document.querySelectorAll(tag).forEach(el => el.remove());
+      return this;
+    },
+
+    setDefaults(options = {}) {
+      if (options.styles) defaults.styles = options.styles;
+      if (options.attributes) defaults.attributes = options.attributes;
+      return this;
+    },
+
+    isRegistered(tag) {
+      return registry.has(tag);
+    }
+  };
+})();
+
 module.exports=components;

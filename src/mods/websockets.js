@@ -1,115 +1,174 @@
 /*
-  Copyright (C) 2021 Arturo Vasquez Soluciones Web.
+  Copyright (C) 2025 Arturo Vasquez Soluciones Web.
   Todos los derechos reservados.
-
-  La redistribución y uso en formatos fuente y binario están permitidas
-  siempre que el aviso de copyright anterior y este párrafo son
-  duplicado en todas esas formas y que cualquier documentación,
-  materiales de publicidad y otros materiales relacionados con dicha
-  distribución y uso reconocen que el software fue desarrollado
-  por el Arturo Vasquez Soluciones Web. El nombre de
-  Arturo Vasquez Soluciones Web No se puede utilizar para respaldar o promocionar productos derivados
-  de este software sin el permiso previo por escrito.
-  ESTE SOFTWARE SE PROPORCIONA '' tal cual '' Y SIN EXPRESA O
-  Garantías implícitas, incluyendo, sin limitación, los implicados
-  GARANTÍAS DE COMERCIALIZACIÓN Y APTITUD PARA UN PROPÓSITO PARTICULAR.
+  Licencia: MIT
 */
-/*función - módulo interno websockets*/
-/************************************************/
-ws=(function(){
-	var numsockets;
-	var socketUnt;
-    var workerName;
-	var retobject;
-	var objectfinal;
-	var socketi;
-	var sockets;
-	sockets=[];
-	retobject={};
-	objectfinal={};
 
-	function printonerror(event){
-		console.log("ERROR...");
-		console.log(event.error);
-	};
-	function printonopen(event){
-		console.log("Conexion abierta...");
-	};
-	function printonmsg(event){
-		console.log("Enviando mensaje...");
-		console.log(event.data);
-	};
-	//Submodulo WebSockets
-	return{
-		set:function(nombreid,urldir){
-			console.log("************************************SOCKET*******************************");
-			console.log(socketUnt);
-			console.log("************************************SOCKET*******************************");
-			if(socketUnt==undefined){
-				if(urldir!=''){
-            // Code Below.....
-            			try{
-            				socketUnt=new WebSocket(urldir);
-            			}
-            			catch(e){
-            				console.error(e);
-            			}
-            			finally{
-            				socketUnt.addEventListener('error',printonerror);
-							socketUnt.addEventListener('open',printonopen);
-							socketUnt.addEventListener('message',printonmsg);
-							sockets[numsockets]={'nombre':nombreid,'inst':socketUnt};
-							numsockets++;
-            			}
-				}
-			}
-			else{
-				g.log("El WebSocket API no está soportado por el navegador.");
-			}
-		},
-		get:function(nombreid){
-			for(w in sockets){
-				if(sockets[w].inst!=undefined){
-					if(sockets[w].nombre==nombreid){
-						g.log(sockets[w]);
-						retobject.socket=sockets[w].inst;
-						retobject.id=sockets[w].nombre;
-						return sockets[w].nombre;
-						break;
-					}
-				}
-			}
-			return retobject;
-		},
-		close:function(nombreid){
-			for(w in sockets){
-				if(sockets[w].inst!=undefined){
-					if(sockets[w].nombre==nombreid){
-						socketi=sockets[w].inst;
-						break;
-					}
-				}
-			}
-			socketi.close();
-			return 0;
-		},
-		reply:function(nombreid,message,callbackmsg){
-			var w=genrl.ws.get(nombreid);
-			w.socket.addEventListener('message',callbackmsg);
-			callbackmsg();
-		},
-		receive:function(nombreid,callbackmsg){
-			var w=genrl.ws.get(nombreid);
-			w.socket.addEventListener('message',callbackmsg);
-			callbackmsg();
-		},
-		send:function(nombreid,message){
-			var w=genrl.ws.get(nombreid);
-			w.socket.send(message);
-			g.log("************SOCKET RESPONSE*************");
-			g.log(message);
-			g.log("************SOCKET RESPONSE*************");
-		}
-	}
-}());
-module.exports=ws;
+const ws = (function () {
+  const sockets = new Map(); // nombreid → WebSocket
+  const channels = new Map(); // topic → Set of nombreid
+  const metrics = new Map(); // nombreid → { openAt, messages, errors }
+  const queue = new Map(); // nombreid → [pending messages]
+  const log = console.log;
+  const error = console.error;
+
+  function createSocket(nombreid, urldir) {
+    if (!window.WebSocket) {
+      error("El WebSocket API no está soportado por el navegador.");
+      return null;
+    }
+
+    try {
+      const socket = new WebSocket(urldir);
+      const stats = { openAt: null, messages: 0, errors: 0 };
+      metrics.set(nombreid, stats);
+
+      socket.addEventListener("open", () => {
+        stats.openAt = Date.now();
+        log(`✅ Conexión abierta: ${nombreid}`);
+        flush(nombreid);
+      });
+
+      socket.addEventListener("message", e => {
+        stats.messages++;
+        log(`📨 [${nombreid}] Mensaje recibido:`, e.data);
+      });
+
+      socket.addEventListener("error", e => {
+        stats.errors++;
+        error(`🛑 [${nombreid}] Error:`, e.error);
+      });
+
+      sockets.set(nombreid, socket);
+      queue.set(nombreid, []);
+      return socket;
+    } catch (e) {
+      error("Error al crear WebSocket:", e);
+      return null;
+    }
+  }
+
+  function getSocket(nombreid) {
+    return sockets.get(nombreid) || null;
+  }
+
+  function flush(nombreid) {
+    const socket = getSocket(nombreid);
+    const pending = queue.get(nombreid);
+    if (socket && socket.readyState === WebSocket.OPEN && pending?.length) {
+      pending.forEach(msg => socket.send(msg));
+      queue.set(nombreid, []);
+      log(`🚀 [${nombreid}] Mensajes pendientes enviados.`);
+    }
+  }
+
+  return {
+    set(nombreid, urldir) {
+      if (!sockets.has(nombreid) && urldir) {
+        return createSocket(nombreid, urldir);
+      }
+      log(`ℹ️ Socket "${nombreid}" ya existe o URL inválida.`);
+      return null;
+    },
+
+    get(nombreid) {
+      const socket = getSocket(nombreid);
+      return socket ? { id: nombreid, socket } : { id: null, socket: null };
+    },
+
+    close(nombreid) {
+      const socket = getSocket(nombreid);
+      if (socket) {
+        socket.close();
+        sockets.delete(nombreid);
+        queue.delete(nombreid);
+        metrics.delete(nombreid);
+        log(`🔒 Socket "${nombreid}" cerrado.`);
+        return true;
+      }
+      return false;
+    },
+
+    send(nombreid, message) {
+      const socket = getSocket(nombreid);
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send(message);
+        log(`📤 [${nombreid}] Enviado:`, message);
+        return true;
+      } else {
+        queue.get(nombreid)?.push(message);
+        log(`⏳ [${nombreid}] Socket no abierto. Mensaje en cola.`);
+        return false;
+      }
+    },
+
+    receive(nombreid, callback) {
+      const socket = getSocket(nombreid);
+      if (socket) {
+        socket.addEventListener("message", event => callback(event.data));
+        log(`👂 [${nombreid}] Escuchando mensajes.`);
+        return true;
+      }
+      return false;
+    },
+
+    reply(nombreid, callback) {
+      return this.receive(nombreid, callback);
+    },
+
+    isOpen(nombreid) {
+      const socket = getSocket(nombreid);
+      return socket?.readyState === WebSocket.OPEN;
+    },
+
+    reconnect(nombreid, urldir) {
+      const socket = getSocket(nombreid);
+      if (!socket || socket.readyState === WebSocket.CLOSED) {
+        log(`🔄 Reconectando "${nombreid}"...`);
+        return createSocket(nombreid, urldir);
+      }
+      log(`✅ Socket "${nombreid}" ya está activo.`);
+      return socket;
+    },
+
+    subscribe(nombreid, topic, callback) {
+      if (!channels.has(topic)) channels.set(topic, new Set());
+      channels.get(topic).add(nombreid);
+      this.receive(nombreid, callback);
+      log(`📡 [${nombreid}] Suscrito a "${topic}"`);
+    },
+
+    broadcast(topic, message) {
+      const ids = channels.get(topic);
+      if (ids) {
+        ids.forEach(id => this.send(id, message));
+        log(`📢 Broadcast a "${topic}":`, message);
+      }
+    },
+
+    pause(nombreid) {
+      const socket = getSocket(nombreid);
+      if (socket) socket.onmessage = null;
+      log(`⏸️ [${nombreid}] Pausado.`);
+    },
+
+    resume(nombreid, callback) {
+      this.receive(nombreid, callback);
+      log(`▶️ [${nombreid}] Reanudado.`);
+    },
+
+    flush(nombreid) {
+      flush(nombreid);
+    },
+
+    stats(nombreid) {
+      return metrics.get(nombreid) || null;
+    },
+
+    list() {
+      return Array.from(sockets.keys());
+    }
+  };
+})();
+
+module.exports = ws;

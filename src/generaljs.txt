@@ -31,7 +31,6 @@ let elementactive="html";
 let varsint=[{}];
 let nameapp="appdata"+numapps;
 let scopenom="genrlapp-" + Math.floor(Math.random() * 27);
-
 //CLASE GENERAL - GENRL
 const genrl = (function (global) {
   const _logStore = [];
@@ -74,50 +73,32 @@ const genrl = (function (global) {
 
   // 🔓 API público
   const api = {
-	extend(extensions) {
-	  if (isObject(extensions)) {
-	    Object.entries(extensions).forEach(([name, method]) => {
-	      if (isFunction(method)) {
-	        api[name] = function (...args) {
-	          const result = method.apply(api, args);
-	          return result === undefined ? api : result;
-	        };
-	      } else {
-	        api[name] = method; // también permite extender con objetos o valores
-	      }
-	    });
-	  }
-	  return api;
-	},
-	fn(name) {
-	  const method = api[name];
-	  return isFunction(method) ? method.bind(api) : undefined;
-	},
-	fn: {
-	  call(name) {
-	    const method = api[name];
-	    return isFunction(method) ? method.bind(api) : undefined;
-	  },
-	  extend(extensions) {
-	    if (isObject(extensions)) {
-	      Object.entries(extensions).forEach(([name, method]) => {
-	        if (isFunction(method)) {
-	          api[name] = function (...args) {
-	            const result = method.apply(api, args);
-	            return result === undefined ? api : result;
-	          };
-	        } else {
-	          api[name] = method;
-	        }
-	      });
-	    }
-	    return api;
-	  }
-	},
-	init() {
-		api.createScope();
-		return api;
-	},
+    extend_(name, method) {
+      if (typeof name === 'string' && isFunction(method)) {
+        api[name] = function (...args) {
+          const result = method.apply(api, args);
+          return result === undefined ? api : result;
+        };
+      }
+      return api;
+    },
+    fn(name) {
+      const method = api[name];
+      return isFunction(method) ? method.bind(api) : undefined;
+    },
+    fn.extend(name, method) {
+      if (typeof name === 'string' && isFunction(method)) {
+        api[name] = function (...args) {
+          const result = method.apply(api, args);
+          return result === undefined ? api : result;
+        };
+      }
+      return api;
+    },
+    init() {
+      api.createScope();
+      return api;
+    },
     createScope() {
       html.setAttribute("id", nameapp);
       html.setAttribute("name", nameapp);
@@ -357,66 +338,68 @@ genrl.extend({ ytapi });
 genrl.extend({ components });
 genrl.extend({ bind });
 genrl.extend({ gdom });
-
 ////////PROTOTIPOS//////////
 genrl.__proto__.watch_=function(objeto,attrib,callback){
-	//funcion Watch
-	DOMelement=g.getelem(objeto);
-	watch(DOMelement,attrib,callback);
+  //funcion Watch
+  DOMelement=g.getelem(objeto);
+  watch(DOMelement,attrib,callback);
 };
 genrl.__proto__.unwatch_=function(objeto,attrib,callback){
-	//Funcion Unwatch
-	DOMelement=g.getelem(objeto);
-	unwatch(DOMelement,attrib,callback);
+  //Funcion Unwatch
+  DOMelement=g.getelem(objeto);
+  unwatch(DOMelement,attrib,callback);
 };
 genrl.__proto__.ajax=function(){
-	let sock;
-	sock=genrl.getxhr();
-	return sock;
+  let sock;
+  sock=genrl.getxhr();
+  return sock;
 };
 genrl.__proto__.isReady=function(){
-	if(document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
-		return 1;
-	}
-	else{
-		return 0;
-	}
+  if(document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
+    return 1;
+  }
+  else{
+    return 0;
+  }
 }
 genrl.__proto__.empty=function(string){
-	if(typeof string==='string'){
-		if(string==""){
-			return;
-		}
-		else{
-			return -1;
-		}
-	}
-	else{
-		return -1;
-	}
+  if(typeof string==='string'){
+    if(string==""){
+      return;
+    }
+    else{
+      return -1;
+    }
+  }
+  else{
+    return -1;
+  }
 };
 
 genrl.__proto__.getelem=function(id){
-	let objeto;
-	if(typeof id==='string'){
-		objeto=document.querySelector(id);
-		if(typeof objeto==='object'){
-			return objeto;
-		}
-	}
+  let objeto;
+  if(typeof id==='string'){
+    objeto=document.querySelector(id);
+    if(typeof objeto==='object'){
+      return objeto;
+    }
+  }
 };
 genrl.__proto__.getelems=function(tag){
-	let arrtags=[];
-	if(tag!=undefined){
-		arrtags=document.querySelectorAll(tag);
-		return arrtags;
-	}
-	else{
-		return -1;
-	}
+  let arrtags=[];
+  if(tag!=undefined){
+    arrtags=document.querySelectorAll(tag);
+    return arrtags;
+  }
+  else{
+    return -1;
+  }
 };
+
+genrl.__proto__.g=gdom;
 
 if (typeof window !== 'undefined') {
   window.genrl=genrl;
+  window.g=genrl.gdom;
 }
 module.exports=genrl;

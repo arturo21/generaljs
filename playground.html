@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeneralJS PlayGround</title>
+  <link rel="stylesheet" href="fenixnova.bundle.css"> <!-- Opcional: hoja de estilos -->
+</head>
+<body>
+
+  <h1 id="titulo">Bienvenido a mi sitio</h1>
+  <p>Este es un ejemplo básico de HTML con JavaScript externo.</p>
+  <!-- Integración del script externo -->
+  <script src="dist/general.min.js"></script>
+  <!-- Tu contenido aquí -->
+  <script type="text/javascript">
+    genrl.run(function(){
+      g("#titulo").css({
+        'font-size':'36px'
+      })
+    });
+  </script>
+</body>
+</html>

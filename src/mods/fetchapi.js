@@ -1,92 +1,81 @@
-/*
-  Copyright (C) 2021 Arturo Vasquez Soluciones Web.
-  Todos los derechos reservados.
+const fetchapi = (function (global) {
+  // 🔧 Utilidad interna para obtener fetch
+  function getSocket() {
+    return global.fetch || null;
+  }
 
-  La redistribución y uso en formatos fuente y binario están permitidas
-  siempre que el aviso de copyright anterior y este párrafo son
-  duplicado en todas esas formas y que cualquier documentación,
-  materiales de publicidad y otros materiales relacionados con dicha
-  distribución y uso reconocen que el software fue desarrollado
-  por el Arturo Vasquez Soluciones Web. El nombre de
-  Arturo Vasquez Soluciones Web No se puede utilizar para respaldar o promocionar productos derivados
-  de este software sin el permiso previo por escrito.
-  ESTE SOFTWARE SE PROPORCIONA '' tal cual '' Y SIN EXPRESA O
-  Garantías implícitas, incluyendo, sin limitación, los implicados
-  GARANTÍAS DE COMERCIALIZACIÓN Y APTITUD PARA UN PROPÓSITO PARTICULAR.
-*/
-/************************************************/
-/**********************FETCH API*****************/
-/************************************************/
-fetchapi=(function(global,factory){
-  //write code below
-  function getSocket(){
-    let fetchapi=fetch;
-    if(fetchapi){
-      return fetchapi;
+  // 🔧 Utilidad para construir opciones de solicitud
+  function buildOptions(method, data = null) {
+    const options = {
+      method: method.toUpperCase(),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    if (data) {
+      options.body = JSON.stringify({ data });
+    }
+    return options;
+  }
+
+  // 🔧 Manejo de respuesta genérico
+  function handleResponse(response, callback, parse = 'json') {
+    if (!response.ok) {
+      console.error(`Error HTTP: ${response.status}`);
+      return;
+    }
+
+    response[parse]()
+      .then(data => {
+        try {
+          callback(data);
+        } catch (e) {
+          console.error('Callback error:', e);
+        }
+      })
+      .catch(err => console.error('Parse error:', err));
+  }
+
+  return {
+    getFetch: function () {
+      return getSocket();
+    },
+
+    get: function (url, callback) {
+      const fetcher = getSocket();
+      if (!fetcher) return console.error('Fetch API no disponible');
+      fetcher(url)
+        .then(response => handleResponse(response, callback, 'json'))
+        .catch(err => console.error('Fetch error:', err));
+    },
+
+    post: function (url, data, callback) {
+      const fetcher = getSocket();
+      if (!fetcher) return console.error('Fetch API no disponible');
+      const options = buildOptions('POST', data);
+      fetcher(url, options)
+        .then(response => handleResponse(response, callback, 'text'))
+        .catch(err => console.error('Fetch error:', err));
+    },
+
+    put: function (url, data, callback) {
+      const fetcher = getSocket();
+      if (!fetcher) return console.error('Fetch API no disponible');
+      const options = buildOptions('PUT', data);
+      fetcher(url, options)
+        .then(response => handleResponse(response, callback, 'json'))
+        .catch(err => console.error('Fetch error:', err));
+    },
+
+    delete: function (url, callback) {
+      const fetcher = getSocket();
+      if (!fetcher) return console.error('Fetch API no disponible');
+      const options = buildOptions('DELETE');
+      fetcher(url, options)
+        .then(response => handleResponse(response, callback, 'json'))
+        .catch(err => console.error('Fetch error:', err));
     }
   };
-  return{
-    getFetch:function(){
-		let sockfetch=getSocket();
-		return sockfetch;
-  	},
-  	get:function(url,callbackReq){
-  		let objeto;
-		let x,y,valor,indice;
-		let sockfetch=getSocket();
-		sockfetch(url)
-	    .then(function(response){
-	    	response.json().then(function(data){
-			if(response.ok){
-		          try {
-		            callbackReq(data);
-		          }
-		          catch (e) {
-		            throw new Error(e);
-		          }
-		          finally {
-		              //silence is golden
-		          }
-	          }
-	    	})
-	        .catch(function(error){
-	          console.log(error);
-	        })
-	    })
-	    .catch(function(error){
-	      console.log(error);
-	    })
-  	},
-  	post:function(url,data,callbackReq){
-		let sockfetch=getSocket();
-		let options;
-		let respjson;
-		let objeto;
-		let x,y,valor,indice;
-      options={
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json'
-        },
-        body:JSON.stringify({
-			"data":data
-		})
-      }
-      sockfetch(url,options)
-        .then(function(response){
-        	if(response.ok){
-				response.text().then(function(data){
-					callbackReq(data);
-				})
-		        .catch(function(error){
-		          	console.log(error);
-	        	})
-        	}
-        })
-        .catch(function(error){
-          console.log(error);
-        })
-  	}
-  }
-}(window));
-module.exports=fetchapi;
+})(window);
+
+module.exports = fetchapi;
