@@ -19,17 +19,50 @@
 
 ---
 
-## ✨ Novedades en v2
+## ✨ Novedades en generaljs v2
 
-- 🔧 Patrón Module Revealed para encapsulación segura
-- 🔗 Encadenamiento fluido (`genrl.metodo1().metodo2()`)
-- 🧩 `setScope(nombre)` y `createScope()` para definir ámbitos de aplicación
-- 🔐 `safeEval(fn)` para ejecución segura de funciones
-- 🕒 `now()` devuelve tiempo como entero positivo
-- 🧱 Métodos DOM integrados con `gdom`: `createElem`, `appendTo`, `on`, `html`, `attr`, `addClass`, `remove`
-- 🧬 Módulo `components` extendido con `register`, `addcomponent`, `loadAll`, `mount`, `unmount`, `setDefaults`
-- 📦 Registro dinámico de Web Components con plantillas externas
-- 🧠 Métodos utilitarios: `uuid`, `timestamp`, `sanitize`, `validate`, `logEvent`, `getLog`, `clearLog`
+- 🔧 **Encapsulación segura con patrón Module Revealed**  
+  Lógica privada protegida, API pública revelada con control total.
+
+- 🔗 **Encadenamiento fluido de métodos**  
+  Todos los métodos devuelven `genrl` para composición elegante:  
+  `genrl.log().setScope().ready()`
+
+- 🧩 **Ámbitos dinámicos con `setScope(nombre)` y `createScope()`**  
+  Define entornos de aplicación únicos por instancia.
+
+- 🧠 **Sistema de extensión modular con `fn.extend({...})`**  
+  Permite registrar múltiples módulos (como `cripto`, `ajaxapi`, `gdom`) en una sola llamada.
+
+- 🧬 **Integración profunda con `gdom(selector)`**  
+  Acceso fluido a métodos DOM como `addClass`, `removeClass`, `on`, `attr`, `html`, `appendTo`, etc.
+
+- 🧱 **Compatibilidad con CommonJS y entorno navegador**  
+  Exportación dual con `module.exports` y `window.genrl` para uso universal.
+
+- 🧠 **Alias global `g` para `gdom`**  
+  Disponible como `window.g(selector)` para manipulación directa del DOM.
+
+- 🔐 **Ejecución segura con `safeEval(fn)`**  
+  Captura errores silenciosamente sin romper el flujo.
+
+- 🕒 **Tiempos precisos con `now()`, `nowFloat()`, `timestamp()`**  
+  Ideal para medición de rendimiento y trazabilidad.
+
+- 📦 **Registro dinámico de Web Components**  
+  Soporte para plantillas externas, `mount`, `unmount`, `setDefaults`, y `loadAll`.
+
+- 🧠 **Utilitarios robustos**  
+  Incluye `uuid()`, `sanitize`, `validate.email/url`, `base64_encode/decode`, `utf8_encode/decode`, `parseHTML`, `parseJSON`, `stringifyJSON`.
+
+- 🔍 **Observación reactiva con `watch(obj, path, callback)`**  
+  Define propiedades reactivas y dispara eventos ante cambios profundos.
+
+- 🧪 **Depuración integrada con `log`, `warn`, `info`, `error`**  
+  Registro interno (`_logStore`) accesible para trazabilidad.
+
+- 🧩 **Extensión de prototipos con `genrl.__proto__`**  
+  Métodos como `watch_`, `unwatch_`, `ajax`, `isReady`, `getelem`, `getelems`, `empty`.
 
 ---
 
